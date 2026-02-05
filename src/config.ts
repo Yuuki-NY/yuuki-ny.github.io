@@ -1,7 +1,7 @@
 export const siteConfig = {
-  name: "Ryan Fitzgerald",
-  title: "Senior Software Engineer",
-  description: "Portfolio website of Ryan Fitzgerald",
+  name: "Nicholas Yap",
+  title: "Mechatronics Engineering Student",
+  description: "Portfolio website of Nicholas Yap",
   accentColor: "#1d4ed8",
   social: {
     email: "nicholas.yap28@gmail.com",
@@ -9,29 +9,31 @@ export const siteConfig = {
     github: "https://github.com/Yuuki-NY",
   },
   aboutMe:
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem quos asperiores nihil consequatur tempore cupiditate architecto natus commodi corrupti quas quasi facere est, dignissimos odit nam veniam sapiente ut, vitae eligendi ipsum dolor, nostrum ullam impedit! Corrupti ratione mollitia temporibus necessitatibus, consectetur reiciendis recusandae id, dolorum quaerat, vero pariatur. Ratione!",
-  skills: ["Javascript", "React", "Node.js", "Python", "AWS", "Docker"],
+    "Hello, I'm Nicholas Yap and I am a Mechatronics Student at the University of British Columbia!",
+  skills: ["SolidWorks", "Onshape CAD", "C/C++", "C#", "WinForms", "Python", "MATLAB", "MSP430FR5739 Firmware", "Code Composer Studio", "Soldering", "3D Printing"],
   projects: [
     {
-      name: "AI Dev Roundup Newsletter",
-      description:
-        "One concise email. Five minutes. Every Tuesday. Essential AI news & trends, production-ready libraries, powerful AI tools, and real-world code examples",
-      link: "https://aidevroundup.com/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
+      name: "Self-Balancing Wheeled Bipedal Robot: Protoype Grass",
+      bullets: [
+          "Built a C# WinForms application to interface with an ESP-WROOM-32 over BLE communication, allowing for wireless real-time PC control of the ESP through a client - server relationship.",
+          "Prototyped a dual-PID self-balancing control system in collaboration with a partner to balance an elevated robot on two motorized wheels through accelerometer, gyroscope, and encoder input.",
+          ],
+          skills: ["C#", "Winforms", "Onshape CAD", "3D Printing",],
     },
     {
-      name: "Chrome Extension Mastery: Build Full-Stack Extensions with React & Node.js",
-      description:
-        "Master the art of building production-ready, full-stack Chrome Extensions using modern web technologies and best practices",
-      link: "https://fullstackextensions.com/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
+      name: "Soft-Robotics Octopus Claw Prototype",
+      bullets: [
+          "Researched and developed prototypes of a TPU-structured flexible manipulator inspired by logarithmic spirals in nature to allow for complex 3D movement and adaptable grasping capabilities.",
+          ],
+      skills: ["Onshape CAD", "3D Printing",],
     },
     {
-      name: "ExtensionKit",
-      description:
-        "Kit to jump-start your Chrome extension projects with a variety of battle-tested starter templates & examples",
-      link: "https://extensionkit.io/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
+      name: "Stepper Motor 2-Axis Gantry",
+      bullets: [
+          "Soldered a predesigned PCB to implement a MSP430FR5739 microcontroller with motor drivers and encoder inputs.",
+          "Programmed firmware in Code Composer Studio to control stepper motors for G-code–based gantry operation via UART from a C# WinForms application, enabling precise image drawing through custom G - code paths. ",
+          ],
+        skills: ["Soldering", "C#", "WinForms", "Code Composer Studio", "MSP430FR5739 Firmware",],
     },
   ],
   experience: [
@@ -69,12 +71,14 @@ export const siteConfig = {
   education: [
     {
       school: "University of British Columbia",
-      degree: "Bachelor of Applied Science in Mechanical Engineering - Mechatronics Specialization",
+      degree: "Bachelor of Applied Science in Mechanical Engineering",
       dateRange: "2021-Present",
+      description:
+        "Mechatronics Specialization",
       achievements: [
-        "Graduated Magna Cum Laude with 3.8 GPA",
-        "Dean's List all semesters",
-        "President of Computer Science Club",
+        "CGPA: 87.8%",
+        "Dean's List",
+        "Swan Memorial Scholarship 2024"
       ],
     },
     {
