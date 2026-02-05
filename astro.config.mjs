@@ -10,5 +10,4 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   site: 'https://yuuki-ny.github.io',
-  base: '/yuuki-ny.github.io',
 });
