@@ -31,7 +31,7 @@ export const siteConfig = {
       name: "Stepper Motor 2-Axis Gantry",
       bullets: [
           "Soldered a predesigned PCB to implement a MSP430FR5739 microcontroller with motor drivers and encoder inputs.",
-          "Programmed firmware in Code Composer Studio to control stepper motors for G-code–based gantry operation via UART from a C# WinForms application, enabling precise image drawing through custom G - code paths. ",
+          "Programmed firmware in Code Composer Studio to control stepper motors for G-codeâ€“based gantry operation via UART from a C# WinForms application, enabling precise image drawing through custom G - code paths. ",
           ],
         skills: ["Soldering", "C#", "WinForms", "Code Composer Studio", "MSP430FR5739 Firmware",],
     },
@@ -55,7 +55,7 @@ export const siteConfig = {
       dateRange: "Sept 2023 - Feb 2024",
       bullets: [
         "Collaborated with multiple plant operations teams to author and update Corrosion Control Documents and Integrity Operating Windows, improving reliability across all site operations.",
-        "Revised ABSA regulatory documentation to ensure regulatory compliance and maintain the site’s permission to operate.",
+        "Revised ABSA regulatory documentation to ensure regulatory compliance and maintain the site\â€™s permission to operate.",
       ],
     },
     {
