@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Nicholas Yap",
   title: "Mechatronics Engineering Student",
   description: "Portfolio website of Nicholas Yap",
-  accentColor: "#1d4ed8",
+  accentColor: "#011638",
   social: {
     email: "nicholas.yap28@gmail.com",
     linkedin: "www.linkedin.com/in/nicholas-yap28",
@@ -38,12 +38,23 @@ export const siteConfig = {
   ],
   experience: [
     {
+      company: "Ted Rogers Centre for Heart Research + University Health Network",
+      title: "Summer Research Student - Cardiac Surgery Department",
+      dateRange: "May 2025 - Aug 2025",
+      bullets: [
+        "Designed a framework for a secure data collection system for aortic biomechanics research using REDCap, ensuring patient confidentiality and anonymity.",
+        "Built custom MATLAB scripts to process and restructure existing research data for enhanced data security and streamlined management capabilities.",
+        "Customized web elements using HTML and CSS to improve visual consistency and mobile compatibility.",
+        "Participated in a company-sponsored animal dissection study for aortic heart research.",
+      ],
+    },
+    {
       company: "The Dow Chemical Company",
       title: "Maintenance/Reliability Engineering Co-op",
       dateRange: "Feb 2024 - Aug 2024",
       bullets: [
         "Reprogrammed an industrial oven PID controller and created safe operating procedures, shortening maintenance and improving operator safety.",
-        "Designed flange covers for shut-down pressure equipment in SolidWorks to improve the safety and repair efficiency for millwrights. ",
+        "Designed flange covers for shut-down pressure equipment in SolidWorks to improve the safety and repair efficiency for millwrights.",
         "Redesigned equipment cleaning procedures, reducing corrosion and extending equipment service life.",
         "Coordinated management of change (MOC) for facility renovations, equipment upgrades, and technical documentation to ensure compliant implementation and proper record keeping.",
         "Communicated with vendors, work coordinators, and operators to streamline equipment bill of materials, stocking, and upgrades to ensure up-to date management and procurement of critical equipment.",
@@ -65,6 +76,24 @@ export const siteConfig = {
       bullets: [
         "Designed airfoil frames, landing gear, and electrical equipment mounts for a VTOL reconnaissance aircraft.",
         "Collaborated with an interdisciplinary team to develop comprehensive quadcopter and VTOL CAD assemblies in Onshape, creating functional autonomous drones for competition.",
+      ],
+    },
+    {
+      company: "SUBC - UBC's Submarine Design Team",
+      title: "Frame Subteam Member",
+      dateRange: "Oct 2021 - Jul 2022",
+      bullets: [
+        "Designed 3D models of aluminum extrusion attachments for the outer hull of a submarine.",
+        "Collaborated to manufacture an aluminum frame for a submarine consistenting of aluminum extrusions and water jet cut sheets.",
+      ],
+    },
+    {
+      company: "University of Toronto Aerospace Team",
+      title: "Mechanical Subsystem General Member",
+      dateRange: "Sept 2020 - Jul 2021",
+      bullets: [
+        "Modelled servo mounts, camera mounts, and alignment frames for an autonomous driving payload carried by an aircraft.",
+        "Designed a custom team-wide Google Slides presentation theme for competition.",
       ],
     },
   ],
