@@ -15,20 +15,20 @@ export const siteConfig = {
     {
       name: "Self-Balancing Wheeled Bipedal Robot: Protoype Grass",
       description:
-          "Grass is a robot I worked on with a partner that uses a dual-PID control system to balance an elevated robot on two motorized wheels through accelerometer, gyroscope, and encoder input. The design includes multiple prototypes to house the electronics, size the wheels, and a C# WinForms application to interface with an ESP-WOOM-32 over BLE communication allowing for wireless real-time PC control and tuning of the ESP through a client - server relationship"
+          "Grass is a robot I worked on with a partner that uses a dual-PID control system to balance an elevated robot on two motorized wheels through accelerometer, gyroscope, and encoder input. The robot is controlled wirelessly through a C# WinForms Application using BLE Communication."
       ,
       skills: ["C#", "Winforms", "Onshape CAD", "3D Printing",],
     },
     {
       name: "Soft-Robotics Octopus Claw Prototype",
       description:
-          "Researched and built prototypes of a TPU-structured flexible manipulator inspired by logarithmic spirals in nature to allow for complex 3D movement and adaptable grasping capabilities.",
+          "Researched and built prototypes of a TPU-structured flexible manipulator inspired by logarithmic spirals in nature, allowing for complex 3D movement and adaptable grasping capabilities.",
       skills: ["Onshape CAD", "3D Printing",],
     },
     {
       name: "Stepper Motor 2-Axis Gantry",
       description:
-          "Programmed firmware in Code Composer Studio to control stepper motors for G-code–based gantry operation via UART from a C# WinForms application, enabling precise image drawing through custom G - code paths. It also involved soldering a predesigned PCB to implement a MSP430FR5739 microcontroller with motor drivers and encoder inputs.",
+          "Programmed firmware to control stepper motors for G-code–based gantry operation via UART from a C# WinForms application, enabling precise image drawing through custom G-code paths. It also involved soldering a predesigned PCB to implement a MSP430FR5739 microcontroller with motor drivers and encoder inputs.",
         skills: ["Soldering", "C#", "WinForms", "Code Composer Studio", "MSP430FR5739 Firmware",],
     },
   ],
