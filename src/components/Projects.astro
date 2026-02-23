@@ -59,14 +59,18 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
                       )}
 
                       <div class="space-y-4">
-
-			  {project.image && (
-			    <img
- 			     src={project.image}
- 			     alt={project.name}
- 			     class="w-full h-48 object-cover rounded-xl mb-4"
- 			   />
- 			 )}
+			
+						{project.images && project.images.length > 0 && (
+						  <div class="grid grid-cols-2 gap-2 mb-4">
+						    {project.images.map((img) => (
+						      <img
+						        src={img}
+						        alt={project.name}
+						        class="w-full h-32 object-cover rounded-lg"
+						      />
+						    ))}
+						  </div>
+						)}
 
                         <div>
                           <span
