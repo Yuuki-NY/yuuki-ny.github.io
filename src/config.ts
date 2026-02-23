@@ -18,18 +18,32 @@ export const siteConfig = {
           "Grass is a robot I worked on with a partner that uses a dual-PID control system to balance an elevated robot on two motorized wheels through accelerometer, gyroscope, and encoder input. The robot is controlled wirelessly through a C# WinForms Application using BLE Communication."
       ,
       skills: ["C#", "Winforms", "Onshape CAD", "3D Printing",],
+        images: [
+            "/images/GrassStanding.png",
+            "/images/GrassUnderDevelopment.jpg",
+            "/images/GrassFinalAssembly.jpg"
+        ]
     },
     {
       name: "Soft-Robotics Octopus Claw Prototype",
       description:
           "Researched and built prototypes of a TPU-structured flexible manipulator inspired by logarithmic spirals in nature, allowing for complex 3D movement and adaptable grasping capabilities.",
-      skills: ["Onshape CAD", "3D Printing",],
+        skills: ["Onshape CAD", "3D Printing",],
+        images: [
+            "/images/OctopusClawTPUPrototype",
+            "/images/OctopusClawIterationCAD.png"
+        ]
     },
     {
       name: "Stepper Motor 2-Axis Gantry",
       description:
           "Programmed firmware to control stepper motors for G-code–based gantry operation via UART from a C# WinForms application, enabling precise image drawing through custom G-code paths. It also involved soldering a predesigned PCB to implement a MSP430FR5739 microcontroller with motor drivers and encoder inputs.",
         skills: ["Soldering", "C#", "WinForms", "Code Composer Studio", "MSP430FR5739 Firmware",],
+        images: [
+            "/images/Gantry+PCB.jpg",
+            "/images/GantrySenseiWu.jpg",
+            "/images/PCB+MotorController.jpg"
+        ]
     },
   ],
   experience: [
