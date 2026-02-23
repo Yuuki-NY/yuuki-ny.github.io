@@ -30,7 +30,7 @@ export const siteConfig = {
           "Researched and built prototypes of a TPU-structured flexible manipulator inspired by logarithmic spirals in nature, allowing for complex 3D movement and adaptable grasping capabilities.",
         skills: ["Onshape CAD", "3D Printing",],
         images: [
-            "/images/OctopusClawTPUPrototype",
+            "/images/OctopusClawTPUPrototype.jpg",
             "/images/OctopusClawIterationCAD.png"
         ]
     },
