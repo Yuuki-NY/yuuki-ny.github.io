@@ -31,7 +31,8 @@ export const siteConfig = {
         skills: ["Onshape CAD", "3D Printing",],
         images: [
             "/images/OctopusClawTPUPrototype.jpg",
-            "/images/OctopusClawIterationCAD.png"
+            "/images/OctopusClawIterationCAD.png",
+            "/images/OctopusClawSpiralTesting.png"
         ]
     },
     {
@@ -42,7 +43,8 @@ export const siteConfig = {
         images: [
             "/images/Gantry+PCB.jpg",
             "/images/GantrySenseiWu.jpg",
-            "/images/PCB+MotorController.jpg"
+            "/images/PCB+MotorController.jpg",
+            "/images/GantryDrawingWu.jpg"
         ]
     },
   ],
