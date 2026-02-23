@@ -27,9 +27,8 @@ export const siteConfig = {
     {
       name: "Soft-Robotics Octopus Claw Prototype",
       description:
-          "Researched and built prototypes of a TPU-structured flexible manipulator inspired by logarithmic spirals in nature, allowing for complex 3D movement and adaptable grasping capabilities. Credits for the inspiration and design go to the developers of Spirobs (link to the article added below).",
+          "Researched and built prototypes of a TPU-structured flexible manipulator inspired by logarithmic spirals in nature, allowing for complex 3D movement and adaptable grasping capabilities. Credits for the inspiration and design go to the developers of Spirobs",
         skills: ["Onshape CAD", "3D Printing",],
-        link: "https://doi.org/10.1016/j.device.2024.100646",
         images: [
             "/images/OctopusClawTPUPrototype.jpg",
             "/images/OctopusClawIterationCAD.png",
