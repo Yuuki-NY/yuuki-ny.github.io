@@ -113,11 +113,11 @@ export const siteConfig = {
     {
       school: "University of British Columbia",
       degree: "Bachelor of Applied Science in Mechanical Engineering",
-      dateRange: "2021-Present",
+      dateRange: "2026",
       description:
         "Mechatronics Specialization",
       achievements: [
-        "CGPA: 87.8%",
+        "CGPA: 87.6%",
         "Dean's List",
         "Swan Memorial Scholarship 2024"
       ],
