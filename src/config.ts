@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Nicholas Yap",
-  title: "Mechatronics Engineering Student",
+  title: "Mechatronics Engineering Graduate",
   description: "Portfolio website of Nicholas Yap",
   accentColor: "#011638",
   social: {
@@ -9,7 +9,7 @@ export const siteConfig = {
     github: "https://github.com/Yuuki-NY",
   },
   aboutMe:
-    "Hello, I'm Nicholas Yap and I am a Mechatronics Student at the University of British Columbia!",
+    "Hello, I'm Nicholas Yap and I am a Mechatronics Engineering Graduate from the University of British Columbia!",
   skills: ["SolidWorks", "Onshape CAD", "C/C++", "C#", "WinForms", "Python", "MATLAB", "MSP430FR5739 Firmware", "Code Composer Studio", "Soldering", "3D Printing"],
   projects: [
     {
