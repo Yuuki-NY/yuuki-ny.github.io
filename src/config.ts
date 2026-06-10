@@ -21,7 +21,9 @@ export const siteConfig = {
         images: [
             "/images/GrassStanding.png",
             "/images/GrassUnderDevelopment.jpg",
-            "/images/GrassFinalAssembly.jpg"
+            "/images/GrassAuraFarming.jpg",
+            "/images/GrassKicked.png",
+            "/images/GrassExploded.jpg"
         ]
     },
     {
