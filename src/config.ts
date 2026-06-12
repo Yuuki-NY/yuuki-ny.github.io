@@ -13,7 +13,7 @@ export const siteConfig = {
   skills: ["SolidWorks", "Onshape CAD", "C/C++", "C#", "WinForms", "Python", "MATLAB", "MSP430FR5739 Firmware", "Code Composer Studio", "Soldering", "3D Printing"],
   projects: [
     {
-      name: "Self-Balancing Wheeled Bipedal Robot: Protoype Grass",
+      name: "Self-Balancing Wheeled Bipedal Robot: Prototype Grass",
       description:
           "Grass is a robot I worked on with a partner that uses a dual-PID control system to balance an elevated robot on two motorized wheels through accelerometer, gyroscope, and encoder input. The robot is controlled wirelessly through a C# WinForms Application using BLE Communication."
       ,
