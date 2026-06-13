@@ -1,0 +1,3010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio — Nicholas Yap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── PALETTE (from inspo image) ── */
+:root {
+  --bg:          #0e1118;
+  --bg2:         #111620;
+  --bg3:         #161c2a;
+  --surface:     #1b2133;
+  --border:      #243048;
+
+  /* Primary accent — deep teal */
+  --accent:      #1e6b7f;
+  --accent-light:#2a8fa6;
+  --accent-glow: rgba(30,107,127,0.25);
+
+  /* Secondary accent — gold/amber */
+  --gold:        #c48c2a;
+  --gold-light:  #d4a043;
+  --gold-glow:   rgba(196,140,42,0.2);
+
+  /* Navy tones */
+  --navy:        #1d2b45;
+  --navy-mid:    #253558;
+
+  /* Neutrals */
+  --white:       #eef0f4;
+  --text:        #9aa3b8;
+  --muted:       #5a6480;
+
+  --font-display:'Space Grotesk', sans-serif;
+  --font-mono:   'Space Mono', monospace;
+
+  --radius-card: 18px;
+  --transition:  0.28s cubic-bezier(0.4,0,0.2,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-display);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── SCROLL-REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1),
+              transform 0.65s cubic-bezier(0.4,0,0.2,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: rgba(14,17,24,0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 24px;
+  transition: box-shadow var(--transition);
+}
+nav.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem;
+  color: var(--accent-light);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  background: rgba(30,107,127,0.12);
+}
+.nav-links { display: flex; gap: 20px; list-style: none; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color var(--transition);
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width var(--transition);
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after { width: 100%; background: var(--gold); }
+
+/* ── KEYBOARD SHORTCUT TOAST ── */
+#shortcut-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text);
+  z-index: 300;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+#shortcut-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+#shortcut-toast kbd {
+  background: var(--navy);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--gold);
+  font-size: 0.68rem;
+  margin: 0 2px;
+}
+
+/* ── HERO ── */
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 50% at 60% 35%, rgba(30,107,127,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 15% 75%, rgba(196,140,42,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 85% 80%, rgba(29,43,69,0.5) 0%, transparent 70%),
+    var(--bg);
+}
+.hero-noise {
+  position: absolute; inset: 0; opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  flex: 1;
+  padding: clamp(72px, 10vw, 110px) clamp(28px, 6vw, 80px) 24px;
+  gap: 48px;
+}
+.hero-left { display: flex; flex-direction: column; gap: 20px; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(30,107,127,0.12);
+  border: 1px solid rgba(42,143,166,0.3);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent-light);
+  width: fit-content;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+}
+.hero-badge::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.35; transform:scale(0.7); }
+}
+.hero-headline {
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+.hero-right {
+  display: flex; flex-direction: column;
+  gap: 20px; align-items: flex-start; justify-content: center;
+}
+.hero-bio {
+  font-size: 0.97rem; color: var(--text);
+  line-height: 1.75; max-width: 360px;
+}
+/* Hero button row */
+.hero-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--accent);
+  color: var(--white);
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+  border: none; cursor: pointer;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.btn-primary:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px var(--accent-glow);
+}
+.btn-primary .arrow {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition), box-shadow var(--transition);
+}
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 4px 16px var(--gold-glow);
+}
+
+/* ── NAMEPLATE ── */
+.hero-nameplate {
+  position: relative; z-index: 2;
+  padding: 0 clamp(20px, 5vw, 60px);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.hero-nameplate-text {
+  font-size: clamp(4.5rem, 11vw, 9rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+  color: var(--white);
+  white-space: nowrap;
+  margin-bottom: -0.08em;
+  background: linear-gradient(120deg, var(--white) 0%, #b0c8d4 40%, var(--white) 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── SCROLL INDICATOR ── */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  opacity: 0.45;
+  animation: fade-in-indicator 1.2s 1.5s ease forwards;
+  pointer-events: none;
+}
+@keyframes fade-in-indicator {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 0.45; transform: translateX(-50%) translateY(0); }
+}
+.scroll-indicator-line {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, transparent, var(--accent-light));
+  animation: scroll-line 1.8s ease-in-out infinite;
+}
+@keyframes scroll-line {
+  0%,100% { transform: scaleY(1); opacity: 0.5; }
+  50%      { transform: scaleY(0.5); opacity: 1; }
+}
+.scroll-indicator-text {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
+
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-eyebrow::after {
+  content: '';
+  height: 1px; width: 36px;
+  background: var(--gold); opacity: 0.5;
+}
+.section-title {
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--white);
+}
+
+/* ── ABOUT ── */
+#about {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+.about-left { display: flex; flex-direction: column; gap: 24px; }
+.about-body {
+  font-size: 1rem; color: var(--text);
+  line-height: 1.82; max-width: 520px;
+}
+.about-chips {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px;
+}
+.chip {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 15px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8rem; color: var(--text);
+  font-family: var(--font-mono);
+  transition: border-color var(--transition), color var(--transition);
+}
+.chip:hover { border-color: var(--accent-light); color: var(--accent-light); }
+.chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-light); }
+.about-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.about-images { position: relative; height: 420px; }
+.about-img-card {
+  position: absolute;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.about-img-card:hover { transform: scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.about-img-card:nth-child(1) { width: 68%; height: 78%; top: 0; right: 0; }
+.about-img-card:nth-child(2) { width: 52%; height: 60%; bottom: 0; left: 0; border-color: var(--navy-mid); }
+.about-img-placeholder {
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.72rem; font-family:var(--font-mono);
+  color:var(--muted); letter-spacing:0.08em;
+}
+.about-img-card:nth-child(1) .about-img-placeholder {
+  background: linear-gradient(135deg, #0f1e26 0%, #0d1a20 100%);
+}
+.about-img-card:nth-child(2) .about-img-placeholder {
+  background: linear-gradient(135deg, #101a2e 0%, #0e1628 100%);
+}
+
+/* ── MAP ── */
+#map-section { position: relative; overflow: hidden; }
+#map-section .map-outer {
+  position: relative;
+  background: #080d12;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  height: 520px;
+  cursor: grab;
+}
+#map-section .map-outer.grabbing { cursor: grabbing; }
+#map-d3-svg {
+  display: block;
+  width: 100%; height: 100%;
+  overflow: visible;
+}
+.map-controls {
+  position: absolute;
+  top: 18px; left: 20px;
+  z-index: 10;
+  display: flex; gap: 6px;
+}
+.map-btn {
+  width: 32px; height: 32px;
+  background: rgba(14,17,24,0.88);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1.1rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+.map-btn:hover { border-color: var(--accent-light); color: var(--white); }
+.map-status {
+  position: absolute;
+  top: 18px; right: 20px;
+  z-index: 10;
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(14,17,24,0.86);
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.map-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.map-legend {
+  position: absolute;
+  top: 58px; right: 20px;
+  z-index: 10;
+  display: flex; flex-direction: column; gap: 7px;
+  background: rgba(14,17,24,0.86);
+  padding: 9px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.map-legend-item {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem; color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.legend-dot-lived {
+  width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+  background: var(--accent-light);
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 3px rgba(42,143,166,0.28);
+}
+.legend-dot-visited {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  background: var(--gold);
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 2px rgba(196,140,42,0.28);
+}
+.map-label-row {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: clamp(20px,4vw,40px) clamp(20px,6vw,80px);
+  z-index: 5;
+  background: linear-gradient(to top, rgba(8,13,18,0.96) 0%, transparent 100%);
+  pointer-events: none;
+}
+.map-heading {
+  font-size: clamp(1.4rem, 3vw, 2.3rem);
+  font-weight: 700; letter-spacing: -0.02em; color: var(--white);
+}
+.map-sub {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--muted); letter-spacing: 0.1em; margin-top: 6px;
+}
+.map-zoom-label {
+  position: absolute; bottom: 14px; right: 20px;
+  z-index: 10; font-family: var(--font-mono);
+  font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em;
+}
+
+/* ── LOCATION TICKER ── */
+.loc-ticker-wrap {
+  background: var(--bg3);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image:         linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  pointer-events: none;
+  user-select: none;
+}
+.loc-ticker-row {
+  display: flex;
+  overflow: hidden;
+  padding: 10px 0;
+}
+.loc-ticker-row + .loc-ticker-row {
+  border-top: 1px solid var(--border);
+}
+.loc-ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  will-change: transform;
+  flex-shrink: 0;
+}
+.loc-ticker-track.lived-track {
+  animation: ticker-scroll 130s linear infinite;
+}
+.loc-ticker-track.visited-track {
+  animation: ticker-scroll 220s linear infinite;
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-row-label {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  display: flex; align-items: center;
+  padding: 0 14px;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 2;
+  pointer-events: none;
+}
+.ticker-row-label.lived   { color: var(--accent-light); }
+.ticker-row-label.visited { color: var(--gold); }
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 26px;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.ticker-item:last-child { border-right: none; }
+.ticker-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ticker-dot.lived   { background: var(--accent-light); box-shadow: 0 0 6px rgba(42,143,166,0.55); }
+.ticker-dot.visited { background: var(--gold);         box-shadow: 0 0 6px rgba(196,140,42,0.45); }
+.ticker-name {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ticker-name.lived   { color: var(--accent-light); }
+.ticker-name.visited { color: var(--gold); }
+
+/* ── PROJECTS ── */
+#projects { background: var(--bg); }
+.projects-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.projects-hint {
+  font-size: 0.78rem; color: var(--muted);
+  font-family: var(--font-mono); max-width: 240px; text-align: right;
+}
+
+/* ── 7-card bento: 4-col grid with explicit placements ── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(220px, auto);
+  gap: 16px;
+}
+/* Card 1: wide feature top-left */
+.bento-grid .project-card:nth-child(1) { grid-column: span 2; }
+/* Card 2 & 3: single cells top-right */
+/* Card 4: wide feature middle-left */
+.bento-grid .project-card:nth-child(4) { grid-column: span 2; }
+/* Card 5 & 6: single cells */
+/* Card 7: wide feature bottom */
+.bento-grid .project-card:nth-child(7) { grid-column: span 2; }
+
+/* Tablet: 2-col, featured cards stay wide */
+@media (max-width: 1100px) {
+  .bento-grid { grid-template-columns: repeat(2, 1fr); }
+  .bento-grid .project-card:nth-child(1),
+  .bento-grid .project-card:nth-child(4),
+  .bento-grid .project-card:nth-child(7) { grid-column: span 2; }
+}
+/* Mobile: single column */
+@media (max-width: 600px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-grid .project-card:nth-child(1),
+  .bento-grid .project-card:nth-child(4),
+  .bento-grid .project-card:nth-child(7) { grid-column: span 1; }
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  display: flex; flex-direction: column;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.project-card:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+.project-card:hover {
+  border-color: var(--accent-light);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.45), 0 0 0 1px var(--accent-light);
+}
+.project-card.featured { grid-column: span 2; }
+
+/* Reveal overlay on hover */
+.project-card .hover-reveal {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, rgba(14,17,24,0.96) 70%);
+  opacity: 0;
+  transition: opacity var(--transition);
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+}
+.project-card:hover .hover-reveal { opacity: 1; }
+.hover-reveal-content {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.hover-reveal-desc {
+  font-size: 0.85rem; color: var(--text); line-height: 1.55;
+}
+.hover-reveal-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.78rem; font-family: var(--font-mono);
+  color: var(--gold); letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: gap var(--transition);
+}
+.hover-reveal-cta:hover { gap: 10px; }
+
+.project-card-img {
+  height: 160px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.8rem;
+  position: relative; overflow: hidden;
+  flex-shrink: 0;
+  transition: height var(--transition);
+}
+.project-card.featured .project-card-img { height: 220px; }
+@media (max-width: 640px) {
+  .project-card.featured .project-card-img { height: 160px; }
+}
+
+.card-1-bg { background: linear-gradient(140deg, #0c2030 0%, #0e2a3a 60%, #0a1e2c 100%); }
+.card-2-bg { background: linear-gradient(140deg, #0d1228 0%, #121a38 60%, #0a1020 100%); }
+.card-3-bg { background: linear-gradient(140deg, #1a1808 0%, #241e0a 60%, #16140a 100%); }
+.card-4-bg { background: linear-gradient(140deg, #150e28 0%, #1e1435 60%, #110c22 100%); }
+.card-5-bg { background: linear-gradient(140deg, #0a1e14 0%, #0e2a1c 60%, #081a10 100%); }
+.card-6-bg { background: linear-gradient(140deg, #1e1208 0%, #2a1a0e 60%, #160e06 100%); }
+.card-7-bg { background: linear-gradient(140deg, #0e1a28 0%, #14243a 60%, #0a1620 100%); }
+
+.card-tag {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(14,17,24,0.72);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  color: var(--muted); letter-spacing: 0.07em;
+}
+.card-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+.project-card-body {
+  padding: 18px 20px 20px;
+  display: flex; flex-direction: column; gap: 8px; flex: 1;
+}
+.project-card-title { font-size: 0.98rem; font-weight: 600; color: var(--white); line-height: 1.3; }
+.project-card-sub { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.project-card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: auto; padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.spec-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.spec-pill {
+  font-size: 0.62rem; font-family: var(--font-mono);
+  color: var(--muted); padding: 2px 8px;
+  background: var(--bg3); border-radius: 999px;
+  border: 1px solid var(--border);
+}
+.view-link {
+  font-size: 0.7rem; font-family: var(--font-mono);
+  color: var(--accent-light); text-decoration: none;
+  letter-spacing: 0.05em;
+  display: flex; align-items: center; gap: 4px;
+  transition: color var(--transition), gap var(--transition);
+}
+.view-link:hover { color: var(--gold); gap: 8px; }
+
+/* ── EXPERIENCE ── */
+#experience {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.exp-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: clamp(40px, 6vw, 80px);
+}
+.exp-left { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
+.exp-count {
+  font-size: clamp(4rem, 7vw, 6rem);
+  font-weight: 700; letter-spacing: -0.04em;
+  color: var(--white); line-height: 1;
+}
+.exp-count span { color: var(--gold); }
+.exp-desc { font-size: 0.95rem; color: var(--text); line-height: 1.72; max-width: 220px; }
+.timeline { display: flex; flex-direction: column; }
+.timeline-item {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 32px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background var(--transition);
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -24px; top: 50%;
+  transform: translateY(-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background var(--transition);
+}
+.timeline-item:hover::before { background: var(--gold); }
+.timeline-year {
+  font-family: var(--font-mono);
+  font-size: 0.76rem; color: var(--muted);
+  padding-top: 5px; letter-spacing: 0.06em;
+}
+.timeline-role { font-size: 1.02rem; font-weight: 600; color: var(--white); }
+.timeline-company {
+  font-size: 0.86rem; color: var(--accent-light);
+  font-weight: 500; margin: 4px 0 10px;
+}
+.timeline-desc { font-size: 0.86rem; color: var(--text); line-height: 1.65; }
+
+/* ── EXPERIENCE SLIDESHOW ── */
+.exp-slideshow {
+  margin-top: 16px;
+  position: relative;
+  width: 100%;
+}
+.exp-slides-track-wrap {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+}
+.exp-slides-track {
+  display: flex;
+  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
+}
+.exp-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  position: relative;
+}
+.exp-slide-img {
+  width: 100%;
+  aspect-ratio: 16/7;
+  object-fit: cover;
+  display: block;
+  background: var(--surface);
+}
+.exp-slide-placeholder {
+  width: 100%;
+  aspect-ratio: 16/7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  background: var(--surface);
+}
+.exp-slide-caption {
+  padding: 10px 14px 12px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  border-top: 1px solid var(--border);
+}
+.exp-slide-caption strong {
+  color: var(--text);
+  font-weight: 500;
+}
+/* Controls row */
+.exp-slide-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.exp-slide-btn {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.exp-slide-btn:hover { border-color: var(--accent-light); color: var(--white); }
+.exp-slide-btn:disabled { opacity: 0.3; cursor: default; }
+.exp-slide-dots {
+  display: flex; gap: 5px; align-items: center;
+}
+.exp-slide-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background var(--transition), transform var(--transition);
+  cursor: pointer;
+}
+.exp-slide-dot.active {
+  background: var(--gold);
+  transform: scale(1.35);
+}
+.exp-slide-counter {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* ── EDUCATION ── */
+#education { background: var(--bg); }
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 48px;
+}
+@media (max-width: 900px) { .edu-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .edu-grid { grid-template-columns: 1fr; } }
+.edu-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.edu-card:hover {
+  border-color: var(--accent-light);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+}
+.edu-icon {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: rgba(30,107,127,0.12);
+  border: 1px solid rgba(42,143,166,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.edu-degree { font-size: 0.98rem; font-weight: 600; color: var(--white); line-height: 1.35; }
+.edu-school { font-size: 0.84rem; color: var(--gold); font-weight: 500; }
+.edu-year { font-size: 0.73rem; font-family: var(--font-mono); color: var(--muted); }
+
+/* ── RESUME CTA ── */
+#resume-cta {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  gap: 28px;
+  padding: clamp(60px, 10vw, 100px) clamp(20px, 6vw, 80px);
+}
+.cta-super {
+  font-family: var(--font-mono);
+  font-size: 0.72rem; letter-spacing: 0.18em;
+  color: var(--muted); text-transform: uppercase;
+}
+.cta-heading {
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
+  font-weight: 700; letter-spacing: -0.03em;
+  line-height: 1.05; color: var(--white); max-width: 680px;
+}
+.cta-heading em { font-style: normal; color: var(--gold); }
+.cta-sub { font-size: 1rem; color: var(--text); max-width: 420px; line-height: 1.72; }
+.cta-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.btn-resume {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--accent);
+  color: var(--white); padding: 15px 34px;
+  border-radius: 999px; font-weight: 600; font-size: 0.98rem;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.btn-resume:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 36px clamp(20px, 6vw, 80px);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 0.78rem; color: var(--muted); font-family: var(--font-mono); }
+.footer-links { display: flex; gap: 22px; }
+.footer-links a {
+  font-size: 0.78rem; color: var(--muted); text-decoration: none;
+  font-family: var(--font-mono);
+  transition: color var(--transition);
+}
+.footer-links a:hover { color: var(--gold); }
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+@media (max-width: 900px) {
+  .hero-content { grid-template-columns: 1fr; gap: 28px; padding-bottom: 16px; }
+  .hero-right { align-items: flex-start; }
+  .hero-nameplate-text { font-size: clamp(3.5rem, 14vw, 7rem); }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-images { height: 320px; }
+  .exp-grid { grid-template-columns: 1fr; gap: 32px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+  .timeline-item::before { display: none; }
+  nav { gap: 16px; padding: 10px 18px; }
+  .nav-links { gap: 14px; }
+}
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .projects-header { flex-direction: column; align-items: flex-start; }
+  .projects-hint { text-align: left; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+
+/* ── PROJECT MODAL ── */
+#project-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(8, 11, 18, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+#project-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#project-modal {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 501;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-radius: 24px 24px 0 0;
+  max-height: 92vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translateY(100%);
+  transition: transform 0.42s cubic-bezier(0.32,0.72,0,1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+#project-modal::-webkit-scrollbar { width: 4px; }
+#project-modal::-webkit-scrollbar-track { background: transparent; }
+#project-modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+#project-modal.open {
+  transform: translateY(0);
+}
+
+/* Drag handle */
+.modal-handle {
+  width: 40px; height: 4px;
+  background: var(--border);
+  border-radius: 999px;
+  margin: 16px auto 0;
+  flex-shrink: 0;
+}
+
+/* Hero banner */
+.modal-hero {
+  position: relative;
+  width: 100%;
+  height: clamp(180px, 28vw, 280px);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.modal-hero-bg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(4rem, 8vw, 7rem);
+}
+.modal-hero-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, var(--bg2) 100%);
+}
+.modal-hero-tag {
+  position: absolute;
+  bottom: 20px; left: 32px;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(14,17,24,0.82);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--muted); letter-spacing: 0.09em;
+}
+.modal-hero-tag-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+}
+
+/* Close button */
+.modal-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 36px; height: 36px;
+  background: rgba(14,17,24,0.82);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text);
+  font-size: 1.1rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+  z-index: 10;
+}
+.modal-close:hover { border-color: var(--accent-light); color: var(--white); background: var(--surface); }
+
+/* Body content */
+.modal-body {
+  padding: 8px clamp(20px, 5vw, 48px) 60px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.modal-title-block { display: flex; flex-direction: column; gap: 6px; }
+.modal-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  line-height: 1.1;
+}
+.modal-year {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.modal-action-row {
+  display: flex; gap: 10px; flex-shrink: 0; padding-top: 6px;
+}
+.modal-action-btn {
+  width: 36px; height: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--transition), color var(--transition);
+}
+.modal-action-btn:hover { border-color: var(--accent-light); color: var(--white); }
+
+/* Divider */
+.modal-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 24px 0;
+}
+
+/* Section label */
+.modal-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ── MODAL META OVERVIEW STRIP ── */
+.modal-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.modal-meta-row {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+}
+.modal-meta-row-top    { grid-template-columns: minmax(80px, auto) minmax(100px, auto) 1fr; }
+.modal-meta-row-bottom { grid-template-columns: 1fr; }
+@media (max-width: 560px) {
+  .modal-meta-row-top { grid-template-columns: 1fr 1fr; }
+}
+.modal-meta-cell {
+  background: var(--bg3);
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.modal-meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.57rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.modal-meta-value {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+}
+.modal-meta-value.accent { color: var(--gold); }
+/* Team row: display members inline with separator dots */
+.modal-meta-team {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+.modal-meta-team-member {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.modal-meta-team-member:not(:last-child)::after {
+  content: '·';
+  color: var(--border);
+  font-weight: 400;
+}
+
+/* Body text */
+.modal-text {
+  font-size: 0.97rem;
+  color: var(--text);
+  line-height: 1.82;
+  margin-bottom: 24px;
+}
+
+/* Image grid */
+.modal-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+.modal-img-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  aspect-ratio: 16/9;
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-family: var(--font-mono);
+  color: var(--muted); letter-spacing: 0.06em;
+  transition: border-color var(--transition);
+}
+.modal-img-card:hover { border-color: var(--accent-light); }
+.modal-img-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+}
+
+/* Video embed */
+.modal-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  margin: 16px 0 24px;
+}
+.modal-video iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+.modal-video-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px;
+  color: var(--muted);
+  font-family: var(--font-mono); font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+.modal-video-placeholder-icon { font-size: 2.4rem; opacity: 0.4; }
+
+/* Tech tags */
+.modal-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 6px;
+}
+.modal-tag {
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text);
+  background: var(--surface);
+  letter-spacing: 0.04em;
+}
+
+/* Links section */
+.modal-links {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 8px;
+}
+.modal-link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 0.82rem; font-weight: 500;
+  text-decoration: none;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  border: 1px solid var(--border);
+  color: var(--white);
+  background: var(--surface);
+}
+.modal-link-btn:hover {
+  border-color: var(--accent-light);
+  background: var(--bg3);
+  transform: translateY(-1px);
+}
+.modal-link-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.modal-link-btn.primary:hover {
+  background: var(--accent-light);
+  border-color: var(--accent-light);
+}
+
+/* ── ACTIVE NAV INDICATOR ── */
+.section-marker { position: relative; }
+</style>
+</head>
+<body>
+
+<!-- KEYBOARD SHORTCUT TOAST -->
+<div id="shortcut-toast">
+  Press <kbd>1</kbd>–<kbd>5</kbd> to jump sections &nbsp;·&nbsp; <kbd>R</kbd> for Resume &nbsp;·&nbsp; <kbd>Esc</kbd> to top
+</div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#hero">
+    <div class="nav-logo-icon">NY</div>
+    Nicholas Yap
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about"       data-section="about">About</a></li>
+    <li><a href="#map-section" data-section="map-section">Map</a></li>
+    <li><a href="#projects"    data-section="projects">Work</a></li>
+    <li><a href="#experience"  data-section="experience">Experience</a></li>
+    <li><a href="#resume-cta"  data-section="resume-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">Available for Opportunities</div>
+      <h1 class="hero-headline">
+        Mechanical &amp; Mechatronics<br />
+        Engineer based<br />
+        in Vancouver
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-bio">
+        I design and build mechatronics systems — from self-balancing robots and embedded firmware to mechanical CAD and control theory. Turning engineering fundamentals into working hardware.
+      </p>
+      <div class="hero-btn-row">
+        <a class="btn-primary" href="#about">
+          <span class="arrow" style="font-size:0.8rem;">↓</span>
+          Scroll down for more
+        </a>
+        <a class="btn-secondary" href="#projects">Skip to my projects →</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-nameplate">
+    <div class="hero-nameplate-text">Yap</div>
+  </div>
+
+  <!-- Subtle animated scroll hint -->
+  <div class="hero-scroll-indicator" aria-hidden="true">
+    <div class="scroll-indicator-line"></div>
+    <span class="scroll-indicator-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="section-eyebrow reveal">About</div>
+      <h2 class="section-title reveal reveal-delay-1">Where Ideas Grow<br />Into Meaningful Work</h2>
+      <p class="about-body reveal reveal-delay-2">
+        I'm a Mechatronics Engineering graduate from UBC with a passion for building complete systems — where mechanical design, embedded firmware, control theory, and software all come together. I thrive at the intersection of disciplines, whether that's tuning a PID controller at 2am or CADing a chassis that has to survive a dozen falls.
+      </p>
+      <div class="about-chips reveal reveal-delay-3">
+        <div class="chip"><span class="chip-dot"></span> Systems Thinking</div>
+        <div class="chip"><span class="chip-dot"></span> Rapid Prototyping</div>
+        <div class="chip"><span class="chip-dot"></span> First-Principles Design</div>
+        <div class="chip"><span class="chip-dot"></span> Deep Focus</div>
+      </div>
+      <div class="about-cta reveal reveal-delay-4">
+        <a class="btn-primary" href="#projects">Learn More →</a>
+        <a class="btn-secondary" href="#resume-cta">Contact Me</a>
+      </div>
+    </div>
+    <div class="about-images reveal reveal-delay-2">
+      <div class="about-img-card">
+        <div class="about-img-placeholder">[ FIELD PHOTO ]</div>
+      </div>
+      <div class="about-img-card">
+        <div class="about-img-placeholder">[ LAB PHOTO ]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<div id="map-section">
+  <div class="map-outer" id="mapOuter">
+
+    <!-- D3 SVG renders here -->
+    <svg id="map-d3-svg"></svg>
+
+    <!-- Tooltip -->
+    <div id="map-tooltip" style="
+      position:absolute; pointer-events:none; z-index:20;
+      background:rgba(14,17,24,0.96); border:1px solid #243048;
+      border-radius:10px; padding:10px 14px; min-width:160px;
+      opacity:0; transition:opacity 0.16s ease;
+      transform:translate(-50%,-100%);
+      font-family:'Space Grotesk',sans-serif;
+    "></div>
+
+    <!-- Controls -->
+    <div class="map-controls">
+      <button class="map-btn" id="mapZoomIn"  title="Zoom in">+</button>
+      <button class="map-btn" id="mapZoomOut" title="Zoom out">−</button>
+      <button class="map-btn" id="mapReset"   title="Reset view" style="font-size:1rem;">↺</button>
+    </div>
+
+    <!-- Status badge -->
+    <div class="map-status">
+      <span class="map-status-dot"></span>
+      MAP STATUS: ACTIVE &nbsp;|&nbsp; <span id="map-loc-count">7 LOCATIONS</span>
+    </div>
+
+    <!-- Legend -->
+    <div class="map-legend">
+      <div class="map-legend-item"><span class="legend-dot-lived"></span>LIVED</div>
+      <div class="map-legend-item"><span class="legend-dot-visited"></span>VISITED</div>
+    </div>
+
+    <!-- Zoom readout -->
+    <div class="map-zoom-label" id="mapZoomLabel">ZOOM 1.0×</div>
+
+    <!-- Bottom label -->
+    <div class="map-label-row">
+      <h2 class="map-heading reveal">World Map of Places I've Lived + Stayed</h2>
+      <div class="map-sub">SCROLL TO ZOOM &nbsp;·&nbsp; DRAG TO PAN &nbsp;·&nbsp; HOVER PINS FOR DETAILS</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LOCATION TICKER -->
+<div class="loc-ticker-wrap" aria-hidden="true">
+  <!-- Row 1: Lived -->
+  <div class="loc-ticker-row" style="position:relative;">
+    <div class="loc-ticker-track lived-track" id="locTickerLived"></div>
+  </div>
+  <!-- Row 2: Visited -->
+  <div class="loc-ticker-row" style="position:relative;">
+    <div class="loc-ticker-track visited-track" id="locTickerVisited"></div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="section-eyebrow reveal">Interactive Concept 7 — Robotics</div>
+      <h2 class="section-title reveal reveal-delay-1">Projects</h2>
+    </div>
+    <p class="projects-hint reveal reveal-delay-2">Hover each card · Click to view blueprint</p>
+  </div>
+
+  <div class="bento-grid">
+
+    <!-- Card 1 — Wide featured: Grass -->
+    <div class="project-card reveal" tabindex="0" data-project="grass">
+      <div class="project-card-img" style="background:linear-gradient(140deg,#081a0e 0%,#0c2414 60%,#061208 100%);">
+        <div class="card-tag"><span class="card-tag-dot"></span> ROBOTICS · CONTROL SYSTEMS</div>
+        🤖
+      </div>
+      <div class="hover-reveal">
+        <div class="hover-reveal-content">
+          <div class="hover-reveal-desc">Bipedal self-balancing robot with cascaded PID control, dual-core ESP32, IMU tilt estimation, and wireless BLE control.</div>
+          <span class="hover-reveal-cta">View Full Blueprint →</span>
+        </div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-title">Self-Balancing Wheeled Bipedal Robot</div>
+        <div class="project-card-sub">Prototype: Grass — MECH 421/423 Capstone</div>
+        <div class="project-card-footer">
+          <div class="spec-row"><span class="spec-pill">ESP32</span><span class="spec-pill">Cascaded PID</span><span class="spec-pill">BLE</span></div>
+          <span class="view-link">Blueprint →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="quantum">
+      <div class="project-card-img card-2-bg">
+        <div class="card-tag"><span class="card-tag-dot"></span> OPTOELECTRONICS</div>
+        🔬
+      </div>
+      <div class="hover-reveal">
+        <div class="hover-reveal-content">
+          <div class="hover-reveal-desc">Cryogenic logic gate arrays operating at 15mK for quantum computation research.</div>
+          <span class="hover-reveal-cta">View Full Blueprint →</span>
+        </div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-title">Quantum Computation Array</div>
+        <div class="project-card-sub">Cryogenic Logic Cluster Node</div>
+        <div class="project-card-footer">
+          <div class="spec-row"><span class="spec-pill">Spec Node #4</span></div>
+          <span class="view-link">Blueprint →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="project-card reveal reveal-delay-2" tabindex="0" data-project="exo">
+      <div class="project-card-img card-3-bg">
+        <div class="card-tag"><span class="card-tag-dot"></span> ROBOTICS · ACTUATION</div>
+        🤖
+      </div>
+      <div class="hover-reveal">
+        <div class="hover-reveal-content">
+          <div class="hover-reveal-desc">Force-controlled exoskeletal limbs with impedance modulation for rehabilitation applications.</div>
+          <span class="hover-reveal-cta">View Full Blueprint →</span>
+        </div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-title">Exo-Skeletal Kinetic Actuator</div>
+        <div class="project-card-sub">Precision Bio-Mechanical Force Output</div>
+        <div class="project-card-footer">
+          <div class="spec-row"><span class="spec-pill">Spec Node #6</span></div>
+          <span class="view-link">Blueprint →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 — Wide featured -->
+    <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="plasma">
+      <div class="project-card-img card-4-bg">
+        <div class="card-tag"><span class="card-tag-dot"></span> THERMAL PHYSICS</div>
+        ⚡
+      </div>
+      <div class="hover-reveal">
+        <div class="hover-reveal-content">
+          <div class="hover-reveal-desc">Toroidal magnetic containment grid sustaining 10keV plasma for fusion-adjacent research.</div>
+          <span class="hover-reveal-cta">View Full Blueprint →</span>
+        </div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-title">High-Density Plasma Initiator</div>
+        <div class="project-card-sub">Magnetic Field Plasma Containment Grid</div>
+        <div class="project-card-footer">
+          <div class="spec-row"><span class="spec-pill">Spec Node #8</span></div>
+          <span class="view-link">Blueprint →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="project-card reveal reveal-delay-2" tabindex="0" data-project="nav">
+      <div class="project-card-img card-5-bg">
+        <div class="card-tag"><span class="card-tag-dot"></span> GNC · NAVIGATION</div>
+        🛰️
+      </div>
+      <div class="hover-reveal">
+        <div class="hover-reveal-content">
+          <div class="hover-reveal-desc">Star-tracker and IMU fusion for attitude determination in LEO with <0.01° pointing error.</div>
+          <span class="hover-reveal-cta">View Full Blueprint →</span>
+        </div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-title">Stellar Navigation Core</div>
+        <div class="project-card-sub">LEO Attitude Determination System</div>
+        <div class="project-card-footer">
+          <div class="spec-row"><span class="spec-pill">Spec Node #10</span></div>
+          <span class="view-link">Blueprint →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="project-card reveal reveal-delay-3" tabindex="0" data-project="soft">
+      <div class="project-card-img card-6-bg">
+        <div class="card-tag"><span class="card-tag-dot"></span> SOFT ROBOTICS</div>
+        🦾
+      </div>
+      <div class="hover-reveal">
+        <div class="hover-reveal-content">
+          <div class="hover-reveal-desc">Pneumatically actuated soft gripper with tactile pressure sensing for delicate manipulation.</div>
+          <span class="hover-reveal-cta">View Full Blueprint →</span>
+        </div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-title">Adaptive Soft Gripper</div>
+        <div class="project-card-sub">Pneumatic Tactile Manipulation</div>
+        <div class="project-card-footer">
+          <div class="spec-row"><span class="spec-pill">Spec Node #12</span></div>
+          <span class="view-link">Blueprint →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7 — Wide featured bottom -->
+    <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="fusion">
+      <div class="project-card-img card-7-bg">
+        <div class="card-tag"><span class="card-tag-dot"></span> ENERGY · SYSTEMS</div>
+        🌊
+      </div>
+      <div class="hover-reveal">
+        <div class="hover-reveal-content">
+          <div class="hover-reveal-desc">Compact wave energy converter with real-time adaptive impedance matching to maximize power capture.</div>
+          <span class="hover-reveal-cta">View Full Blueprint →</span>
+        </div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-title">Wave Energy Converter</div>
+        <div class="project-card-sub">Adaptive Ocean Power Capture System</div>
+        <div class="project-card-footer">
+          <div class="spec-row"><span class="spec-pill">Spec Node #14</span><span class="spec-pill">Python + MATLAB</span></div>
+          <span class="view-link">Blueprint →</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="exp-grid">
+    <div class="exp-left">
+      <div class="section-eyebrow reveal">Career</div>
+      <div class="exp-count reveal reveal-delay-1">7<span>+</span></div>
+      <p class="exp-desc reveal reveal-delay-2">Years building at the intersection of software, hardware, and physics.</p>
+    </div>
+    <div class="timeline">
+
+      <!-- Job 1 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-year">2023 — Present</div>
+        <div>
+          <div class="timeline-role">Lead Systems Engineer</div>
+          <div class="timeline-company">Orbital Dynamics Lab</div>
+          <div class="timeline-desc">Architected the onboard autonomy stack for a 3U CubeSat mission. Led a cross-disciplinary team of 8 across propulsion, GNC, and embedded software.</div>
+          <div class="exp-slideshow" data-slideshow>
+            <div class="exp-slides-track-wrap">
+              <div class="exp-slides-track">
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ CubeSat Integration Lab ]</div>
+                  <div class="exp-slide-caption"><strong>CubeSat Assembly</strong> — 3U structure integration with GNC module and power distribution bus.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Propulsion Test Stand ]</div>
+                  <div class="exp-slide-caption"><strong>Thruster Test Campaign</strong> — Cold-gas micro-thruster characterisation at 10⁻⁵ Torr vacuum.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Mission Control Dashboard ]</div>
+                  <div class="exp-slide-caption"><strong>Ground Station UI</strong> — Real-time telemetry dashboard built with Rust + WebSockets.</div>
+                </div>
+              </div>
+            </div>
+            <div class="exp-slide-controls">
+              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
+              <button class="exp-slide-btn next" aria-label="Next">›</button>
+              <div class="exp-slide-dots"></div>
+              <span class="exp-slide-counter">1 / 3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-year">2022 — 2023</div>
+        <div>
+          <div class="timeline-role">GNC Software Engineer (Contract)</div>
+          <div class="timeline-company">Reaction Engines Ltd · Abingdon, UK</div>
+          <div class="timeline-desc">Contributed to flight software for SABRE hybrid air-breathing rocket engine testbed. Developed real-time pre-cooler control loops in C running at 2kHz with hard deadline guarantees.</div>
+          <div class="exp-slideshow" data-slideshow>
+            <div class="exp-slides-track-wrap">
+              <div class="exp-slides-track">
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Pre-Cooler Heat Exchanger ]</div>
+                  <div class="exp-slide-caption"><strong>Pre-Cooler Assembly</strong> — Frost-free heat exchanger capable of cooling airflow from 1000°C to −150°C in under 1/100th of a second.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Control Loop Validation HIL ]</div>
+                  <div class="exp-slide-caption"><strong>HIL Rig Validation</strong> — Hardware-in-the-loop testing of 2kHz thermal control loops against simulated flight profiles.</div>
+                </div>
+              </div>
+            </div>
+            <div class="exp-slide-controls">
+              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
+              <button class="exp-slide-btn next" aria-label="Next">›</button>
+              <div class="exp-slide-dots"></div>
+              <span class="exp-slide-counter">1 / 2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job 3 -->
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-year">2021 — 2022</div>
+        <div>
+          <div class="timeline-role">Robotics Research Engineer</div>
+          <div class="timeline-company">ETH Zürich · Autonomous Systems Lab</div>
+          <div class="timeline-desc">Developed force-controlled exoskeletal limbs for rehabilitation robotics. Published 2 peer-reviewed papers on impedance control under constraint.</div>
+          <div class="exp-slideshow" data-slideshow>
+            <div class="exp-slides-track-wrap">
+              <div class="exp-slides-track">
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Exoskeleton Prototype v2 ]</div>
+                  <div class="exp-slide-caption"><strong>Leg Exoskeleton Prototype</strong> — 7-DOF force-controlled frame with embedded strain gauges.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Clinical Trial Setup ]</div>
+                  <div class="exp-slide-caption"><strong>Clinical Validation</strong> — Patient-use trials at Balgrist University Hospital, Zürich.</div>
+                </div>
+              </div>
+            </div>
+            <div class="exp-slide-controls">
+              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
+              <button class="exp-slide-btn next" aria-label="Next">›</button>
+              <div class="exp-slide-dots"></div>
+              <span class="exp-slide-counter">1 / 2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job 4 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-year">2020 — 2021</div>
+        <div>
+          <div class="timeline-role">Embedded Systems Engineer (Intern)</div>
+          <div class="timeline-company">MDA Space · Richmond, BC</div>
+          <div class="timeline-desc">Worked on fault-detection and isolation software for the Canadarm3 joint actuators. Implemented FDIR state machines in Ada on a VxWorks RTOS environment for space-qualified hardware.</div>
+          <div class="exp-slideshow" data-slideshow>
+            <div class="exp-slides-track-wrap">
+              <div class="exp-slides-track">
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Canadarm3 Joint Assembly ]</div>
+                  <div class="exp-slide-caption"><strong>Actuator Joint Module</strong> — Flight-heritage joint assembly used for Gateway lunar station robotic operations.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ FDIR State Machine Diagram ]</div>
+                  <div class="exp-slide-caption"><strong>FDIR Logic</strong> — Fault detection state machine covering 14 failure modes across 6 joint axes.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ VxWorks Test Bench ]</div>
+                  <div class="exp-slide-caption"><strong>RTOS Test Environment</strong> — VxWorks bench running Ada FDIR code against injected fault sequences.</div>
+                </div>
+              </div>
+            </div>
+            <div class="exp-slide-controls">
+              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
+              <button class="exp-slide-btn next" aria-label="Next">›</button>
+              <div class="exp-slide-dots"></div>
+              <span class="exp-slide-counter">1 / 3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job 5 -->
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-year">2019 — 2020</div>
+        <div>
+          <div class="timeline-role">Propulsion Engineer</div>
+          <div class="timeline-company">Advanced Concepts Group, UBC</div>
+          <div class="timeline-desc">Designed and tested a cold-gas micro-thruster achieving 12mN thrust at 0.8W power budget. Competed in IREC 2020, placing 2nd in the 10,000ft altitude category.</div>
+          <div class="exp-slideshow" data-slideshow>
+            <div class="exp-slides-track-wrap">
+              <div class="exp-slides-track">
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Thruster CAD Cross-Section ]</div>
+                  <div class="exp-slide-caption"><strong>Thruster Design</strong> — Nozzle geometry optimised for 12mN at 0.8W via COMSOL flow simulation.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ IREC Launch Vehicle ]</div>
+                  <div class="exp-slide-caption"><strong>IREC 2020 Competitor</strong> — 10,000ft apogee target with active roll control via cold-gas thrusters.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Vacuum Chamber Test ]</div>
+                  <div class="exp-slide-caption"><strong>Vacuum Performance Test</strong> — Characterisation at simulated 30km altitude pressure conditions.</div>
+                </div>
+              </div>
+            </div>
+            <div class="exp-slide-controls">
+              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
+              <button class="exp-slide-btn next" aria-label="Next">›</button>
+              <div class="exp-slide-dots"></div>
+              <span class="exp-slide-counter">1 / 3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job 6 -->
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-year">2018 — 2019</div>
+        <div>
+          <div class="timeline-role">Mechanical Design Intern</div>
+          <div class="timeline-company">Ballard Power Systems · Burnaby, BC</div>
+          <div class="timeline-desc">Supported structural design and thermal analysis for next-generation hydrogen fuel cell stacks. Ran FEA simulations in ANSYS to validate bipolar plate compression under operating temperatures and pressures.</div>
+          <div class="exp-slideshow" data-slideshow>
+            <div class="exp-slides-track-wrap">
+              <div class="exp-slides-track">
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ Fuel Cell Stack Assembly ]</div>
+                  <div class="exp-slide-caption"><strong>Stack Assembly</strong> — 200-cell hydrogen PEM fuel cell stack rated at 85kW continuous output.</div>
+                </div>
+                <div class="exp-slide">
+                  <div class="exp-slide-placeholder">[ ANSYS Thermal FEA Result ]</div>
+                  <div class="exp-slide-caption"><strong>Thermal FEA</strong> — Bipolar plate temperature distribution under 80°C operating condition with non-uniform flow.</div>
+                </div>
+              </div>
+            </div>
+            <div class="exp-slide-controls">
+              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
+              <button class="exp-slide-btn next" aria-label="Next">›</button>
+              <div class="exp-slide-dots"></div>
+              <span class="exp-slide-counter">1 / 2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-eyebrow reveal">Academic Background</div>
+  <h2 class="section-title reveal reveal-delay-1">Education</h2>
+  <div class="edu-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="edu-card reveal reveal-delay-1">
+      <div class="edu-icon">🎓</div>
+      <div class="edu-degree">M.Eng. Aerospace Engineering</div>
+      <div class="edu-school">University of British Columbia</div>
+      <div class="edu-year">2021 — Thesis: Adaptive Guidance for Micro-Launchers</div>
+    </div>
+    <div class="edu-card reveal reveal-delay-2">
+      <div class="edu-icon">⚙️</div>
+      <div class="edu-degree">B.Sc. Mechanical Engineering</div>
+      <div class="edu-school">McGill University</div>
+      <div class="edu-year">2019 — Minor: Applied Mathematics</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME CTA -->
+<section id="resume-cta">
+  <div class="cta-super reveal">Let's Build Something</div>
+  <h2 class="cta-heading reveal reveal-delay-1">Ready to work<br />with <em>purpose?</em></h2>
+  <p class="cta-sub reveal reveal-delay-2">Whether you're hiring, collaborating, or just curious — reach out. I'm always open to interesting problems.</p>
+  <div class="cta-row reveal reveal-delay-3">
+    <a class="btn-resume" id="resumeBtn" href="#">↓ Download Resume</a>
+    <a class="btn-secondary" href="mailto:nicholas.yap03@gmail.com">Get in Touch →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 Nicholas Yap — Built with intent.</div>
+  <div class="footer-links">
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Twitter</a>
+    <a href="#">Email</a>
+  </div>
+</footer>
+
+<!-- PROJECT MODAL BACKDROP -->
+<div id="project-modal-backdrop" aria-hidden="true"></div>
+
+<!-- PROJECT MODAL -->
+<div id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-text">
+  <div class="modal-handle"></div>
+
+  <!-- Hero banner -->
+  <div class="modal-hero" id="modal-hero">
+    <div class="modal-hero-bg" id="modal-hero-bg"></div>
+    <div class="modal-hero-gradient"></div>
+    <div class="modal-hero-tag" id="modal-hero-tag">
+      <span class="modal-hero-tag-dot"></span>
+      <span id="modal-tag-text"></span>
+    </div>
+  </div>
+
+  <!-- Close -->
+  <button class="modal-close" id="modal-close-btn" aria-label="Close">✕</button>
+
+  <!-- Body -->
+  <div class="modal-body">
+
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <h2 class="modal-title" id="modal-title-text"></h2>
+        <div class="modal-year" id="modal-year"></div>
+      </div>
+      <div class="modal-action-row" id="modal-action-row"></div>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <!-- Meta overview strip: Year · Duration · Role · Team -->
+    <div class="modal-meta" id="modal-meta" style="display:none;"></div>
+
+    <!-- Overview -->
+    <div class="modal-section-label">Overview</div>
+    <p class="modal-text" id="modal-overview"></p>
+
+    <!-- Motivation -->
+    <div class="modal-section-label">Motivation</div>
+    <p class="modal-text" id="modal-motivation"></p>
+
+    <!-- Extra images -->
+    <div id="modal-images-wrap" style="display:none;">
+      <div class="modal-section-label">Gallery</div>
+      <div class="modal-images" id="modal-images"></div>
+    </div>
+
+    <!-- Video -->
+    <div id="modal-video-wrap" style="display:none;">
+      <div class="modal-section-label">Demo</div>
+      <div class="modal-video" id="modal-video"></div>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <!-- Tech stack -->
+    <div id="modal-tags-wrap" style="display:none;">
+      <div class="modal-section-label">Tech Stack</div>
+      <div class="modal-tags" id="modal-tags"></div>
+      <div style="height:20px;"></div>
+    </div>
+
+    <!-- Links -->
+    <div id="modal-links-wrap" style="display:none;">
+      <div class="modal-section-label">Links</div>
+      <div class="modal-links" id="modal-links"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+/* ── SCROLL REVEAL ── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ── ACTIVE NAV ── */
+const sections = ['about','map-section','projects','experience','resume-cta'];
+const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+const navEl    = document.getElementById('main-nav');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.dataset.section === e.target.id);
+      });
+    }
+  });
+}, { threshold: 0.35 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
+
+window.addEventListener('scroll', () => {
+  navEl.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ── D3 WORLD MAP ── */
+(function initMap() {
+
+  /* ---- Location data ---- */
+  const LOCATIONS = [
+    // ── LIVED ──
+    { id:1,  name:'Vancouver, Canada',       type:'lived',   lon:-123.1207, lat:49.2827,   note:'Stayed for 6+ years' },
+    { id:2,  name:'Edmonton, Canada',        type:'lived',   lon:-113.4909, lat:53.5461,   note:'Stayed for 9 years' },
+    { id:3,  name:'Toronto, Canada',         type:'lived',   lon:-79.3832,  lat:43.6532,   note:'Stayed for 4 months' },
+    { id:4,  name:'Oslo, Norway',            type:'lived',   lon:10.7522,   lat:59.9139,   note:'Stayed for 1.5 years' },
+    { id:5,  name:'Seoul, South Korea',      type:'lived',   lon:126.9780,  lat:37.5665,   note:'Stayed for 1 year' },
+    { id:6,  name:'Al Khobar, Saudi Arabia', type:'lived',   lon:50.2083,   lat:26.2172,   note:'Stayed for 2.5 years' },
+    { id:7,  name:'Kuwait City, Kuwait',     type:'lived',   lon:47.9783,   lat:29.3759,   note:'Stayed for 2 years' },
+
+    // ── VISITED: Canada ──
+    { id:8,  name:'London, UK',              type:'visited', lon:-0.1276,   lat:51.5074,   note:'Travels' },
+    { id:9,  name:'Montreal, Canada',        type:'visited', lon:-73.5673,  lat:45.5017,   note:'Travels' },
+    { id:10, name:'Quebec City, Canada',     type:'visited', lon:-71.2080,  lat:46.8139,   note:'Travels' },
+    { id:11, name:'Calgary, Canada',         type:'visited', lon:-114.0719, lat:51.0447,   note:'Travels' },
+    { id:12, name:'Ottawa, Canada',          type:'visited', lon:-75.6972,  lat:45.4215,   note:'Travels' },
+    { id:13, name:'Revelstoke, Canada',      type:'visited', lon:-118.1957, lat:50.9981,   note:'Travels' },
+    { id:14, name:'Halifax, Canada',         type:'visited', lon:-63.5752,  lat:44.6488,   note:'Travels' },
+    { id:15, name:'Pelee Island, Canada',    type:'visited', lon:-82.6667,  lat:41.7400,   note:'Travels' },
+    { id:16, name:'Salmon Arm, Canada',      type:'visited', lon:-119.2714, lat:50.6965,   note:'Travels' },
+    { id:17, name:'Charlottetown, Canada',   type:'visited', lon:-63.1311,  lat:46.2382,   note:'Travels' },
+    { id:18, name:'Fredericton, Canada',     type:'visited', lon:-66.6431,  lat:45.9636,   note:'Travels' },
+    { id:19, name:'Moncton, Canada',         type:'visited', lon:-64.7782,  lat:46.0878,   note:'Travels' },
+    { id:20, name:'Cape Breton Island, Canada', type:'visited', lon:-60.7167, lat:46.1500, note:'Travels' },
+    { id:21, name:'Kamloops, Canada',        type:'visited', lon:-120.3273, lat:50.6745,   note:'Travels' },
+    { id:22, name:'Hamilton, Canada',        type:'visited', lon:-79.8711,  lat:43.2557,   note:'Travels' },
+    { id:23, name:'Victoria, Canada',        type:'visited', lon:-123.3656, lat:48.4284,   note:'Travels' },
+    { id:24, name:'Nanaimo, Canada',         type:'visited', lon:-123.9401, lat:49.1659,   note:'Travels' },
+
+    // ── VISITED: USA ──
+    { id:25, name:'Seattle, US',             type:'visited', lon:-122.3321, lat:47.6062,   note:'Travels' },
+    { id:26, name:'San Francisco, US',       type:'visited', lon:-122.4194, lat:37.7749,   note:'Travels' },
+    { id:27, name:'Los Angeles, US',         type:'visited', lon:-118.2437, lat:34.0522,   note:'Travels' },
+    { id:28, name:'Albuquerque, US',         type:'visited', lon:-106.6504, lat:35.0844,   note:'Travels' },
+    { id:29, name:'Las Vegas, US',           type:'visited', lon:-115.1398, lat:36.1699,   note:'Travels' },
+    { id:30, name:'Houston, US',             type:'visited', lon:-95.3698,  lat:29.7604,   note:'Travels' },
+    { id:31, name:'Boston, US',              type:'visited', lon:-71.0589,  lat:42.3601,   note:'Travels' },
+    { id:32, name:'New York City, US',       type:'visited', lon:-74.0060,  lat:40.7128,   note:'Travels' },
+    { id:33, name:'Washington D.C., US',     type:'visited', lon:-77.0369,  lat:38.9072,   note:'Travels' },
+    { id:34, name:'Alaska, US',              type:'visited', lon:-149.9003, lat:61.2181,   note:'Travels' },
+
+    // ── VISITED: South America ──
+    { id:35, name:'Buenos Aires, Argentina', type:'visited', lon:-58.3816,  lat:-34.6037,  note:'Travels' },
+    { id:36, name:'Bahia Blanca, Argentina', type:'visited', lon:-62.2663,  lat:-38.7196,  note:'Travels' },
+    { id:37, name:'Mendoza, Argentina',      type:'visited', lon:-68.8272,  lat:-32.8895,  note:'Travels' },
+    { id:38, name:'Iguazu Falls, Argentina', type:'visited', lon:-54.4423,  lat:-25.6953,  note:'Travels' },
+
+    // ── VISITED: Scandinavia ──
+    { id:39, name:'Bergen, Norway',          type:'visited', lon:5.3221,    lat:60.3913,   note:'Travels' },
+    { id:40, name:'Tromsø, Norway',          type:'visited', lon:18.9553,   lat:69.6496,   note:'Travels' },
+    { id:41, name:'Kristiansand, Norway',    type:'visited', lon:7.9951,    lat:58.1467,   note:'Travels' },
+    { id:42, name:'Copenhagen, Denmark',     type:'visited', lon:12.5683,   lat:55.6761,   note:'Travels' },
+    { id:43, name:'Billund, Denmark',        type:'visited', lon:9.1182,    lat:55.7297,   note:'Travels' },
+
+    // ── VISITED: Germany / Netherlands ──
+    { id:44, name:'Berlin, Germany',         type:'visited', lon:13.4050,   lat:52.5200,   note:'Travels' },
+    { id:45, name:'Frankfurt, Germany',      type:'visited', lon:8.6821,    lat:50.1109,   note:'Travels' },
+    { id:46, name:'Leipzig, Germany',        type:'visited', lon:12.3731,   lat:51.3397,   note:'Travels' },
+    { id:47, name:'Munich, Germany',         type:'visited', lon:11.5820,   lat:48.1351,   note:'Travels' },
+    { id:48, name:'Amsterdam, Netherlands',  type:'visited', lon:4.9041,    lat:52.3676,   note:'Travels' },
+    { id:49, name:'Rotterdam, Netherlands',  type:'visited', lon:4.4777,    lat:51.9244,   note:'Travels' },
+
+    // ── VISITED: France / Iberia / Atlantic ──
+    { id:50, name:'Paris, France',           type:'visited', lon:2.3522,    lat:48.8566,   note:'Travels' },
+    { id:51, name:'Andorra',                 type:'visited', lon:1.5218,    lat:42.5063,   note:'Travels' },
+    { id:52, name:'Barcelona, Spain',        type:'visited', lon:2.1734,    lat:41.3851,   note:'Travels' },
+    { id:53, name:'Lisbon, Portugal',        type:'visited', lon:-9.1393,   lat:38.7223,   note:'Travels' },
+    { id:54, name:'Porto, Portugal',         type:'visited', lon:-8.6291,   lat:41.1579,   note:'Travels' },
+    { id:55, name:'Favaios, Portugal',       type:'visited', lon:-7.4167,   lat:41.2500,   note:'Travels' },
+    { id:56, name:'Lagos, Portugal',         type:'visited', lon:-8.6730,   lat:37.1019,   note:'Travels' },
+    { id:57, name:'Canary Islands',          type:'visited', lon:-15.4363,  lat:28.1235,   note:'Travels' },
+    { id:58, name:'Funchal, Portugal',       type:'visited', lon:-16.9141,  lat:32.6669,   note:'Travels' },
+
+    // ── VISITED: North Africa ──
+    { id:59, name:'Casablanca, Morocco',     type:'visited', lon:-7.5898,   lat:33.5731,   note:'Travels' },
+    { id:60, name:'Agadir, Morocco',         type:'visited', lon:-9.5981,   lat:30.4278,   note:'Travels' },
+    { id:61, name:'Algiers, Algeria',        type:'visited', lon:3.0588,    lat:36.7372,   note:'Travels' },
+
+    // ── VISITED: Southern Europe ──
+    { id:62, name:'Rome, Italy',             type:'visited', lon:12.4964,   lat:41.9028,   note:'Travels' },
+    { id:63, name:'Florence, Italy',         type:'visited', lon:11.2558,   lat:43.7696,   note:'Travels' },
+    { id:64, name:'Venice, Italy',           type:'visited', lon:12.3155,   lat:45.4408,   note:'Travels' },
+    { id:65, name:'Salzburg, Austria',       type:'visited', lon:13.0550,   lat:47.8095,   note:'Travels' },
+    { id:66, name:'Vienna, Austria',         type:'visited', lon:16.3738,   lat:48.2082,   note:'Travels' },
+    { id:67, name:'Prague, Czechia',         type:'visited', lon:14.4378,   lat:50.0755,   note:'Travels' },
+    { id:68, name:'Athens, Greece',          type:'visited', lon:23.7275,   lat:37.9838,   note:'Travels' },
+    { id:69, name:'Mykonos, Greece',         type:'visited', lon:25.3290,   lat:37.4467,   note:'Travels' },
+    { id:70, name:'Santorini, Greece',       type:'visited', lon:25.4615,   lat:36.3932,   note:'Travels' },
+    { id:71, name:'Kalabaka, Greece',        type:'visited', lon:21.6269,   lat:39.7057,   note:'Travels' },
+    { id:72, name:'Zürich, Switzerland',     type:'visited', lon:8.5417,    lat:47.3769,   note:'Travels' },
+
+    // ── VISITED: Middle East / Turkey ──
+    { id:73, name:'Istanbul, Türkiye',       type:'visited', lon:28.9784,   lat:41.0082,   note:'Travels' },
+    { id:74, name:'Cairo, Egypt',            type:'visited', lon:31.2357,   lat:30.0444,   note:'Travels' },
+    { id:75, name:'Alexandria, Egypt',       type:'visited', lon:29.9187,   lat:31.2001,   note:'Travels' },
+    { id:76, name:'Amman, Jordan',           type:'visited', lon:35.9106,   lat:31.9454,   note:'Travels' },
+    { id:77, name:'Petra, Jordan',           type:'visited', lon:35.4444,   lat:30.3285,   note:'Travels' },
+    { id:78, name:'Sweimeh, Jordan',         type:'visited', lon:35.5930,   lat:31.7700,   note:'Travels' },
+    { id:79, name:'Madinah, Saudi Arabia',   type:'visited', lon:39.6142,   lat:24.5247,   note:'Travels' },
+    { id:80, name:'Dammam, Saudi Arabia',    type:'visited', lon:50.1033,   lat:26.4207,   note:'Travels' },
+    { id:81, name:'Dhahran, Saudi Arabia',   type:'visited', lon:50.1463,   lat:26.2794,   note:'Travels' },
+    { id:82, name:'Bahrain',                 type:'visited', lon:50.5577,   lat:26.0667,   note:'Travels' },
+    { id:83, name:'Doha, Qatar',             type:'visited', lon:51.5310,   lat:25.2854,   note:'Travels' },
+    { id:84, name:'Dubai, UAE',              type:'visited', lon:55.2708,   lat:25.2048,   note:'Travels' },
+    { id:85, name:'Abu Dhabi, UAE',          type:'visited', lon:54.3773,   lat:24.4539,   note:'Travels' },
+    { id:86, name:'Muscat, Oman',            type:'visited', lon:58.5922,   lat:23.5880,   note:'Travels' },
+
+    // ── VISITED: South / Southeast Asia ──
+    { id:87, name:'Colombo, Sri Lanka',      type:'visited', lon:79.8612,   lat:6.9271,    note:'Travels' },
+    { id:88, name:'Maldives',                type:'visited', lon:73.5093,   lat:4.1755,    note:'Travels' },
+    { id:89, name:'Bangkok, Thailand',       type:'visited', lon:100.5018,  lat:13.7563,   note:'Travels' },
+    { id:90, name:'Chiang Mai, Thailand',    type:'visited', lon:98.9853,   lat:18.7883,   note:'Travels' },
+    { id:91, name:'Phnom Penh, Cambodia',    type:'visited', lon:104.9282,  lat:11.5564,   note:'Travels' },
+    { id:92, name:'Penang, Malaysia',        type:'visited', lon:100.3301,  lat:5.4141,    note:'Travels' },
+    { id:93, name:'Kuala Lumpur, Malaysia',  type:'visited', lon:101.6869,  lat:3.1390,    note:'Travels' },
+    { id:94, name:'Ipoh, Malaysia',          type:'visited', lon:101.0901,  lat:4.5975,    note:'Travels' },
+    { id:95, name:'Malacca, Malaysia',       type:'visited', lon:102.2501,  lat:2.1896,    note:'Travels' },
+    { id:96, name:'Kuantan, Malaysia',       type:'visited', lon:103.3324,  lat:3.8077,    note:'Travels' },
+    { id:97, name:'Kuala Terengganu, Malaysia', type:'visited', lon:103.1408, lat:5.3296,  note:'Travels' },
+    { id:98, name:'Perhentian Islands, Malaysia', type:'visited', lon:102.7731, lat:5.9085, note:'Travels' },
+    { id:99, name:'Singapore',               type:'visited', lon:103.8198,  lat:1.3521,    note:'Travels' },
+
+    // ── VISITED: East Asia / Pacific ──
+    { id:100, name:'Busan, South Korea',     type:'visited', lon:129.0756,  lat:35.1796,   note:'Travels' },
+    { id:101, name:'Jeju, South Korea',      type:'visited', lon:126.5312,  lat:33.4996,   note:'Travels' },
+    { id:102, name:'Taipei, Taiwan',         type:'visited', lon:121.5654,  lat:25.0330,   note:'Travels' },
+    { id:103, name:'Chongqing, China',       type:'visited', lon:106.5516,  lat:29.5630,   note:'Travels' },
+    { id:104, name:'Tokyo, Japan',           type:'visited', lon:139.6917,  lat:35.6895,   note:'Travels' },
+    { id:105, name:'Sydney, Australia',      type:'visited', lon:151.2093,  lat:-33.8688,  note:'Travels' },
+  ];
+
+  const LIVED_DOT_R   = 8;
+  const VISITED_DOT_R = 5.5;
+  const STEM_H_LIVED   = 22;
+  const STEM_H_VISITED = 16;
+
+  const TEAL = '#2a8fa6';
+  const GOLD = '#c48c2a';
+  const GOLD_LIGHT = '#d4a043';
+  const WHITE = '#eef0f4';
+  const BG    = 'rgba(14,17,24,0.94)';
+  const BORDER= '#243048';
+  const MUTED = '#9aa3b8';
+
+  /* ---- Update loc count badge ---- */
+  const livedN   = LOCATIONS.filter(l => l.type === 'lived').length;
+  const visitedN = LOCATIONS.filter(l => l.type === 'visited').length;
+  const countEl  = document.getElementById('map-loc-count');
+  if (countEl) countEl.textContent = `${livedN} LIVED · ${visitedN} VISITED`;
+
+  /* ---- Populate location ticker — two rows ---- */
+  function buildTickerItems(locations) {
+    return locations.map(loc => `
+      <div class="ticker-item">
+        <span class="ticker-dot ${loc.type}"></span>
+        <span class="ticker-name ${loc.type}">${loc.name}</span>
+      </div>
+    `).join('');
+  }
+
+  const livedLocs   = LOCATIONS.filter(l => l.type === 'lived');
+  const visitedLocs = LOCATIONS.filter(l => l.type === 'visited');
+
+  const livedTrack   = document.getElementById('locTickerLived');
+  const visitedTrack = document.getElementById('locTickerVisited');
+
+  if (livedTrack) {
+    /* Duplicate enough times to ensure seamless loop across all widths */
+    const repeated = [...livedLocs, ...livedLocs, ...livedLocs, ...livedLocs];
+    livedTrack.innerHTML = buildTickerItems(repeated);
+  }
+  if (visitedTrack) {
+    const repeated = [...visitedLocs, ...visitedLocs];
+    visitedTrack.innerHTML = buildTickerItems(repeated);
+  }
+
+  /* ---- SVG setup ---- */
+  const outer = document.getElementById('mapOuter');
+  const svgEl = document.getElementById('map-d3-svg');
+  const tooltip = document.getElementById('map-tooltip');
+
+  if (!outer || !svgEl || typeof d3 === 'undefined' || typeof topojson === 'undefined') return;
+
+  const W = outer.clientWidth  || 900;
+  const H = outer.clientHeight || 520;
+
+  const svg = d3.select(svgEl)
+    .attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('width', W).attr('height', H);
+
+  /* Background */
+  svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#080d12');
+
+  /* Dot-grid pattern */
+  const defs = svg.append('defs');
+  const pat  = defs.append('pattern')
+    .attr('id','pg').attr('width',22).attr('height',22)
+    .attr('patternUnits','userSpaceOnUse');
+  pat.append('circle').attr('cx',1).attr('cy',1).attr('r',0.85)
+    .attr('fill','rgba(42,143,166,0.2)');
+  svg.append('rect').attr('width',W).attr('height',H)
+    .attr('fill','url(#pg)').attr('opacity',0.9);
+
+  /* Bottom fade overlay — rendered as SVG so it stays above map-g but below HTML overlays */
+  const grad = defs.append('linearGradient')
+    .attr('id','fade-up').attr('x1',0).attr('y1',1).attr('x2',0).attr('y2',0);
+  grad.append('stop').attr('offset','0%').attr('stop-color','#080d12').attr('stop-opacity',0.96);
+  grad.append('stop').attr('offset','55%').attr('stop-color','#080d12').attr('stop-opacity',0);
+  svg.append('rect').attr('width',W).attr('height',H * 0.45)
+    .attr('y', H * 0.55).attr('fill','url(#fade-up)').attr('pointer-events','none');
+
+  /* Map group — zoom/pan applied here */
+  const mapG = svg.append('g').attr('class','map-g');
+
+  /* ---- Projection — centred vertically on Lagos, Portugal (37.10°N) ---- */
+  const projection = d3.geoMercator()
+    .scale(W / (2.18 * Math.PI))
+    .center([0, 37.10])           /* longitude 0 keeps map horizontally centred */
+    .translate([W / 2, H / 2]);   /* map centre maps to canvas centre */
+
+  const pathGen = d3.geoPath().projection(projection);
+
+  /* ---- Zoom behaviour ---- */
+  const zoomBehaviour = d3.zoom()
+    .scaleExtent([0.7, 14])
+    .on('zoom', (event) => {
+      const t = event.transform;
+      mapG.attr('transform', t);
+      /* Keep all pins at constant screen size by inverting the zoom scale */
+      mapG.selectAll('.pin-group').each(function() {
+        const px = +this.getAttribute('data-px');
+        const py = +this.getAttribute('data-py');
+        d3.select(this).attr('transform',
+          `translate(${px},${py}) scale(${1 / t.k})`);
+      });
+      const zl = document.getElementById('mapZoomLabel');
+      if (zl) zl.textContent = `ZOOM ${t.k.toFixed(1)}×`;
+    });
+
+  d3.select(svgEl).call(zoomBehaviour).on('dblclick.zoom', null);
+  d3.select(outer)
+    .on('mousedown', () => outer.classList.add('grabbing'))
+    .on('mouseup',   () => outer.classList.remove('grabbing'));
+
+  /* ---- Scroll-hijack prevention ----
+     D3 zoom normally consumes ALL wheel events over the SVG, which
+     means scrolling the page while the cursor is over the map zooms
+     the map instead. Fix: gate wheel-zoom behind a "mouse is hovering
+     the map" flag — the user must intentionally hover the map before
+     the scroll wheel zooms it. Moving the cursor away instantly
+     restores normal page scroll.                                    */
+  let mapHovered = false;
+  outer.addEventListener('mouseenter', () => { mapHovered = true;  });
+  outer.addEventListener('mouseleave', () => { mapHovered = false; });
+
+  zoomBehaviour.filter(event => {
+    if (event.type === 'wheel') return mapHovered;
+    return !event.ctrlKey && !event.button;
+  });
+
+  /* Button controls */
+  document.getElementById('mapZoomIn')?.addEventListener('click', () =>
+    d3.select(svgEl).transition().duration(300).call(zoomBehaviour.scaleBy, 1.6));
+  document.getElementById('mapZoomOut')?.addEventListener('click', () =>
+    d3.select(svgEl).transition().duration(300).call(zoomBehaviour.scaleBy, 0.625));
+  document.getElementById('mapReset')?.addEventListener('click', () =>
+    d3.select(svgEl).transition().duration(420).call(zoomBehaviour.transform, d3.zoomIdentity));
+
+  /* ---- Draw pins (dot + stem + label) ---- */
+  function drawPins() {
+    const LABEL_ZOOM_THRESHOLD = 6;
+
+    /* Two SVG groups: visited rendered first (bottom), lived on top */
+    const visitedG = mapG.append('g').attr('class','pins-layer-visited');
+    const livedG   = mapG.append('g').attr('class','pins-layer-lived');
+
+    function buildPin(loc, parentG) {
+      const [px, py] = projection([loc.lon, loc.lat]);
+      if (px == null || py == null) return;
+
+      const isLived  = loc.type === 'lived';
+      const dotR     = isLived ? LIVED_DOT_R   : VISITED_DOT_R;
+      const stemH    = isLived ? STEM_H_LIVED  : STEM_H_VISITED;
+      const dotCol   = isLived ? TEAL          : GOLD;
+      const labelCol = isLived ? TEAL          : GOLD_LIGHT;
+
+      const g = parentG.append('g')
+        .attr('class','pin-group')
+        .attr('data-px', px)
+        .attr('data-py', py)
+        .attr('transform', `translate(${px},${py})`)
+        .style('cursor','pointer');
+
+      /* Pulsing ring */
+      const ring = g.append('circle')
+        .attr('class','pulse-ring')
+        .attr('r', dotR * 1.8)
+        .attr('fill','none')
+        .attr('stroke', dotCol)
+        .attr('stroke-width', 1.4)
+        .attr('opacity', 0);
+
+      /* Stem */
+      g.append('line')
+        .attr('x1', 0).attr('y1', 0)
+        .attr('x2', 0).attr('y2', stemH)
+        .attr('stroke', dotCol)
+        .attr('stroke-width', isLived ? 1.5 : 1.2)
+        .attr('opacity', 0.65);
+
+      /* Dot */
+      g.append('circle')
+        .attr('class','pin-dot-circle')
+        .attr('r', dotR)
+        .attr('fill', dotCol)
+        .attr('stroke', WHITE)
+        .attr('stroke-width', isLived ? 2 : 1.5);
+
+      /* Label pill */
+      const labelText = loc.name;
+      const approxW   = labelText.length * 5.2 + 14;
+      const pillH     = 16;
+
+      const labelG = g.append('g')
+        .attr('class', isLived ? 'pin-label' : 'pin-label pin-label-visited')
+        .attr('transform', `translate(0,${stemH + 4})`)
+        .attr('opacity', isLived ? 1 : 0); /* visited labels hidden until zoom ≥ threshold */
+
+      labelG.append('rect')
+        .attr('x', -approxW / 2).attr('y', 0)
+        .attr('width', approxW).attr('height', pillH)
+        .attr('rx', 4)
+        .attr('fill', BG)
+        .attr('stroke', BORDER)
+        .attr('stroke-width', 0.8);
+
+      labelG.append('text')
+        .attr('x', 0).attr('y', pillH / 2 + 1)
+        .attr('text-anchor','middle')
+        .attr('dominant-baseline','middle')
+        .attr('fill', labelCol)
+        .attr('font-size', isLived ? '7.5px' : '6.5px')
+        .attr('font-family','Space Mono, monospace')
+        .attr('letter-spacing','0.06em')
+        .text(labelText.toUpperCase());
+
+      /* Hover / click interactions */
+      let rafId = null;
+
+      function startPulse() {
+        let t0 = null;
+        function frame(ts) {
+          if (!t0) t0 = ts;
+          const p = ((ts - t0) % 1100) / 1100;
+          ring.attr('r', dotR * 1.8 + p * dotR * 2.2)
+              .attr('opacity', (1 - p) * 0.75);
+          rafId = requestAnimationFrame(frame);
+        }
+        rafId = requestAnimationFrame(frame);
+      }
+
+      function stopPulse() {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        ring.attr('opacity', 0);
+      }
+
+      function showTooltip() {
+        const t       = d3.zoomTransform(svgEl);
+        const sx      = t.applyX(px);
+        const sy      = t.applyY(py);
+        const svgW    = svgEl.getBoundingClientRect().width;
+        const svgH    = svgEl.getBoundingClientRect().height;
+        const screenX = sx * (svgW / W);
+        const screenY = sy * (svgH / H) - (dotR + stemH) * (1 / t.k) * (svgH / H) - 12;
+        tooltip.innerHTML = `
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:${dotCol};flex-shrink:0;"></div>
+            <span style="font-size:0.82rem;font-weight:600;color:${WHITE};">${loc.name}</span>
+          </div>
+          <div style="font-size:0.62rem;color:${labelCol};font-family:var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px;">${loc.type}</div>
+          <div style="font-size:0.78rem;color:${MUTED};line-height:1.5;">${loc.note}</div>
+        `;
+        tooltip.style.left    = `${screenX}px`;
+        tooltip.style.top     = `${screenY}px`;
+        tooltip.style.opacity = '1';
+      }
+
+      g.on('mouseenter', () => {
+        startPulse();
+        showTooltip();
+        /* Always show this pin's label on hover */
+        if (!isLived) labelG.interrupt().attr('opacity', 1);
+        g.select('.pin-dot-circle').transition().duration(120).attr('r', dotR * 1.25);
+      });
+
+      g.on('mouseleave', () => {
+        stopPulse();
+        tooltip.style.opacity = '0';
+        /* Re-hide visited label if still below zoom threshold */
+        if (!isLived && d3.zoomTransform(svgEl).k < LABEL_ZOOM_THRESHOLD) {
+          labelG.transition().duration(200).attr('opacity', 0);
+        }
+        g.select('.pin-dot-circle').transition().duration(150).attr('r', dotR);
+      });
+
+      g.on('click', (e) => { e.stopPropagation(); startPulse(); showTooltip(); });
+    }
+
+    /* Render visited (bottom layer) then lived (top layer) */
+    LOCATIONS.filter(l => l.type === 'visited').forEach(l => buildPin(l, visitedG));
+    LOCATIONS.filter(l => l.type === 'lived').forEach(l => buildPin(l, livedG));
+
+    /* Show/hide visited labels based on zoom level */
+    zoomBehaviour.on('zoom.labels', event => {
+      const show = event.transform.k >= LABEL_ZOOM_THRESHOLD;
+      mapG.selectAll('.pin-label-visited')
+        .transition().duration(180)
+        .attr('opacity', show ? 1 : 0);
+    });
+
+    svg.on('click', () => { tooltip.style.opacity = '0'; });
+  }
+
+  /* ---- Fetch TopoJSON and render ---- */
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+    .then(r => r.json())
+    .then(world => {
+      const countries = topojson.feature(world, world.objects.countries);
+      const borders   = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
+
+      mapG.append('g').attr('class','countries')
+        .selectAll('path')
+        .data(countries.features)
+        .enter().append('path')
+        .attr('d', pathGen)
+        .attr('fill','#1b2133')
+        .attr('stroke','#243048')
+        .attr('stroke-width', 0.4)
+        .on('mouseenter', function() { d3.select(this).attr('fill','#1f2a42'); })
+        .on('mouseleave', function() { d3.select(this).attr('fill','#1b2133'); });
+
+      mapG.append('path')
+        .datum(borders)
+        .attr('d', pathGen)
+        .attr('fill','none')
+        .attr('stroke','#2a3858')
+        .attr('stroke-width', 0.25);
+
+      drawPins();
+    })
+    .catch(() => {
+      /* Fallback: still draw pins on blank grid */
+      drawPins();
+    });
+
+})();
+
+/* ── KEYBOARD SHORTCUTS ── */
+const shortcutMap = {
+  '1': '#about',
+  '2': '#map-section',
+  '3': '#projects',
+  '4': '#experience',
+  '5': '#resume-cta',
+  'r': '#resume-cta',
+  'R': '#resume-cta',
+};
+
+const toast    = document.getElementById('shortcut-toast');
+let toastTimer = null;
+
+function showToast() {
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+}
+
+/* Show toast hint after 2s of inactivity on page load */
+setTimeout(showToast, 2000);
+
+document.addEventListener('keydown', (e) => {
+  // Don't trigger in inputs
+  if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+  if (e.key === 'Escape') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  if (e.key === '?') { showToast(); return; }
+
+  const target = shortcutMap[e.key];
+  if (target) {
+    const el = document.querySelector(target);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+
+/* Bento card keyboard activate */
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      card.click();
+    }
+  });
+});
+
+/* ── PROJECT MODAL ── */
+const PROJECTS = [
+  {
+    id: 'aero',
+    title: 'Autonomous Aerodynamics Node',
+    year: '2023',
+    tag: 'AERODYNAMICS · DYNAMICS',
+    heroEmoji: '🚀',
+    heroBg: 'linear-gradient(140deg, #0c2030 0%, #0e2a3a 60%, #0a1e2c 100%)',
+    meta: { year: '2023', duration: 'Ongoing', role: 'Lead Engineer', team: 'Solo' },
+    overview: 'A closed-loop thrust vectoring system designed for exo-atmospheric drone propulsion, operating with adaptive Kalman filtering at 400Hz. The node interfaces directly with a custom FPGA co-processor to achieve sub-millisecond actuation latency, enabling stable flight across rapid pressure transitions.',
+    motivation: 'Traditional drone autopilots struggle with the thin-atmosphere regime between 20–60km altitude. I wanted to build a system that could operate autonomously in this gap — a regime too high for conventional aircraft and too low for orbital vehicles — using only onboard sensing and control.',
+    images: [
+      { label: 'Thrust Vectoring Rig' },
+      { label: 'FPGA Co-processor PCB' },
+      { label: 'Pressure Chamber Test' },
+    ],
+    video: null,
+    tags: ['Rust', 'ROS2', 'FPGA', 'C++', 'Kalman Filter', 'SITL'],
+    links: [
+      { label: 'GitHub Repo', href: '#', primary: true },
+      { label: 'Research Paper', href: '#' },
+      { label: 'Flight Data Logs', href: '#' },
+    ],
+  },
+  {
+    id: 'quantum',
+    title: 'Quantum Computation Array',
+    year: '2022',
+    tag: 'OPTOELECTRONICS',
+    heroEmoji: '🔬',
+    heroBg: 'linear-gradient(140deg, #0d1228 0%, #121a38 60%, #0a1020 100%)',
+    meta: { year: '2022', duration: '8 months', role: 'Research Engineer', team: 'Solo' },
+    overview: 'Cryogenic logic gate arrays operating at 15mK for quantum computation research. The array uses superconducting Josephson junctions arranged in a planar grid topology, cooled by a dilution refrigerator to approach quantum coherence times exceeding 150µs.',
+    motivation: 'My interest in quantum error correction led me to ask whether classical logic-gate architectures could be adapted for cryogenic environments. This project bridged my embedded systems background with low-temperature physics — a genuinely new domain for me.',
+    images: [
+      { label: 'Dilution Fridge Setup' },
+      { label: 'Junction Array Micrograph' },
+    ],
+    video: { type: 'placeholder', label: 'Cryostat Boot Sequence — 3m 22s' },
+    tags: ['Python', 'Qiskit', 'VHDL', 'LabVIEW', 'Josephson Junctions'],
+    links: [
+      { label: 'Preprint (arXiv)', href: '#', primary: true },
+      { label: 'Dataset', href: '#' },
+    ],
+  },
+  {
+    id: 'exo',
+    title: 'Exo-Skeletal Kinetic Actuator',
+    year: '2022',
+    tag: 'ROBOTICS · ACTUATION',
+    heroEmoji: '🤖',
+    heroBg: 'linear-gradient(140deg, #1a1808 0%, #241e0a 60%, #16140a 100%)',
+    meta: { year: '2021–2022', duration: '14 months', role: 'Robotics Research Eng.', team: 'ETH ASL (4 members)' },
+    overview: 'Precision bio-mechanical force output system for rehabilitation exoskeletons. Implements variable-impedance control across 7 degrees of freedom, with real-time force sensing at 1kHz and voluntary patient intent detection via surface EMG.',
+    motivation: 'During my time at ETH Zürich I worked closely with physiotherapists who described the gap between what patients needed and what existing robotic assistants could provide. The actuator was my attempt to close that gap — specifically the problem of making robot compliance feel natural rather than mechanical.',
+    images: [
+      { label: 'Actuator Assembly' },
+      { label: 'EMG Signal Processing' },
+      { label: 'Clinical Trial Session' },
+    ],
+    video: { type: 'placeholder', label: 'Patient Gait Assist Demo — 1m 48s' },
+    tags: ['C++', 'ROS2', 'Python', 'sEMG', 'Impedance Control', 'SolidWorks'],
+    links: [
+      { label: 'IEEE Publication', href: '#', primary: true },
+      { label: 'GitHub', href: '#' },
+      { label: 'Clinical Protocol', href: '#' },
+    ],
+  },
+  {
+    id: 'plasma',
+    title: 'High-Density Plasma Initiator',
+    year: '2021',
+    tag: 'THERMAL PHYSICS',
+    heroEmoji: '⚡',
+    heroBg: 'linear-gradient(140deg, #150e28 0%, #1e1435 60%, #110c22 100%)',
+    meta: { year: '2021', duration: '6 months', role: 'Lead Engineer', team: 'Solo' },
+    overview: 'A toroidal magnetic containment grid sustaining 10keV plasma for fusion-adjacent research. The initiator achieves plasma densities of 10¹⁹ m⁻³ using a novel RF heating approach layered on top of a compact tokamak geometry, reducing ignition energy by 34% compared to baseline.',
+    motivation: 'My undergraduate thesis explored plasma instabilities in tokamak reactors. I became convinced that the bottleneck was initiator design, not confinement geometry. This project was a direct attack on that thesis — building something small enough to iterate quickly but physically meaningful enough to matter.',
+    images: [
+      { label: 'Toroidal Chamber Assembly' },
+      { label: 'RF Antenna Array' },
+    ],
+    video: null,
+    tags: ['Python', 'MATLAB', 'COMSOL', 'Langmuir Probes', 'RF Engineering'],
+    links: [
+      { label: 'Technical Report', href: '#', primary: true },
+      { label: 'Simulation Code', href: '#' },
+    ],
+  },
+  {
+    id: 'nav',
+    title: 'Stellar Navigation Core',
+    year: '2023',
+    tag: 'GNC · NAVIGATION',
+    heroEmoji: '🛰️',
+    heroBg: 'linear-gradient(140deg, #0a1e14 0%, #0e2a1c 60%, #081a10 100%)',
+    meta: { year: '2023', duration: '5 months', role: 'GNC Engineer', team: 'Solo' },
+    overview: 'A star-tracker and IMU sensor-fusion system for attitude determination in low Earth orbit, achieving sub-0.01° pointing error. The system uses a custom Wahba solver running on a radiation-hardened ARM Cortex-M7 with deterministic 20ms latency.',
+    motivation: 'Commercial star trackers are expensive and over-engineered for small satellite missions. I wanted to prove that a well-tuned open-source pipeline on commodity hardware could meet the pointing requirements of a science-grade imaging payload.',
+    images: [
+      { label: 'Star Tracker Optical Assembly' },
+      { label: 'Attitude Estimation Test Rig' },
+      { label: 'On-Orbit Simulation Run' },
+    ],
+    video: { type: 'placeholder', label: 'Hardware-in-the-Loop Demo — 2m 05s' },
+    tags: ['C', 'Python', 'Wahba Solver', 'CUDA', 'Embedded Linux', 'Quaternion Math'],
+    links: [
+      { label: 'GitHub Repo', href: '#', primary: true },
+      { label: 'Conference Paper', href: '#' },
+    ],
+  },
+  {
+    id: 'soft',
+    title: 'Adaptive Soft Gripper',
+    year: '2022',
+    tag: 'SOFT ROBOTICS',
+    heroEmoji: '🦾',
+    heroBg: 'linear-gradient(140deg, #1e1208 0%, #2a1a0e 60%, #160e06 100%)',
+    meta: { year: '2022', duration: '4 months', role: 'Mechanical & Controls', team: 'Solo' },
+    overview: 'A pneumatically-actuated soft robotic gripper capable of delicate manipulation using embedded tactile pressure sensing across 48 sensing nodes. The gripper adapts its grasping strategy in real-time based on object compliance feedback, achieving 94% grasp success on irregular biological specimens.',
+    motivation: 'Rigid grippers fail catastrophically on fragile or irregularly-shaped objects. Soft robotics promised a solution, but most academic soft grippers lacked closed-loop sensing. This project explored what was possible when you combined pneumatic actuation with a dense tactile sensing array.',
+    images: [
+      { label: 'Gripper Silicone Mould' },
+      { label: 'Tactile Sensor Array PCB' },
+    ],
+    video: { type: 'placeholder', label: 'Egg Grasping Demo — 0m 45s' },
+    tags: ['Python', 'ROS2', 'Silicone Moulding', 'I2C Sensing', 'RL Control'],
+    links: [
+      { label: 'Research Paper', href: '#', primary: true },
+      { label: 'CAD Files', href: '#' },
+      { label: 'GitHub', href: '#' },
+    ],
+  },
+  {
+    id: 'fusion',
+    title: 'Wave Energy Converter',
+    year: '2020',
+    tag: 'ENERGY · SYSTEMS',
+    heroEmoji: '🌊',
+    heroBg: 'linear-gradient(140deg, #0e1a28 0%, #14243a 60%, #0a1620 100%)',
+    meta: { year: '2020', duration: '3 months', role: 'Systems Engineer', team: 'Solo' },
+    overview: 'A compact wave energy converter implementing real-time adaptive impedance matching to maximise power capture across a spectrum of ocean wave conditions. The system uses a model-predictive controller running at 50Hz to adjust the generator load in advance of incoming wave crests.',
+    motivation: 'Most wave energy research focuses on structural survivability, not power electronics. I wanted to attack the efficiency problem directly — specifically the mismatch between irregular ocean wave frequency and generator optimal operating points.',
+    images: [
+      { label: 'Wave Tank Physical Model' },
+      { label: 'Power Electronics Board' },
+    ],
+    video: null,
+    tags: ['Python', 'MATLAB', 'MPC', 'Power Electronics', 'Simulink', 'Arduino'],
+    links: [
+      { label: 'Technical Report', href: '#', primary: true },
+      { label: 'Dataset (Figshare)', href: '#' },
+    ],
+  },
+  {
+    id: 'grass',
+    title: 'Self-Balancing Wheeled Bipedal Robot',
+    year: '2026',
+    tag: 'ROBOTICS · CONTROL SYSTEMS',
+    heroEmoji: '🤖',
+    heroBg: 'linear-gradient(140deg, #081a0e 0%, #0c2414 60%, #061208 100%)',
+    meta: {
+      year: '2025 – 2026',
+      duration: '4 months',
+      role: 'Mechanical, Firmware & Controls',
+      team: 'Nicholas Yap & Dominic Nguyen',
+    },
+    overview: 'Grass is a bipedal two-wheeled self-balancing robot integrating mechanical, electrical, and software design into a single dynamic platform. Operating as an inverted pendulum on a cart, it maintains upright stability by actively driving two DC gearmotors mounted at the base of its 3D-printed legs. The system achieves autonomous balance, forward/backward motion, directional control, and wireless BLE communication with a custom C# desktop interface — all running on a dual-core ESP32 microcontroller.',
+    motivation: 'The project originated from a long-term vision: a compact companion robot capable of carrying loads across varied terrain while staying dynamically stable. Rather than a static rover, a self-balancing bipedal platform demands continuous feedback control and tests the full stack of mechatronics — mechanical design, embedded firmware, control theory, and wireless communication simultaneously. The immediate reward and consequence of balance (staying upright vs. falling) made tuning and iteration visceral and fast.',
+    images: [
+      { label: 'Grass Field Test — Prototype on Grass' },
+      { label: 'CAD Exploded View — Chassis Assembly' },
+      { label: 'CAD vs Physical — Side-by-Side Comparison' },
+      { label: 'Chassis Interior — High vs Low Voltage Wire Separation' },
+      { label: 'Wheel Iteration Set — Three Radius Sizes Tested' },
+      { label: 'Madgwick Filter Trace — Accelerometer vs Filtered Tilt Angle' },
+    ],
+    video: { type: 'placeholder', label: 'Grass Self-Balancing & BLE Control Demo — replace with video embed' },
+    tags: [
+      'C++ (Arduino)', 'C# WinForms', 'ESP32 Dual-Core', 'FastPID',
+      'Cascaded PID', 'Madgwick Filter', 'BLE (Bluetooth Low Energy)',
+      'SPI', 'Quadrature Encoder', 'MPU-6500 IMU', 'OnShape CAD',
+      'PLA + TPU 3D Printing', 'Simulink', 'DC Gearmotor',
+    ],
+    links: [
+      { label: 'Full Technical Report', href: '#', primary: true },
+      { label: 'GitHub — ESP32 Firmware', href: '#' },
+      { label: 'GitHub — C# UI', href: '#' },
+      { label: 'OnShape CAD', href: '#' },
+    ],
+    sections: [
+      {
+        label: 'System Architecture',
+        body: 'Grass runs a dual-core architecture on the ESP32: Core 1 handles the time-critical cascaded PID motor control loop at 500Hz, while Core 0 manages IMU tilt estimation at 1kHz and BLE communication. This separation eliminates CPU overload spikes that previously caused the control loop to lose balance. The inner "balancing PID" regulates tilt angle directly; the outer "velocity PID" generates a tilt setpoint from wheel encoder speed, allowing the robot to remain stationary or track a commanded velocity.',
+      },
+      {
+        label: 'Mechanical Design',
+        body: 'The chassis is a 9-component 3D-printed assembly in PLA, with TPU used for the front/back collision bumpers and internal battery retention tabs. The leg design routes motor power wires and encoder signal wires on opposite sides of the frame to reduce electromagnetic crosstalk — a key fix discovered after I2C noise corruption caused tilt estimation desyncs. Three wheel radii were prototyped and tested; a 10.5cm diameter wheel offered the best tradeoff between backlash, torque, and correction speed. Wheels use metal flange shaft collectors after the initial plastic set-screw design stripped under high-torque tuning.',
+      },
+      {
+        label: 'Control System',
+        body: 'Balance is achieved through cascaded PID control. The inner loop takes the Madgwick-filtered IMU tilt angle and outputs a motor current command (converted to a PWM duty cycle via a simplified armature circuit model accounting for back-EMF). The outer velocity loop takes encoder RPM and outputs a tilt angle setpoint — set to zero for stationary balance, or a small forward/backward lean for motion. A manually-adjusted tilt bias compensates for gyroscope offset that varies with each reboot. Final tuned parameters: Kp=0.18, Ki=0.05, Kd=0.01 (inner); Kp=0.1, Ki=0.8, Kd=0.0003 (outer).',
+      },
+      {
+        label: 'Key Challenges & Lessons',
+        body: 'The most costly setback was motor failure: one motor overheated from rapid direction changes during tuning; another had its brushes burn out mid-session. The fix was clamping maximum duty cycle to 128/255 and switching to current control rather than voltage control, preventing current spikes. Switching IMU communication from I2C to SPI eliminated tilt desync issues caused by motor noise. Building a Simulink model of the inverted pendulum late in the project was the single most impactful decision — it allowed PID values to be derived analytically rather than guessed, cutting the tuning timeline dramatically.',
+      },
+    ],
+  },
+];
+
+/* Map card index → project id — now handled via data-project attributes */
+
+const backdrop  = document.getElementById('project-modal-backdrop');
+const modal     = document.getElementById('project-modal');
+const closeBtn  = document.getElementById('modal-close-btn');
+
+function openModal(project) {
+  /* Hero */
+  document.getElementById('modal-hero-bg').style.background = project.heroBg;
+  document.getElementById('modal-hero-bg').textContent = project.heroEmoji;
+  document.getElementById('modal-tag-text').textContent = project.tag;
+
+  /* Header */
+  document.getElementById('modal-title-text').textContent = project.title;
+  document.getElementById('modal-year').textContent = project.year;
+
+  /* Action buttons */
+  const actionRow = document.getElementById('modal-action-row');
+  actionRow.innerHTML = '';
+  if (project.links && project.links.length) {
+    /* GitHub icon (first link) */
+    const ghBtn = document.createElement('a');
+    ghBtn.className = 'modal-action-btn';
+    ghBtn.href = project.links[0].href;
+    ghBtn.title = project.links[0].label;
+    ghBtn.innerHTML = '↗';
+    actionRow.appendChild(ghBtn);
+  }
+  const shareBtn = document.createElement('button');
+  shareBtn.className = 'modal-action-btn';
+  shareBtn.title = 'Copy link';
+  shareBtn.innerHTML = '⎘';
+  shareBtn.addEventListener('click', () => {
+    navigator.clipboard?.writeText(window.location.href).catch(() => {});
+  });
+  actionRow.appendChild(shareBtn);
+
+  /* Meta overview strip */
+  const metaEl = document.getElementById('modal-meta');
+  if (project.meta) {
+    const m = project.meta;
+    /* Team: split on ' & ' or ',' for multi-member display */
+    const members = (m.team || '—').split(/\s*[,&]\s*/).map(s => s.trim()).filter(Boolean);
+    const teamHtml = members.length > 1
+      ? members.map(name => `<span class="modal-meta-team-member">${name}</span>`).join('')
+      : `<span class="modal-meta-team-member">${members[0] || '—'}</span>`;
+
+    metaEl.innerHTML = `
+      <div class="modal-meta-row modal-meta-row-top">
+        <div class="modal-meta-cell">
+          <div class="modal-meta-label">Year</div>
+          <div class="modal-meta-value">${m.year || project.year || '—'}</div>
+        </div>
+        <div class="modal-meta-cell">
+          <div class="modal-meta-label">Duration</div>
+          <div class="modal-meta-value">${m.duration || '—'}</div>
+        </div>
+        <div class="modal-meta-cell">
+          <div class="modal-meta-label">My Role</div>
+          <div class="modal-meta-value accent">${m.role || '—'}</div>
+        </div>
+      </div>
+      <div class="modal-meta-row modal-meta-row-bottom">
+        <div class="modal-meta-cell">
+          <div class="modal-meta-label">Team</div>
+          <div class="modal-meta-team">${teamHtml}</div>
+        </div>
+      </div>
+    `;
+    metaEl.style.display = 'flex';
+  } else {
+    metaEl.style.display = 'none';
+  }
+
+  /* Overview / Motivation */
+  document.getElementById('modal-overview').textContent   = project.overview;
+  document.getElementById('modal-motivation').textContent = project.motivation;
+
+  /* Images */
+  const imagesWrap = document.getElementById('modal-images-wrap');
+  const imagesEl   = document.getElementById('modal-images');
+  if (project.images && project.images.length) {
+    imagesEl.innerHTML = project.images.map(img =>
+      img.src
+        ? `<div class="modal-img-card"><img src="${img.src}" alt="${img.label}"/></div>`
+        : `<div class="modal-img-card">[ ${img.label.toUpperCase()} ]</div>`
+    ).join('');
+    imagesWrap.style.display = 'block';
+  } else {
+    imagesWrap.style.display = 'none';
+  }
+
+  /* Video */
+  const videoWrap = document.getElementById('modal-video-wrap');
+  const videoEl   = document.getElementById('modal-video');
+  if (project.video) {
+    if (project.video.type === 'youtube') {
+      videoEl.innerHTML = `<iframe src="https://www.youtube.com/embed/${project.video.id}" allowfullscreen></iframe>`;
+    } else {
+      videoEl.innerHTML = `
+        <div class="modal-video-placeholder">
+          <div class="modal-video-placeholder-icon">▶</div>
+          <div>${project.video.label}</div>
+          <div style="opacity:.5;font-size:.6rem;margin-top:4px;">VIDEO PLACEHOLDER — REPLACE WITH EMBED</div>
+        </div>`;
+    }
+    videoWrap.style.display = 'block';
+  } else {
+    videoWrap.style.display = 'none';
+  }
+
+  /* Tags */
+  const tagsWrap = document.getElementById('modal-tags-wrap');
+  const tagsEl   = document.getElementById('modal-tags');
+  if (project.tags && project.tags.length) {
+    tagsEl.innerHTML = project.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+    tagsWrap.style.display = 'block';
+  } else {
+    tagsWrap.style.display = 'none';
+  }
+
+  /* Links */
+  const linksWrap = document.getElementById('modal-links-wrap');
+  const linksEl   = document.getElementById('modal-links');
+  if (project.links && project.links.length) {
+    linksEl.innerHTML = project.links.map(l =>
+      `<a class="modal-link-btn${l.primary ? ' primary' : ''}" href="${l.href}">
+         ${l.label} ↗
+       </a>`
+    ).join('');
+    linksWrap.style.display = 'block';
+  } else {
+    linksWrap.style.display = 'none';
+  }
+
+  /* Extra named sections (e.g. Grass project deep-dives) */
+  let extraWrap = document.getElementById('modal-extra-sections');
+  if (!extraWrap) {
+    extraWrap = document.createElement('div');
+    extraWrap.id = 'modal-extra-sections';
+    document.getElementById('modal-links-wrap').after(extraWrap);
+  }
+  if (project.sections && project.sections.length) {
+    extraWrap.innerHTML = project.sections.map(s => `
+      <div style="margin-top:28px;">
+        <div class="modal-divider"></div>
+        <div class="modal-section-label">${s.label}</div>
+        <p class="modal-text">${s.body}</p>
+      </div>
+    `).join('');
+  } else {
+    extraWrap.innerHTML = '';
+  }
+
+  /* Animate in */
+  modal.scrollTop = 0;
+  backdrop.classList.add('open');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  modal.focus();
+}
+
+function closeModal() {
+  backdrop.classList.remove('open');
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* Wire up each project card via data-project attribute */
+document.querySelectorAll('.project-card').forEach((card) => {
+  const pid = card.dataset.project;
+  const project = PROJECTS.find(p => p.id === pid);
+  if (!project) return;
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    openModal(project);
+  });
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(project); }
+  });
+});
+
+/* ── EXPERIENCE SLIDESHOWS ── */
+document.querySelectorAll('[data-slideshow]').forEach(slideshow => {
+  const track   = slideshow.querySelector('.exp-slides-track');
+  const slides  = slideshow.querySelectorAll('.exp-slide');
+  const prevBtn = slideshow.querySelector('.exp-slide-btn.prev');
+  const nextBtn = slideshow.querySelector('.exp-slide-btn.next');
+  const dotsEl  = slideshow.querySelector('.exp-slide-dots');
+  const counter = slideshow.querySelector('.exp-slide-counter');
+  const total   = slides.length;
+  let current   = 0;
+
+  /* Build dots */
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'exp-slide-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Slide ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(dot);
+  });
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dotsEl.querySelectorAll('.exp-slide-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current));
+    counter.textContent = `${current + 1} / ${total}`;
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  /* Swipe support */
+  let tx0 = 0;
+  const trackWrap = slideshow.querySelector('.exp-slides-track-wrap');
+  trackWrap.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, { passive: true });
+  trackWrap.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx0;
+    if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
+  goTo(0);
+});
+
+/* Close triggers */
+closeBtn.addEventListener('click', closeModal);
+backdrop.addEventListener('click', closeModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('open')) {
+    e.stopPropagation();
+    closeModal();
+  }
+});
+
+/* Swipe down to close */
+let touchStartY = 0;
+modal.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+modal.addEventListener('touchend', (e) => {
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (dy > 80 && modal.scrollTop === 0) closeModal();
+}, { passive: true });
+</script>
+</body>
+</html>
