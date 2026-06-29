@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Portfolio — Nicholas Yap</title>
+<title>Portfolio | Nicholas Yap</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -180,10 +180,13 @@ nav.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 55% 50% at 60% 35%, rgba(30,107,127,0.18) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 40% at 15% 75%, rgba(196,140,42,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 60% at 85% 80%, rgba(29,43,69,0.5) 0%, transparent 70%),
-    var(--bg);
+    radial-gradient(ellipse 55% 50% at 60% 35%, rgba(30,107,127,0.18) 0%, transparent 80%),
+    radial-gradient(ellipse 40% 40% at 15% 75%, rgba(196,140,42,0.08) 0%, transparent 75%),
+    radial-gradient(ellipse 70% 60% at 85% 80%, rgba(29,43,69,0.5) 0%, transparent 90%),
+    
+    linear-gradient(rgba(14, 17, 24, 0.9), rgba(14, 17, 24, 0.9)),
+    
+    url('images/aboutme-01.jpeg') center / cover no-repeat;
 }
 .hero-noise {
   position: absolute; inset: 0; opacity: 0.025;
@@ -241,7 +244,6 @@ nav.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
   font-size: 0.97rem; color: var(--text);
   line-height: 1.75; max-width: 360px;
 }
-/* Hero button row */
 .hero-btn-row {
   display: flex;
   flex-wrap: wrap;
@@ -300,7 +302,6 @@ nav.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
 .hero-nameplate {
   position: relative; z-index: 2;
   padding: 0 clamp(20px, 5vw, 60px);
-  overflow: hidden;
   flex-shrink: 0;
 }
 .hero-nameplate-text {
@@ -380,7 +381,15 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
 
 /* ── ABOUT ── */
 #about {
-  background: var(--bg2);
+  /* The linear-gradient acts as the dark overlay, sitting on top of the image */
+  background: 
+    linear-gradient(
+      rgba(14, 17, 24, 0.9), /* Top color (88% opacity) */
+      rgba(14, 17, 24, 0.9)  /* Bottom color (88% opacity) */
+    ),
+    url('images/aboutme-02.jpeg') center / cover no-repeat;
+
+  /* Keep your existing borders */
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -410,17 +419,33 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
 .chip:hover { border-color: var(--accent-light); color: var(--accent-light); }
 .chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-light); }
 .about-cta { display: flex; gap: 14px; flex-wrap: wrap; }
-.about-images { position: relative; height: 420px; }
+.about-images { 
+  position: relative; 
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centers the image horizontally */
+  align-items: center;     /* Centers the image vertically */
+}
 .about-img-card {
-  position: absolute;
+  position: relative;
+  width: 100%;             /* Let it fill the container up to max-width */
+  max-width: 420px;        /* Controls the maximum size on ultra-wide screens */
+  aspect-ratio: 3 / 4; 
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--border);
   transition: transform var(--transition), box-shadow var(--transition);
 }
-.about-img-card:hover { transform: scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
-.about-img-card:nth-child(1) { width: 68%; height: 78%; top: 0; right: 0; }
-.about-img-card:nth-child(2) { width: 52%; height: 60%; bottom: 0; left: 0; border-color: var(--navy-mid); }
+.about-img-card:hover { 
+  transform: scale(1.02); 
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4); 
+}
+.about-img-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .about-img-placeholder {
   width:100%; height:100%;
   display:flex; align-items:center; justify-content:center;
@@ -617,7 +642,14 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
 .ticker-name.visited { color: var(--gold); }
 
 /* ── PROJECTS ── */
-#projects { background: var(--bg); }
+#projects { 
+  background: 
+    linear-gradient(
+      rgba(14, 17, 24, 0.85), /* Dark overlay - 85% opacity */
+      rgba(14, 17, 24, 0.95)  /* Slightly darker at the bottom */
+    ),
+    url('images/grass-14.png') center / cover no-repeat;
+}
 .projects-header {
   display: flex;
   align-items: flex-end;
@@ -631,30 +663,22 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
   font-family: var(--font-mono); max-width: 240px; text-align: right;
 }
 
-/* ── 7-card bento: 4-col grid with explicit placements ── */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(220px, auto);
   gap: 16px;
 }
-/* Card 1: wide feature top-left */
 .bento-grid .project-card:nth-child(1) { grid-column: span 2; }
-/* Card 2 & 3: single cells top-right */
-/* Card 4: wide feature middle-left */
 .bento-grid .project-card:nth-child(4) { grid-column: span 2; }
-/* Card 5 & 6: single cells */
-/* Card 7: wide feature bottom */
 .bento-grid .project-card:nth-child(7) { grid-column: span 2; }
 
-/* Tablet: 2-col, featured cards stay wide */
 @media (max-width: 1100px) {
   .bento-grid { grid-template-columns: repeat(2, 1fr); }
   .bento-grid .project-card:nth-child(1),
   .bento-grid .project-card:nth-child(4),
   .bento-grid .project-card:nth-child(7) { grid-column: span 2; }
 }
-/* Mobile: single column */
 @media (max-width: 600px) {
   .bento-grid { grid-template-columns: 1fr; }
   .bento-grid .project-card:nth-child(1),
@@ -684,7 +708,6 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
 }
 .project-card.featured { grid-column: span 2; }
 
-/* Reveal overlay on hover */
 .project-card .hover-reveal {
   position: absolute;
   inset: 0;
@@ -713,7 +736,7 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
 .hover-reveal-cta:hover { gap: 10px; }
 
 .project-card-img {
-  height: 160px;
+  height: 280px;
   display: flex; align-items: center; justify-content: center;
   font-size: 2.8rem;
   position: relative; overflow: hidden;
@@ -879,7 +902,6 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
   color: var(--text);
   font-weight: 500;
 }
-/* Controls row */
 .exp-slide-controls {
   display: flex;
   align-items: center;
@@ -924,7 +946,14 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
 }
 
 /* ── EDUCATION ── */
-#education { background: var(--bg); }
+#education { 
+  background: 
+    linear-gradient(
+      rgba(14, 17, 24, 0.85), /* Dark overlay - 85% opacity */
+      rgba(14, 17, 24, 0.95)  /* Slightly darker at the bottom */
+    ),
+    url('images/capstone-02.jpeg') center / cover no-repeat;
+}
 .edu-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1011,13 +1040,13 @@ footer {
 }
 .footer-links a:hover { color: var(--gold); }
 
-/* ── RESPONSIVE BREAKPOINTS ── */
+/* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .hero-content { grid-template-columns: 1fr; gap: 28px; padding-bottom: 16px; }
   .hero-right { align-items: flex-start; }
   .hero-nameplate-text { font-size: clamp(3.5rem, 14vw, 7rem); }
   .about-grid { grid-template-columns: 1fr; }
-  .about-images { height: 320px; }
+  /* .about-images { height: 320px; } */
   .exp-grid { grid-template-columns: 1fr; gap: 32px; }
   .timeline-item { grid-template-columns: 1fr; gap: 8px; }
   .timeline-item::before { display: none; }
@@ -1066,12 +1095,8 @@ footer {
 #project-modal::-webkit-scrollbar { width: 4px; }
 #project-modal::-webkit-scrollbar-track { background: transparent; }
 #project-modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+#project-modal.open { transform: translateY(0); }
 
-#project-modal.open {
-  transform: translateY(0);
-}
-
-/* Drag handle */
 .modal-handle {
   width: 40px; height: 4px;
   background: var(--border);
@@ -1080,11 +1105,10 @@ footer {
   flex-shrink: 0;
 }
 
-/* Hero banner */
 .modal-hero {
   position: relative;
   width: 100%;
-  height: clamp(180px, 28vw, 280px);
+  height: clamp(180px, 30vw, 500px);
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -1092,6 +1116,13 @@ footer {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: clamp(4rem, 8vw, 7rem);
+}
+.modal-hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
 }
 .modal-hero-gradient {
   position: absolute; inset: 0;
@@ -1113,7 +1144,6 @@ footer {
   width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
 }
 
-/* Close button */
 .modal-close {
   position: absolute;
   top: 20px; right: 20px;
@@ -1130,7 +1160,6 @@ footer {
 }
 .modal-close:hover { border-color: var(--accent-light); color: var(--white); background: var(--surface); }
 
-/* Body content */
 .modal-body {
   padding: 8px clamp(20px, 5vw, 48px) 60px;
   max-width: 860px;
@@ -1175,14 +1204,12 @@ footer {
 }
 .modal-action-btn:hover { border-color: var(--accent-light); color: var(--white); }
 
-/* Divider */
 .modal-divider {
   height: 1px;
   background: var(--border);
   margin: 24px 0;
 }
 
-/* Section label */
 .modal-section-label {
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -1192,7 +1219,6 @@ footer {
   margin-bottom: 12px;
 }
 
-/* ── MODAL META OVERVIEW STRIP ── */
 .modal-meta {
   display: flex;
   flex-direction: column;
@@ -1234,7 +1260,6 @@ footer {
   line-height: 1.3;
 }
 .modal-meta-value.accent { color: var(--gold); }
-/* Team row: display members inline with separator dots */
 .modal-meta-team {
   display: flex;
   align-items: center;
@@ -1255,7 +1280,6 @@ footer {
   font-weight: 400;
 }
 
-/* Body text */
 .modal-text {
   font-size: 0.97rem;
   color: var(--text);
@@ -1263,31 +1287,148 @@ footer {
   margin-bottom: 24px;
 }
 
-/* Image grid */
 .modal-images {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 160px;
+  gap: 8px;
   margin: 16px 0 24px;
 }
-.modal-img-card {
-  border-radius: 12px;
+@media (max-width: 600px) {
+  .modal-images { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 130px; }
+}
+.modal-bento-tile {
+  border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--border);
-  aspect-ratio: 16/9;
   background: var(--surface);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.72rem; font-family: var(--font-mono);
-  color: var(--muted); letter-spacing: 0.06em;
-  transition: border-color var(--transition);
+  cursor: zoom-in;
+  position: relative;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.modal-img-card:hover { border-color: var(--accent-light); }
-.modal-img-card img {
-  width: 100%; height: 100%; object-fit: cover;
-  display: block;
+.modal-bento-tile:hover {
+  border-color: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.modal-bento-tile.wide { grid-column: span 2; }
+.modal-bento-tile.tall { grid-row: span 2; }
+.modal-bento-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.3s ease;
+}
+.modal-bento-tile:hover img { transform: scale(1.03); }
+.modal-bento-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 6px;
+}
+.modal-bento-placeholder-label {
+  font-size: 0.65rem; font-family: var(--font-mono);
+  color: var(--muted); letter-spacing: 0.06em;
+  text-align: center; padding: 0 10px; line-height: 1.4;
+}
+.modal-bento-zoom-badge {
+  position: absolute; bottom: 8px; right: 8px;
+  background: rgba(14,17,24,0.82);
+  border: 1px solid var(--border);
+  border-radius: 6px; padding: 3px 8px;
+  font-size: 0.6rem; font-family: var(--font-mono);
+  color: var(--muted); letter-spacing: 0.06em;
+  opacity: 0; transition: opacity var(--transition);
+  pointer-events: none;
+}
+.modal-bento-tile:hover .modal-bento-zoom-badge { opacity: 1; }
+
+/* ── LIGHTBOX ── */
+#modal-lightbox {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(6,9,14,0.94);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+#modal-lightbox.open { opacity: 1; pointer-events: all; }
+.lb-img-wrap {
+  position: relative;
+  max-width: min(92vw, 1100px);
+  width: 100%;
+  transform: scale(0.93);
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+#modal-lightbox.open .lb-img-wrap { transform: scale(1); }
+#lb-img {
+  display: block; width: 100%;
+  max-height: 76vh; object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+#lb-placeholder {
+  width: 100%; height: 340px;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+}
+.lb-close {
+  position: absolute; top: -14px; right: -14px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color var(--transition), color var(--transition);
+  z-index: 10;
+}
+.lb-close:hover { border-color: var(--accent-light); color: var(--white); }
+.lb-caption {
+  margin-top: 14px; text-align: center;
+  font-size: 0.85rem; color: var(--text); line-height: 1.5;
+  max-width: 600px; font-family: var(--font-display);
+}
+.lb-nav {
+  display: flex; align-items: center; gap: 16px; margin-top: 14px;
+}
+.lb-nav-btn {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color var(--transition), color var(--transition);
+}
+.lb-nav-btn:hover { border-color: var(--accent-light); color: var(--white); }
+.lb-nav-btn:disabled { opacity: 0.3; cursor: default; }
+.lb-counter {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--muted); letter-spacing: 0.1em;
 }
 
-/* Video embed */
+.modal-section-img-wrap {
+  margin: 14px 0 20px;
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.modal-section-img-wrap:hover {
+  border-color: var(--accent-light);
+  transform: translateY(-1px);
+}
+.modal-section-img-wrap img {
+  display: block; width: 100%;
+  max-height: 400px; object-fit: cover;
+}
+.modal-section-img-caption {
+  padding: 9px 14px;
+  font-size: 0.75rem; font-family: var(--font-mono);
+  color: var(--muted); letter-spacing: 0.06em;
+  border-top: 1px solid var(--border);
+  background: var(--bg3);
+}
+
 .modal-video {
   position: relative;
   width: 100%;
@@ -1298,7 +1439,7 @@ footer {
   background: var(--surface);
   margin: 16px 0 24px;
 }
-.modal-video iframe {
+.modal-video iframe, .modal-video video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   border: none;
@@ -1314,7 +1455,6 @@ footer {
 }
 .modal-video-placeholder-icon { font-size: 2.4rem; opacity: 0.4; }
 
-/* Tech tags */
 .modal-tags {
   display: flex; flex-wrap: wrap; gap: 8px;
   margin-top: 6px;
@@ -1330,7 +1470,6 @@ footer {
   letter-spacing: 0.04em;
 }
 
-/* Links section */
 .modal-links {
   display: flex; flex-wrap: wrap; gap: 10px;
   margin-top: 8px;
@@ -1360,8 +1499,147 @@ footer {
   border-color: var(--accent-light);
 }
 
-/* ── ACTIVE NAV INDICATOR ── */
-.section-marker { position: relative; }
+/* ── MODAL CROSS-LINKS ── */
+.modal-cross-link {
+  color: var(--accent-light);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+  font-weight: 500;
+}
+.modal-cross-link:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* ══════════════════════════════════════════
+   STL VIEWER
+   ══════════════════════════════════════════ */
+
+/* Wrapper injected above the Gallery section */
+#modal-stl-wrap {
+  margin-bottom: 28px;
+}
+
+.stl-viewer {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #080d12;
+  border: 1px solid var(--border);
+  margin-top: 10px;
+}
+
+.stl-viewer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Loading overlay */
+.stl-viewer__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #080d12;
+  z-index: 10;
+}
+.stl-viewer__spinner {
+  width: 28px; height: 28px;
+  border: 2px solid #21262d;
+  border-top-color: var(--accent-light);
+  border-radius: 50%;
+  animation: stl-spin 0.7s linear infinite;
+}
+@keyframes stl-spin { to { transform: rotate(360deg); } }
+.stl-viewer__overlay-text {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.stl-viewer__overlay-sub {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #484f58;
+  letter-spacing: 0.06em;
+}
+.stl-viewer__error-icon { font-size: 2rem; }
+
+/* Bottom controls bar */
+.stl-viewer__controls {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  display: flex; gap: 6px;
+  z-index: 5;
+}
+.stl-viewer__btn {
+  width: 32px; height: 32px;
+  background: rgba(8,13,18,0.85);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 14px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.stl-viewer__btn:hover {
+  color: var(--white);
+  border-color: rgba(42,143,166,0.5);
+  background: rgba(42,143,166,0.1);
+}
+.stl-viewer__btn.active {
+  color: var(--accent-light);
+  border-color: rgba(42,143,166,0.5);
+  background: rgba(42,143,166,0.12);
+}
+
+/* Triangle count (bottom-right) */
+.stl-viewer__info {
+  position: absolute;
+  bottom: 14px; right: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: #484f58;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Hint label (fades out after 4s) */
+.stl-viewer__hint {
+  position: absolute;
+  top: 12px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+  animation: stl-hint-fade 4s ease forwards;
+}
+@keyframes stl-hint-fade {
+  0%, 60% { opacity: 1; }
+  100%     { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stl-viewer__spinner { animation-duration: 2s; }
+  .stl-viewer__hint    { animation: none; opacity: 0; }
+}
 </style>
 </head>
 <body>
@@ -1394,14 +1672,13 @@ footer {
     <div class="hero-left">
       <div class="hero-badge">Available for Opportunities</div>
       <h1 class="hero-headline">
-        Mechanical &amp; Mechatronics<br />
-        Engineer based<br />
-        in Vancouver
+        Mechanical Engineering Graduate <br />
+        Specialized in Mechatronics
       </h1>
     </div>
     <div class="hero-right">
       <p class="hero-bio">
-        I design and build mechatronics systems — from self-balancing robots and embedded firmware to mechanical CAD and control theory. Turning engineering fundamentals into working hardware.
+        Hello and welcome! I’m a Mechatronics Engineer who went from snapping together LEGOs to designing self-balancing robots. Feel free to explore my work and get to know me better.
       </p>
       <div class="hero-btn-row">
         <a class="btn-primary" href="#about">
@@ -1413,10 +1690,8 @@ footer {
     </div>
   </div>
   <div class="hero-nameplate">
-    <div class="hero-nameplate-text">Yap</div>
+    <div class="hero-nameplate-text">Nicholas Yap</div>
   </div>
-
-  <!-- Subtle animated scroll hint -->
   <div class="hero-scroll-indicator" aria-hidden="true">
     <div class="scroll-indicator-line"></div>
     <span class="scroll-indicator-text">Scroll</span>
@@ -1428,87 +1703,59 @@ footer {
   <div class="about-grid">
     <div class="about-left">
       <div class="section-eyebrow reveal">About</div>
-      <h2 class="section-title reveal reveal-delay-1">Where Ideas Grow<br />Into Meaningful Work</h2>
+      <h2 class="section-title reveal reveal-delay-1">A Little About Me</h2>
       <p class="about-body reveal reveal-delay-2">
-        I'm a Mechatronics Engineering graduate from UBC with a passion for building complete systems — where mechanical design, embedded firmware, control theory, and software all come together. I thrive at the intersection of disciplines, whether that's tuning a PID controller at 2am or CADing a chassis that has to survive a dozen falls.
+        I'm a Mechatronics Engineering graduate driven by my love for "cool tech" and have a habit of throwing myself headfirst into the chaos of mechanical design and complex, integrated systems. I thrive in the trenches of development and persistent iteration, whether that means tuning a PID controller at 2am or CADing a chassis that has to survive a dozen falls. </br></br>Off the clock, you can find me unwinding with some fast-paced badminton rallies, diving into video games, or satisfying my inner foodie and love for exploration throughout my travels. 
       </p>
       <div class="about-chips reveal reveal-delay-3">
-        <div class="chip"><span class="chip-dot"></span> Systems Thinking</div>
-        <div class="chip"><span class="chip-dot"></span> Rapid Prototyping</div>
-        <div class="chip"><span class="chip-dot"></span> First-Principles Design</div>
-        <div class="chip"><span class="chip-dot"></span> Deep Focus</div>
+        <div class="chip"><span class="chip-dot"></span> Detail Oriented</div>
+        <div class="chip"><span class="chip-dot"></span> Versatile</div>
+        <div class="chip"><span class="chip-dot"></span> Mechatronics</div>
+        <div class="chip"><span class="chip-dot"></span> Foodie & Gamer</div>
       </div>
       <div class="about-cta reveal reveal-delay-4">
-        <a class="btn-primary" href="#projects">Learn More →</a>
+        <a class="btn-primary" href="#projects">My Projects →</a>
         <a class="btn-secondary" href="#resume-cta">Contact Me</a>
       </div>
     </div>
     <div class="about-images reveal reveal-delay-2">
       <div class="about-img-card">
-        <div class="about-img-placeholder">[ FIELD PHOTO ]</div>
+        <img src="images/aboutme-00.jpg" alt="About Me" style="width: 100%; height: 100%; object-fit: cover;" />
       </div>
-      <div class="about-img-card">
-        <div class="about-img-placeholder">[ LAB PHOTO ]</div>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- MAP -->
 <div id="map-section">
   <div class="map-outer" id="mapOuter">
-
-    <!-- D3 SVG renders here -->
     <svg id="map-d3-svg"></svg>
-
-    <!-- Tooltip -->
-    <div id="map-tooltip" style="
-      position:absolute; pointer-events:none; z-index:20;
-      background:rgba(14,17,24,0.96); border:1px solid #243048;
-      border-radius:10px; padding:10px 14px; min-width:160px;
-      opacity:0; transition:opacity 0.16s ease;
-      transform:translate(-50%,-100%);
-      font-family:'Space Grotesk',sans-serif;
-    "></div>
-
-    <!-- Controls -->
+    <div id="map-tooltip" style="position:absolute;pointer-events:none;z-index:20;background:rgba(14,17,24,0.96);border:1px solid #243048;border-radius:10px;padding:10px 14px;min-width:160px;opacity:0;transition:opacity 0.16s ease;transform:translate(-50%,-100%);font-family:'Space Grotesk',sans-serif;"></div>
     <div class="map-controls">
       <button class="map-btn" id="mapZoomIn"  title="Zoom in">+</button>
       <button class="map-btn" id="mapZoomOut" title="Zoom out">−</button>
       <button class="map-btn" id="mapReset"   title="Reset view" style="font-size:1rem;">↺</button>
     </div>
-
-    <!-- Status badge -->
     <div class="map-status">
       <span class="map-status-dot"></span>
       MAP STATUS: ACTIVE &nbsp;|&nbsp; <span id="map-loc-count">7 LOCATIONS</span>
     </div>
-
-    <!-- Legend -->
     <div class="map-legend">
       <div class="map-legend-item"><span class="legend-dot-lived"></span>LIVED</div>
       <div class="map-legend-item"><span class="legend-dot-visited"></span>VISITED</div>
     </div>
-
-    <!-- Zoom readout -->
     <div class="map-zoom-label" id="mapZoomLabel">ZOOM 1.0×</div>
-
-    <!-- Bottom label -->
     <div class="map-label-row">
-      <h2 class="map-heading reveal">World Map of Places I've Lived + Stayed</h2>
+      <h2 class="map-heading reveal">Interactive World Map of Places I've Lived + Stayed</h2>
       <div class="map-sub">SCROLL TO ZOOM &nbsp;·&nbsp; DRAG TO PAN &nbsp;·&nbsp; HOVER PINS FOR DETAILS</div>
     </div>
-
   </div>
 </div>
 
 <!-- LOCATION TICKER -->
 <div class="loc-ticker-wrap" aria-hidden="true">
-  <!-- Row 1: Lived -->
   <div class="loc-ticker-row" style="position:relative;">
     <div class="loc-ticker-track lived-track" id="locTickerLived"></div>
   </div>
-  <!-- Row 2: Visited -->
   <div class="loc-ticker-row" style="position:relative;">
     <div class="loc-ticker-track visited-track" id="locTickerVisited"></div>
   </div>
@@ -1518,19 +1765,16 @@ footer {
 <section id="projects">
   <div class="projects-header">
     <div>
-      <div class="section-eyebrow reveal">Interactive Concept 7 — Robotics</div>
+      <div class="section-eyebrow reveal">Interactive Concept 7 · Robotics</div>
       <h2 class="section-title reveal reveal-delay-1">Projects</h2>
     </div>
-    <p class="projects-hint reveal reveal-delay-2">Hover each card · Click to view blueprint</p>
+    <p class="projects-hint reveal reveal-delay-2">Hover each card</br>Click to view blueprint</p>
   </div>
 
   <div class="bento-grid">
-
-    <!-- Card 1 — Wide featured: Grass -->
     <div class="project-card reveal" tabindex="0" data-project="grass">
-      <div class="project-card-img" style="background:linear-gradient(140deg,#081a0e 0%,#0c2414 60%,#061208 100%);">
+      <div class="project-card-img" style="background-image:url('images/grass-00.jpg');background-size:cover;background-position:center;">
         <div class="card-tag"><span class="card-tag-dot"></span> ROBOTICS · CONTROL SYSTEMS</div>
-        🤖
       </div>
       <div class="hover-reveal">
         <div class="hover-reveal-content">
@@ -1540,15 +1784,14 @@ footer {
       </div>
       <div class="project-card-body">
         <div class="project-card-title">Self-Balancing Wheeled Bipedal Robot</div>
-        <div class="project-card-sub">Prototype: Grass — MECH 421/423 Capstone</div>
+        <div class="project-card-sub">Prototype: Grass | MECH 421/423 Final Project</div>
         <div class="project-card-footer">
-          <div class="spec-row"><span class="spec-pill">ESP32</span><span class="spec-pill">Cascaded PID</span><span class="spec-pill">BLE</span></div>
+          <div class="spec-row"><span class="spec-pill">ESP32</span><span class="spec-pill">Cascaded PID</span><span class="spec-pill">WinForms</span><span class="spec-pill">BLE</span><span class="spec-pill">CAD</span><span class="spec-pill">3D Printing</span></div>
           <span class="view-link">Blueprint →</span>
         </div>
       </div>
     </div>
 
-    <!-- Card 2 -->
     <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="quantum">
       <div class="project-card-img card-2-bg">
         <div class="card-tag"><span class="card-tag-dot"></span> OPTOELECTRONICS</div>
@@ -1570,7 +1813,6 @@ footer {
       </div>
     </div>
 
-    <!-- Card 3 -->
     <div class="project-card reveal reveal-delay-2" tabindex="0" data-project="exo">
       <div class="project-card-img card-3-bg">
         <div class="card-tag"><span class="card-tag-dot"></span> ROBOTICS · ACTUATION</div>
@@ -1592,73 +1834,66 @@ footer {
       </div>
     </div>
 
-    <!-- Card 4 — Wide featured -->
-    <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="plasma">
-      <div class="project-card-img card-4-bg">
-        <div class="card-tag"><span class="card-tag-dot"></span> THERMAL PHYSICS</div>
-        ⚡
+    <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="capstone">
+      <div class="project-card-img card-4-bg" style="background-image:url('images/capstone-00.jpg');background-size:cover;background-position:center;">
+        <div class="card-tag"><span class="card-tag-dot"></span> CAPSTONE · MECHATRONICS</div>
       </div>
       <div class="hover-reveal">
         <div class="hover-reveal-content">
-          <div class="hover-reveal-desc">Toroidal magnetic containment grid sustaining 10keV plasma for fusion-adjacent research.</div>
+          <div class="hover-reveal-desc">Development of a semi-autonomous trash retrieval drone system for object retrieval with downwash mitigation.</div>
           <span class="hover-reveal-cta">View Full Blueprint →</span>
         </div>
       </div>
       <div class="project-card-body">
-        <div class="project-card-title">High-Density Plasma Initiator</div>
-        <div class="project-card-sub">Magnetic Field Plasma Containment Grid</div>
+        <div class="project-card-title">Trash Retrieval Drone</div>
+        <div class="project-card-sub">Mechatronics Capstone Project</div>
         <div class="project-card-footer">
-          <div class="spec-row"><span class="spec-pill">Spec Node #8</span></div>
+          <div class="spec-row"><span class="spec-pill">CAD</span><span class="spec-pill">3D Printing</span><span class="spec-pill">Flight Controller</span><span class="spec-pill">Drones</span><span class="spec-pill">Downwash Mitigation</span></div>
           <span class="view-link">Blueprint →</span>
         </div>
       </div>
     </div>
 
-    <!-- Card 5 -->
-    <div class="project-card reveal reveal-delay-2" tabindex="0" data-project="nav">
-      <div class="project-card-img card-5-bg">
-        <div class="card-tag"><span class="card-tag-dot"></span> GNC · NAVIGATION</div>
-        🛰️
+    <div class="project-card reveal reveal-delay-2" tabindex="0" data-project="smalldrone">
+      <div class="project-card-img card-5-bg" style="background-image:url('images/capstone-13.jpg');background-size:cover;background-position:center;">
+        <div class="card-tag"><span class="card-tag-dot"></span> CAPSTONE · DOWNSCALED DESIGN</div>
       </div>
       <div class="hover-reveal">
         <div class="hover-reveal-content">
-          <div class="hover-reveal-desc">Star-tracker and IMU fusion for attitude determination in LEO with <0.01° pointing error.</div>
+          <div class="hover-reveal-desc">Downscaled design of the Trash Retrieval Drone to minimize weight for downwash mitigation and improve portability.</div>
           <span class="hover-reveal-cta">View Full Blueprint →</span>
         </div>
       </div>
       <div class="project-card-body">
-        <div class="project-card-title">Stellar Navigation Core</div>
-        <div class="project-card-sub">LEO Attitude Determination System</div>
+        <div class="project-card-title">Smaller Litter Drone</div>
+        <div class="project-card-sub">Downscaled Trash Retrieval Drone - Downwash Mitigation Tests</div>
         <div class="project-card-footer">
-          <div class="spec-row"><span class="spec-pill">Spec Node #10</span></div>
+          <div class="spec-row"><span class="spec-pill">CAD</span><span class="spec-pill">3D Printing</span><span class="spec-pill">Drones</span><span class="spec-pill">Downwash Mitigation</span></div>
           <span class="view-link">Blueprint →</span>
         </div>
       </div>
     </div>
 
-    <!-- Card 6 -->
-    <div class="project-card reveal reveal-delay-3" tabindex="0" data-project="soft">
-      <div class="project-card-img card-6-bg">
-        <div class="card-tag"><span class="card-tag-dot"></span> SOFT ROBOTICS</div>
-        🦾
+    <div class="project-card reveal reveal-delay-3" tabindex="0" data-project="octopus">
+      <div class="project-card-img card-6-bg" style="background-image:url('images/capstone-09.png');background-size:cover;background-position:center;">
+        <div class="card-tag"><span class="card-tag-dot"></span> CAPSTONE · SOFT ROBOTICS</div>
       </div>
       <div class="hover-reveal">
         <div class="hover-reveal-content">
-          <div class="hover-reveal-desc">Pneumatically actuated soft gripper with tactile pressure sensing for delicate manipulation.</div>
+          <div class="hover-reveal-desc">Mechanically actuated soft gripper designed with logarithmic spirals for adaptive and flexible grabbing.</div>
           <span class="hover-reveal-cta">View Full Blueprint →</span>
         </div>
       </div>
       <div class="project-card-body">
-        <div class="project-card-title">Adaptive Soft Gripper</div>
-        <div class="project-card-sub">Pneumatic Tactile Manipulation</div>
+        <div class="project-card-title">Octopus Claw</div>
+        <div class="project-card-sub">Soft Robotics Research & Testing</div>
         <div class="project-card-footer">
-          <div class="spec-row"><span class="spec-pill">Spec Node #12</span></div>
+          <div class="spec-row"><span class="spec-pill">CAD</span><span class="spec-pill">3D Printing</span><span class="spec-pill">Soft Robotics</span><span class="spec-pill">Manipulator</span></div>
           <span class="view-link">Blueprint →</span>
         </div>
       </div>
     </div>
 
-    <!-- Card 7 — Wide featured bottom -->
     <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="fusion">
       <div class="project-card-img card-7-bg">
         <div class="card-tag"><span class="card-tag-dot"></span> ENERGY · SYSTEMS</div>
@@ -1679,7 +1914,6 @@ footer {
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -1688,127 +1922,73 @@ footer {
   <div class="exp-grid">
     <div class="exp-left">
       <div class="section-eyebrow reveal">Career</div>
-      <div class="exp-count reveal reveal-delay-1">7<span>+</span></div>
-      <p class="exp-desc reveal reveal-delay-2">Years building at the intersection of software, hardware, and physics.</p>
+      <!-- <div class="exp-count reveal reveal-delay-1">5<span>+</span></div>
+      <p class="exp-desc reveal reveal-delay-2">Years</p> -->
     </div>
     <div class="timeline">
-
-      <!-- Job 1 -->
       <div class="timeline-item reveal">
-        <div class="timeline-year">2023 — Present</div>
+        <div class="timeline-year">May 2025 to</br>Aug 2025</div>
         <div>
-          <div class="timeline-role">Lead Systems Engineer</div>
-          <div class="timeline-company">Orbital Dynamics Lab</div>
-          <div class="timeline-desc">Architected the onboard autonomy stack for a 3U CubeSat mission. Led a cross-disciplinary team of 8 across propulsion, GNC, and embedded software.</div>
-          <div class="exp-slideshow" data-slideshow>
-            <div class="exp-slides-track-wrap">
-              <div class="exp-slides-track">
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ CubeSat Integration Lab ]</div>
-                  <div class="exp-slide-caption"><strong>CubeSat Assembly</strong> — 3U structure integration with GNC module and power distribution bus.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Propulsion Test Stand ]</div>
-                  <div class="exp-slide-caption"><strong>Thruster Test Campaign</strong> — Cold-gas micro-thruster characterisation at 10⁻⁵ Torr vacuum.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Mission Control Dashboard ]</div>
-                  <div class="exp-slide-caption"><strong>Ground Station UI</strong> — Real-time telemetry dashboard built with Rust + WebSockets.</div>
-                </div>
-              </div>
-            </div>
-            <div class="exp-slide-controls">
-              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
-              <button class="exp-slide-btn next" aria-label="Next">›</button>
-              <div class="exp-slide-dots"></div>
-              <span class="exp-slide-counter">1 / 3</span>
-            </div>
+          <div class="timeline-role">Summer Research Student - Cardiac Surgery Department</div>
+          <div class="timeline-company">Ted Rogers Centre for Heart Research + University Health Network</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Designed a framework for a secure data collection system for aortic biomechanics research using REDCap, ensuring patient confidentiality and anonymity.</li>
+              <li>Built custom MATLAB scripts to process and restructure existing research data for enhanced data security and streamlined management capabilities.</li>
+              <li>Customized web elements using HTML and CSS to improve visual consistency and mobile compatibility.</li>
+              <li>Participated in a company-sponsored animal dissection study for aortic heart research.</li>
+            </ul>
           </div>
         </div>
       </div>
-
-      <!-- Job 2 -->
       <div class="timeline-item reveal reveal-delay-1">
-        <div class="timeline-year">2022 — 2023</div>
+        <div class="timeline-year">Feb 2024 to</br>Aug 2024</div>
         <div>
-          <div class="timeline-role">GNC Software Engineer (Contract)</div>
-          <div class="timeline-company">Reaction Engines Ltd · Abingdon, UK</div>
-          <div class="timeline-desc">Contributed to flight software for SABRE hybrid air-breathing rocket engine testbed. Developed real-time pre-cooler control loops in C running at 2kHz with hard deadline guarantees.</div>
-          <div class="exp-slideshow" data-slideshow>
-            <div class="exp-slides-track-wrap">
-              <div class="exp-slides-track">
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Pre-Cooler Heat Exchanger ]</div>
-                  <div class="exp-slide-caption"><strong>Pre-Cooler Assembly</strong> — Frost-free heat exchanger capable of cooling airflow from 1000°C to −150°C in under 1/100th of a second.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Control Loop Validation HIL ]</div>
-                  <div class="exp-slide-caption"><strong>HIL Rig Validation</strong> — Hardware-in-the-loop testing of 2kHz thermal control loops against simulated flight profiles.</div>
-                </div>
-              </div>
-            </div>
-            <div class="exp-slide-controls">
-              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
-              <button class="exp-slide-btn next" aria-label="Next">›</button>
-              <div class="exp-slide-dots"></div>
-              <span class="exp-slide-counter">1 / 2</span>
-            </div>
+          <div class="timeline-role">Maintenance/Reliability Engineering Co-op</div>
+          <div class="timeline-company">The Dow Chemical Company</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Reprogrammed an industrial oven PID controller and created safe operating procedures, shortening maintenance and improving operator safety.</li>
+              <li>Designed flange covers for shut-down pressure equipment in SolidWorks to improve the safety and repair efficiency for millwrights.</li>
+              <li>Redesigned equipment cleaning procedures, reducing corrosion and extending equipment service life.</li>
+              <li>Coordinated management of change (MOC) for facility renovations, equipment upgrades, and technical documentation to ensure compliant implementation and proper record keeping.</li>
+              <li>Communicated with vendors, work coordinators, and operators to streamline equipment bill of materials, stocking, and upgrades to ensure up-to date management and procurement of critical equipment.</li>
+            </ul>
           </div>
         </div>
       </div>
-
-      <!-- Job 3 -->
       <div class="timeline-item reveal reveal-delay-2">
-        <div class="timeline-year">2021 — 2022</div>
+        <div class="timeline-year">Sept 2023 to</br>Feb 2024</div>
         <div>
-          <div class="timeline-role">Robotics Research Engineer</div>
-          <div class="timeline-company">ETH Zürich · Autonomous Systems Lab</div>
-          <div class="timeline-desc">Developed force-controlled exoskeletal limbs for rehabilitation robotics. Published 2 peer-reviewed papers on impedance control under constraint.</div>
-          <div class="exp-slideshow" data-slideshow>
-            <div class="exp-slides-track-wrap">
-              <div class="exp-slides-track">
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Exoskeleton Prototype v2 ]</div>
-                  <div class="exp-slide-caption"><strong>Leg Exoskeleton Prototype</strong> — 7-DOF force-controlled frame with embedded strain gauges.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Clinical Trial Setup ]</div>
-                  <div class="exp-slide-caption"><strong>Clinical Validation</strong> — Patient-use trials at Balgrist University Hospital, Zürich.</div>
-                </div>
-              </div>
-            </div>
-            <div class="exp-slide-controls">
-              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
-              <button class="exp-slide-btn next" aria-label="Next">›</button>
-              <div class="exp-slide-dots"></div>
-              <span class="exp-slide-counter">1 / 2</span>
-            </div>
+          <div class="timeline-role">Fixed Asset Integrity Engineering Co-op</div>
+          <div class="timeline-company">The Dow Chemical Company</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Collaborated with multiple plant operations teams to author and update Corrosion Control Documents and Integrity Operating Windows, improving reliability across all site operations.</li>
+              <li>Revised ABSA regulatory documentation to ensure regulatory compliance and maintain the site’s permission to operate.</li>
+            </ul>
           </div>
         </div>
       </div>
-
-      <!-- Job 4 -->
       <div class="timeline-item reveal">
-        <div class="timeline-year">2020 — 2021</div>
+        <div class="timeline-year">Sept 2022 to</br>Aug 2026</div>
         <div>
-          <div class="timeline-role">Embedded Systems Engineer (Intern)</div>
-          <div class="timeline-company">MDA Space · Richmond, BC</div>
-          <div class="timeline-desc">Worked on fault-detection and isolation software for the Canadarm3 joint actuators. Implemented FDIR state machines in Ada on a VxWorks RTOS environment for space-qualified hardware.</div>
+          <div class="timeline-role">Senior Aircraft and Administrative Member</div>
+          <div class="timeline-company">UBC Uncrewed Aircraft Systems (UAS)</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Designed airfoil frames, landing gear, and electrical equipment mounts for a VTOL reconnaissance aircraft.</li>
+              <li>Collaborated with an interdisciplinary team to develop comprehensive quadcopter and VTOL CAD assemblies in Onshape, creating functional autonomous drones for competition.</li>
+            </ul>
+          </div>
           <div class="exp-slideshow" data-slideshow>
             <div class="exp-slides-track-wrap">
               <div class="exp-slides-track">
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Canadarm3 Joint Assembly ]</div>
-                  <div class="exp-slide-caption"><strong>Actuator Joint Module</strong> — Flight-heritage joint assembly used for Gateway lunar station robotic operations.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ FDIR State Machine Diagram ]</div>
-                  <div class="exp-slide-caption"><strong>FDIR Logic</strong> — Fault detection state machine covering 14 failure modes across 6 joint axes.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ VxWorks Test Bench ]</div>
-                  <div class="exp-slide-caption"><strong>RTOS Test Environment</strong> — VxWorks bench running Ada FDIR code against injected fault sequences.</div>
-                </div>
+                <div class="exp-slide"><img src="images/scout-00.png" class="exp-slide-img" alt="Scout VTOL Assembly" /><div class="exp-slide-caption"><strong>Scout VTOL Assembly:</strong>Assembly of the VTOL Aircraft named Scout. Developed for long distance scouting for the AEAC competition.</div></div>
+                <div class="exp-slide"><img src="images/scout-02.png" class="exp-slide-img" alt="Scout Servo Mount & Landing Gear" /><div class="exp-slide-caption"><strong>Scout Servo Mount & Landing Gear:</strong>Direct aileron servo control paired with lightweight landing gear.</div></div>
+                <div class="exp-slide"><img src="images/uas-00.png" class="exp-slide-img" alt="Hydrone Payload Mount" /><div class="exp-slide-caption"><strong>Hydrone Payload Mount:</strong>Utilizes Picatinny and M-Lok rails designs for quick access and swapping of payload on a quadcopter.</div></div>
+                <div class="exp-slide"><img src="images/scout-03.png" class="exp-slide-img" alt="Scout Servo Mount Detail" /><div class="exp-slide-caption"><strong>Scout Servo Mount Detail:</strong>Closer look at the servo embedded into the wing to directly drive the ailerons.</div></div>
+                <div class="exp-slide"><img src="images/dragonfly-03.png" class="exp-slide-img" alt="Dragonfly Airfoil Frame" /><div class="exp-slide-caption"><strong>Dragonfly Airfoil Frame:</strong>Full CAD of the VTOL tail frame for manufacturing and lasercutting balsa wood.</div></div>
               </div>
             </div>
             <div class="exp-slide-controls">
@@ -1820,29 +2000,22 @@ footer {
           </div>
         </div>
       </div>
-
-      <!-- Job 5 -->
       <div class="timeline-item reveal reveal-delay-1">
-        <div class="timeline-year">2019 — 2020</div>
+        <div class="timeline-year">Oct 2021 to</br>Jul 2022</div>
         <div>
-          <div class="timeline-role">Propulsion Engineer</div>
-          <div class="timeline-company">Advanced Concepts Group, UBC</div>
-          <div class="timeline-desc">Designed and tested a cold-gas micro-thruster achieving 12mN thrust at 0.8W power budget. Competed in IREC 2020, placing 2nd in the 10,000ft altitude category.</div>
+          <div class="timeline-role">Frame Subteam Member</div>
+          <div class="timeline-company">SUBC - UBC's Submarine Design Team</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Designed 3D models of aluminum extrusion attachments for the outer hull of a submarine.</li>
+              <li>Collaborated to manufacture an aluminum frame for a submarine consistenting of aluminum extrusions and water jet cut sheets.</li>
+            </ul>
+          </div>
           <div class="exp-slideshow" data-slideshow>
             <div class="exp-slides-track-wrap">
               <div class="exp-slides-track">
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Thruster CAD Cross-Section ]</div>
-                  <div class="exp-slide-caption"><strong>Thruster Design</strong> — Nozzle geometry optimised for 12mN at 0.8W via COMSOL flow simulation.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ IREC Launch Vehicle ]</div>
-                  <div class="exp-slide-caption"><strong>IREC 2020 Competitor</strong> — 10,000ft apogee target with active roll control via cold-gas thrusters.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Vacuum Chamber Test ]</div>
-                  <div class="exp-slide-caption"><strong>Vacuum Performance Test</strong> — Characterisation at simulated 30km altitude pressure conditions.</div>
-                </div>
+                <div class="exp-slide"><img src="images/subc-00.png" class="exp-slide-img" alt="SUBC Frame Assembly" /><div class="exp-slide-caption"><strong>SUBC Frame Assembly:</strong>Full aluminum frame for mechanically-powered submarine.</div></div>
+                <div class="exp-slide"><img src="images/subc-01.png" class="exp-slide-img" alt="Frame Mount Attachment" /><div class="exp-slide-caption"><strong>Frame Mount Attachment:</strong>Attachments for auxillery components to the aluminum extrusion frame.</div></div>
               </div>
             </div>
             <div class="exp-slide-controls">
@@ -1854,37 +2027,19 @@ footer {
           </div>
         </div>
       </div>
-
-      <!-- Job 6 -->
       <div class="timeline-item reveal reveal-delay-2">
-        <div class="timeline-year">2018 — 2019</div>
+        <div class="timeline-year">Sept 2020 to</br>Jul 2021</div>
         <div>
-          <div class="timeline-role">Mechanical Design Intern</div>
-          <div class="timeline-company">Ballard Power Systems · Burnaby, BC</div>
-          <div class="timeline-desc">Supported structural design and thermal analysis for next-generation hydrogen fuel cell stacks. Ran FEA simulations in ANSYS to validate bipolar plate compression under operating temperatures and pressures.</div>
-          <div class="exp-slideshow" data-slideshow>
-            <div class="exp-slides-track-wrap">
-              <div class="exp-slides-track">
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ Fuel Cell Stack Assembly ]</div>
-                  <div class="exp-slide-caption"><strong>Stack Assembly</strong> — 200-cell hydrogen PEM fuel cell stack rated at 85kW continuous output.</div>
-                </div>
-                <div class="exp-slide">
-                  <div class="exp-slide-placeholder">[ ANSYS Thermal FEA Result ]</div>
-                  <div class="exp-slide-caption"><strong>Thermal FEA</strong> — Bipolar plate temperature distribution under 80°C operating condition with non-uniform flow.</div>
-                </div>
-              </div>
-            </div>
-            <div class="exp-slide-controls">
-              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
-              <button class="exp-slide-btn next" aria-label="Next">›</button>
-              <div class="exp-slide-dots"></div>
-              <span class="exp-slide-counter">1 / 2</span>
-            </div>
+          <div class="timeline-role">Mechanical Subsystem General Member</div>
+          <div class="timeline-company">University of Toronto Aerospace Team</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Modelled servo mounts, camera mounts, and alignment frames for an autonomous driving payload carried by an aircraft.</li>
+              <li>Designed a custom team-wide Google Slides presentation theme for competition.</li>
+            </ul>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -1896,15 +2051,15 @@ footer {
   <div class="edu-grid" style="grid-template-columns: repeat(2, 1fr);">
     <div class="edu-card reveal reveal-delay-1">
       <div class="edu-icon">🎓</div>
-      <div class="edu-degree">M.Eng. Aerospace Engineering</div>
+      <div class="edu-degree">BASc, Mechanical Engineering - Mechatronics Specialization</div>
       <div class="edu-school">University of British Columbia</div>
-      <div class="edu-year">2021 — Thesis: Adaptive Guidance for Micro-Launchers</div>
+      <div class="edu-year">2021 to 2026: CGPA = 87.6%</div>
     </div>
     <div class="edu-card reveal reveal-delay-2">
       <div class="edu-icon">⚙️</div>
-      <div class="edu-degree">B.Sc. Mechanical Engineering</div>
-      <div class="edu-school">McGill University</div>
-      <div class="edu-year">2019 — Minor: Applied Mathematics</div>
+      <div class="edu-degree">IB Diploma Programme</div>
+      <div class="edu-school">International Baccalaureate</div>
+      <div class="edu-year">2019 to 2021: Biology HL, Global Politics HL, English Literature HL</div>
     </div>
   </div>
 </section>
@@ -1913,21 +2068,20 @@ footer {
 <section id="resume-cta">
   <div class="cta-super reveal">Let's Build Something</div>
   <h2 class="cta-heading reveal reveal-delay-1">Ready to work<br />with <em>purpose?</em></h2>
-  <p class="cta-sub reveal reveal-delay-2">Whether you're hiring, collaborating, or just curious — reach out. I'm always open to interesting problems.</p>
+  <p class="cta-sub reveal reveal-delay-2">Whether you're hiring, collaborating, or just curious, reach out. I'm always open to interesting problems.</p>
   <div class="cta-row reveal reveal-delay-3">
-    <a class="btn-resume" id="resumeBtn" href="#">↓ Download Resume</a>
+    <a class="btn-resume" id="resumeBtn" href="files/Nicholas-Yap-Resume-2026.pdf">↓ Download Resume</a>
     <a class="btn-secondary" href="mailto:nicholas.yap03@gmail.com">Get in Touch →</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-copy">© 2026 Nicholas Yap — Built with intent.</div>
+  <div class="footer-copy">© 2026 Nicholas Yap</div>
   <div class="footer-links">
-    <a href="#">GitHub</a>
-    <a href="#">LinkedIn</a>
-    <a href="#">Twitter</a>
-    <a href="#">Email</a>
+    <a href="https://github.com/Yuuki-NY">GitHub</a>
+    <a href="https://www.linkedin.com/in/nicholas-yap28">LinkedIn</a>
+    <a href="mailto:nicholas.yap28@gmail.com">Email</a>
   </div>
 </footer>
 
@@ -1938,7 +2092,6 @@ footer {
 <div id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-text">
   <div class="modal-handle"></div>
 
-  <!-- Hero banner -->
   <div class="modal-hero" id="modal-hero">
     <div class="modal-hero-bg" id="modal-hero-bg"></div>
     <div class="modal-hero-gradient"></div>
@@ -1948,12 +2101,9 @@ footer {
     </div>
   </div>
 
-  <!-- Close -->
   <button class="modal-close" id="modal-close-btn" aria-label="Close">✕</button>
 
-  <!-- Body -->
   <div class="modal-body">
-
     <div class="modal-header">
       <div class="modal-title-block">
         <h2 class="modal-title" id="modal-title-text"></h2>
@@ -1964,24 +2114,39 @@ footer {
 
     <div class="modal-divider"></div>
 
-    <!-- Meta overview strip: Year · Duration · Role · Team -->
     <div class="modal-meta" id="modal-meta" style="display:none;"></div>
 
-    <!-- Overview -->
     <div class="modal-section-label">Overview</div>
     <p class="modal-text" id="modal-overview"></p>
 
-    <!-- Motivation -->
     <div class="modal-section-label">Motivation</div>
     <p class="modal-text" id="modal-motivation"></p>
 
-    <!-- Extra images -->
+    <!-- ── STL 3D VIEWER ── injected here when project has stlPath -->
+    <div id="modal-stl-wrap" style="display:none;">
+      <div class="modal-divider"></div>
+      <div class="modal-section-label">3D Model</div>
+      <div class="stl-viewer" id="stl-viewer-container">
+        <canvas id="stl-canvas"></canvas>
+        <div class="stl-viewer__overlay" id="stl-overlay">
+          <div class="stl-viewer__spinner"></div>
+          <div class="stl-viewer__overlay-text">Loading model…</div>
+        </div>
+        <div class="stl-viewer__controls" id="stl-controls" style="display:none;">
+          <button class="stl-viewer__btn" id="stl-btn-reset"  title="Reset view">⊙</button>
+          <button class="stl-viewer__btn" id="stl-btn-wire"   title="Wireframe">⬡</button>
+          <button class="stl-viewer__btn" id="stl-btn-flat"   title="Flat shading">◈</button>
+        </div>
+        <div class="stl-viewer__info"  id="stl-info"  style="display:none;"></div>
+        <div class="stl-viewer__hint"  id="stl-hint"  style="display:none;">Drag · Scroll · Right-drag pan</div>
+      </div>
+    </div>
+
     <div id="modal-images-wrap" style="display:none;">
       <div class="modal-section-label">Gallery</div>
       <div class="modal-images" id="modal-images"></div>
     </div>
 
-    <!-- Video -->
     <div id="modal-video-wrap" style="display:none;">
       <div class="modal-section-label">Demo</div>
       <div class="modal-video" id="modal-video"></div>
@@ -1989,28 +2154,364 @@ footer {
 
     <div class="modal-divider"></div>
 
-    <!-- Tech stack -->
     <div id="modal-tags-wrap" style="display:none;">
       <div class="modal-section-label">Tech Stack</div>
       <div class="modal-tags" id="modal-tags"></div>
       <div style="height:20px;"></div>
     </div>
 
-    <!-- Links -->
     <div id="modal-links-wrap" style="display:none;">
       <div class="modal-section-label">Links</div>
       <div class="modal-links" id="modal-links"></div>
     </div>
-
   </div>
 </div>
 
+<!-- LIGHTBOX -->
+<div id="modal-lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+  <div class="lb-img-wrap">
+    <button class="lb-close" id="lb-close" aria-label="Close lightbox">✕</button>
+    <img id="lb-img" src="" alt="" style="display:none;" />
+    <div id="lb-placeholder">
+      <div style="font-size:2rem;opacity:0.3;">🖼</div>
+      <div id="lb-ph-label" style="font-size:0.7rem;font-family:var(--font-mono);color:var(--muted);letter-spacing:0.06em;"></div>
+    </div>
+    <div class="lb-caption" id="lb-caption"></div>
+    <div class="lb-nav">
+      <button class="lb-nav-btn" id="lb-prev" aria-label="Previous image">‹</button>
+      <div class="lb-counter" id="lb-counter">1 / 1</div>
+      <button class="lb-nav-btn" id="lb-next" aria-label="Next image">›</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+     ══════════════════════════════════════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <script>
+/* ════════════════════════════════════════════════════════
+   STL VIEWER CLASS
+   ════════════════════════════════════════════════════════ */
+class STLViewer {
+  constructor(canvasEl, containerEl) {
+    this.canvas    = canvasEl;
+    this.container = containerEl;
+    this.mesh      = null;
+    this.wireframe = false;
+    this.flatShade = false;
+    this.orbit     = { theta: 45, phi: 28, radius: 5, panX: 0, panY: 0 };
+    this.dragging  = false;
+    this.rightBtn  = false;
+    this.lastX     = 0;
+    this.lastY     = 0;
+    this.rafId     = null;
+    this._cleanupFns = [];
+    this._init();
+  }
+
+  _init() {
+    const { canvas, container } = this;
+
+    /* Renderer */
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setClearColor(0x080d12, 1);
+
+    /* Scene */
+    this.scene = new THREE.Scene();
+
+    /* Camera */
+    this.camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
+
+    /* Lighting rig */
+    const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+    const key     = new THREE.DirectionalLight(0xffffff, 0.9);
+    const fill    = new THREE.DirectionalLight(0x8ab4f8, 0.35);
+    const rim     = new THREE.DirectionalLight(0xffeedd, 0.2);
+    key.position.set(2, 3, 2);
+    fill.position.set(-3, 0.5, -1);
+    rim.position.set(0, -2, -3);
+    this.scene.add(ambient, key, fill, rim);
+
+    /* Resize */
+    this._ro = new ResizeObserver(() => this._resize());
+    this._ro.observe(container);
+    this._resize();
+
+    /* Input */
+    this._bindInput();
+
+    /* Render loop */
+    const tick = () => {
+      this.rafId = requestAnimationFrame(tick);
+      if (!this.dragging && this.mesh) {
+        this.orbit.theta += 0.08;
+      }
+      this._updateCamera();
+      this.renderer.render(this.scene, this.camera);
+    };
+    tick();
+  }
+
+  _resize() {
+    const w = this.container.clientWidth;
+    const h = this.container.clientHeight;
+    if (!w || !h) return;
+    this.renderer.setSize(w, h, false);
+    this.camera.aspect = w / h;
+    this.camera.updateProjectionMatrix();
+  }
+
+  _updateCamera() {
+    const { theta, phi, radius, panX, panY } = this.orbit;
+    const t = THREE.MathUtils.degToRad(theta);
+    const p = THREE.MathUtils.degToRad(phi);
+    this.camera.position.set(
+      panX + radius * Math.cos(p) * Math.sin(t),
+      panY + radius * Math.sin(p),
+             radius * Math.cos(p) * Math.cos(t)
+    );
+    this.camera.lookAt(panX, panY, 0);
+  }
+
+  _bindInput() {
+    const { canvas } = this;
+
+    const onDown = (e) => {
+      this.dragging = true;
+      this.rightBtn = e.button === 2;
+      const pos = e.touches ? e.touches[0] : e;
+      this.lastX = pos.clientX;
+      this.lastY = pos.clientY;
+    };
+    const onMove = (e) => {
+      if (!this.dragging) return;
+      const pos = e.touches ? e.touches[0] : e;
+      const dx = pos.clientX - this.lastX;
+      const dy = pos.clientY - this.lastY;
+      this.lastX = pos.clientX;
+      this.lastY = pos.clientY;
+      if (this.rightBtn) {
+        this.orbit.panX -= dx * 0.005 * this.orbit.radius;
+        this.orbit.panY += dy * 0.005 * this.orbit.radius;
+      } else {
+        this.orbit.theta -= dx * 0.4;
+        this.orbit.phi = Math.max(-89, Math.min(89, this.orbit.phi + dy * 0.4));
+      }
+    };
+    const onUp   = () => { this.dragging = false; };
+    const onCtx  = (e) => e.preventDefault();
+    const onWheel = (e) => {
+      e.preventDefault();
+      const zoomFactor = Math.exp(e.deltaY * 0.0015);
+      this.orbit.radius = Math.max(0.1, Math.min(5000,
+        this.orbit.radius * zoomFactor));
+    };
+
+    canvas.addEventListener('mousedown',   onDown);
+    canvas.addEventListener('touchstart',  onDown,  { passive: true });
+    canvas.addEventListener('contextmenu', onCtx);
+    canvas.addEventListener('wheel',       onWheel, { passive: false });
+    window.addEventListener('mousemove',   onMove);
+    window.addEventListener('touchmove',   onMove,  { passive: true });
+    window.addEventListener('mouseup',     onUp);
+    window.addEventListener('touchend',    onUp);
+
+    this._cleanupFns.push(() => {
+      canvas.removeEventListener('mousedown',   onDown);
+      canvas.removeEventListener('touchstart',  onDown);
+      canvas.removeEventListener('contextmenu', onCtx);
+      canvas.removeEventListener('wheel',       onWheel);
+      window.removeEventListener('mousemove',   onMove);
+      window.removeEventListener('touchmove',   onMove);
+      window.removeEventListener('mouseup',     onUp);
+      window.removeEventListener('touchend',    onUp);
+    });
+  }
+
+  /* ── STL Parser: binary + ASCII ── */
+  _parseSTL(buffer) {
+    const view    = new DataView(buffer);
+    const numTris = view.getUint32(80, true);
+    const expectedBytes = 84 + numTris * 50;
+    const isBinary = buffer.byteLength === expectedBytes && numTris > 0;
+    const geo = new THREE.BufferGeometry();
+
+    if (isBinary) {
+      const positions = new Float32Array(numTris * 9);
+      const normals   = new Float32Array(numTris * 9);
+      let offset = 84;
+      for (let i = 0; i < numTris; i++) {
+        const nx = view.getFloat32(offset,     true);
+        const ny = view.getFloat32(offset + 4, true);
+        const nz = view.getFloat32(offset + 8, true);
+        offset += 12;
+        for (let v = 0; v < 3; v++) {
+          const vi = i * 9 + v * 3;
+          positions[vi]     = view.getFloat32(offset,     true);
+          positions[vi + 1] = view.getFloat32(offset + 4, true);
+          positions[vi + 2] = view.getFloat32(offset + 8, true);
+          normals[vi]     = nx;
+          normals[vi + 1] = ny;
+          normals[vi + 2] = nz;
+          offset += 12;
+        }
+        offset += 2;
+      }
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geo.setAttribute('normal',   new THREE.BufferAttribute(normals,   3));
+      return { geo, triCount: numTris };
+    } else {
+      const text  = new TextDecoder().decode(buffer);
+      const verts = [];
+      for (const line of text.split('\n')) {
+        const t = line.trim();
+        if (t.startsWith('vertex ')) {
+          const [, x, y, z] = t.split(/\s+/);
+          verts.push(+x, +y, +z);
+        }
+      }
+      geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts), 3));
+      geo.computeVertexNormals();
+      return { geo, triCount: Math.round(verts.length / 9) };
+    }
+  }
+
+  /* ── Load a model by URL ── */
+  load(url, accentColor = '#2a8fa6') {
+    return fetch(url)
+      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.arrayBuffer(); })
+      .then(buffer => {
+        const { geo, triCount } = this._parseSTL(buffer);
+        geo.center();
+        geo.computeBoundingSphere();
+        const r = geo.boundingSphere.radius;
+        this.orbit = { theta: 45, phi: 28, radius: r * 3.2, panX: 0, panY: 0 };
+
+        if (this.mesh) {
+          this.scene.remove(this.mesh);
+          this.mesh.geometry.dispose();
+          this.mesh.material.dispose();
+        }
+
+        const mat = new THREE.MeshStandardMaterial({
+          color:       new THREE.Color(accentColor),
+          roughness:   0.45,
+          metalness:   0.25,
+          flatShading: false,
+        });
+        this.mesh = new THREE.Mesh(geo, mat);
+        this.mesh.rotation.x = -Math.PI / 2;
+        this.scene.add(this.mesh);
+        this.wireframe = false;
+        this.flatShade = false;
+        return triCount;
+      });
+  }
+
+  resetView() {
+    if (!this.mesh) return;
+    const r = this.mesh.geometry.boundingSphere.radius;
+    this.orbit = { theta: 45, phi: 28, radius: r * 3.2, panX: 0, panY: 0 };
+  }
+
+  toggleWireframe() {
+    if (!this.mesh) return;
+    this.wireframe = !this.wireframe;
+    this.mesh.material.wireframe = this.wireframe;
+    return this.wireframe;
+  }
+
+  toggleFlat() {
+    if (!this.mesh) return;
+    this.flatShade = !this.flatShade;
+    this.mesh.material.flatShading = this.flatShade;
+    this.mesh.material.needsUpdate = true;
+    return this.flatShade;
+  }
+
+  destroy() {
+    cancelAnimationFrame(this.rafId);
+    this._ro.disconnect();
+    this._cleanupFns.forEach(fn => fn());
+    if (this.mesh) { this.mesh.geometry.dispose(); this.mesh.material.dispose(); }
+    this.renderer.dispose();
+  }
+}
+
+/* ── Active STL viewer instance (destroyed/recreated per modal open) ── */
+let _stlViewerInstance = null;
+
+function initSTLViewer(project) {
+  const wrap      = document.getElementById('modal-stl-wrap');
+  const overlay   = document.getElementById('stl-overlay');
+  const controls  = document.getElementById('stl-controls');
+  const infoEl    = document.getElementById('stl-info');
+  const hintEl    = document.getElementById('stl-hint');
+  const btnReset  = document.getElementById('stl-btn-reset');
+  const btnWire   = document.getElementById('stl-btn-wire');
+  const btnFlat   = document.getElementById('stl-btn-flat');
+  const canvas    = document.getElementById('stl-canvas');
+  const container = document.getElementById('stl-viewer-container');
+
+  if (!project.stlPath) {
+    wrap.style.display = 'none';
+    if (_stlViewerInstance) { _stlViewerInstance.destroy(); _stlViewerInstance = null; }
+    return;
+  }
+
+  wrap.style.display = 'block';
+
+  /* Reset UI */
+  overlay.style.display   = 'flex';
+  overlay.innerHTML       = '<div class="stl-viewer__spinner"></div><div class="stl-viewer__overlay-text">Loading model…</div>';
+  controls.style.display  = 'none';
+  infoEl.style.display    = 'none';
+  hintEl.style.display    = 'none';
+  btnWire.classList.remove('active');
+  btnFlat.classList.remove('active');
+
+  /* Destroy previous instance */
+  if (_stlViewerInstance) { _stlViewerInstance.destroy(); _stlViewerInstance = null; }
+
+  /* Create new instance */
+  const viewer = new STLViewer(canvas, container);
+  _stlViewerInstance = viewer;
+
+  viewer.load(project.stlPath, project.stlColor || '#2a8fa6')
+    .then(triCount => {
+      overlay.style.display  = 'none';
+      controls.style.display = 'flex';
+      infoEl.style.display   = 'block';
+      hintEl.style.display   = 'block';
+      infoEl.textContent     = triCount.toLocaleString() + ' triangles';
+
+      /* Auto-fade hint */
+      setTimeout(() => {
+        hintEl.style.transition = 'opacity 0.5s';
+        hintEl.style.opacity    = '0';
+        setTimeout(() => { hintEl.style.display = 'none'; }, 500);
+      }, 3500);
+    })
+    .catch(() => {
+      overlay.innerHTML = `
+        <span class="stl-viewer__error-icon">⚠</span>
+        <div class="stl-viewer__overlay-text">Could not load model</div>
+        <div class="stl-viewer__overlay-sub">${project.stlPath}</div>`;
+    });
+
+  btnReset.onclick = () => viewer.resetView();
+  btnWire.onclick  = () => { const on = viewer.toggleWireframe(); btnWire.classList.toggle('active', on); };
+  btnFlat.onclick  = () => { const on = viewer.toggleFlat();      btnFlat.classList.toggle('active', on); };
+}
+
 /* ── SCROLL REVEAL ── */
 const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
@@ -2040,10 +2541,7 @@ window.addEventListener('scroll', () => {
 
 /* ── D3 WORLD MAP ── */
 (function initMap() {
-
-  /* ---- Location data ---- */
   const LOCATIONS = [
-    // ── LIVED ──
     { id:1,  name:'Vancouver, Canada',       type:'lived',   lon:-123.1207, lat:49.2827,   note:'Stayed for 6+ years' },
     { id:2,  name:'Edmonton, Canada',        type:'lived',   lon:-113.4909, lat:53.5461,   note:'Stayed for 9 years' },
     { id:3,  name:'Toronto, Canada',         type:'lived',   lon:-79.3832,  lat:43.6532,   note:'Stayed for 4 months' },
@@ -2051,8 +2549,6 @@ window.addEventListener('scroll', () => {
     { id:5,  name:'Seoul, South Korea',      type:'lived',   lon:126.9780,  lat:37.5665,   note:'Stayed for 1 year' },
     { id:6,  name:'Al Khobar, Saudi Arabia', type:'lived',   lon:50.2083,   lat:26.2172,   note:'Stayed for 2.5 years' },
     { id:7,  name:'Kuwait City, Kuwait',     type:'lived',   lon:47.9783,   lat:29.3759,   note:'Stayed for 2 years' },
-
-    // ── VISITED: Canada ──
     { id:8,  name:'London, UK',              type:'visited', lon:-0.1276,   lat:51.5074,   note:'Travels' },
     { id:9,  name:'Montreal, Canada',        type:'visited', lon:-73.5673,  lat:45.5017,   note:'Travels' },
     { id:10, name:'Quebec City, Canada',     type:'visited', lon:-71.2080,  lat:46.8139,   note:'Travels' },
@@ -2070,8 +2566,6 @@ window.addEventListener('scroll', () => {
     { id:22, name:'Hamilton, Canada',        type:'visited', lon:-79.8711,  lat:43.2557,   note:'Travels' },
     { id:23, name:'Victoria, Canada',        type:'visited', lon:-123.3656, lat:48.4284,   note:'Travels' },
     { id:24, name:'Nanaimo, Canada',         type:'visited', lon:-123.9401, lat:49.1659,   note:'Travels' },
-
-    // ── VISITED: USA ──
     { id:25, name:'Seattle, US',             type:'visited', lon:-122.3321, lat:47.6062,   note:'Travels' },
     { id:26, name:'San Francisco, US',       type:'visited', lon:-122.4194, lat:37.7749,   note:'Travels' },
     { id:27, name:'Los Angeles, US',         type:'visited', lon:-118.2437, lat:34.0522,   note:'Travels' },
@@ -2082,29 +2576,21 @@ window.addEventListener('scroll', () => {
     { id:32, name:'New York City, US',       type:'visited', lon:-74.0060,  lat:40.7128,   note:'Travels' },
     { id:33, name:'Washington D.C., US',     type:'visited', lon:-77.0369,  lat:38.9072,   note:'Travels' },
     { id:34, name:'Alaska, US',              type:'visited', lon:-149.9003, lat:61.2181,   note:'Travels' },
-
-    // ── VISITED: South America ──
     { id:35, name:'Buenos Aires, Argentina', type:'visited', lon:-58.3816,  lat:-34.6037,  note:'Travels' },
     { id:36, name:'Bahia Blanca, Argentina', type:'visited', lon:-62.2663,  lat:-38.7196,  note:'Travels' },
     { id:37, name:'Mendoza, Argentina',      type:'visited', lon:-68.8272,  lat:-32.8895,  note:'Travels' },
     { id:38, name:'Iguazu Falls, Argentina', type:'visited', lon:-54.4423,  lat:-25.6953,  note:'Travels' },
-
-    // ── VISITED: Scandinavia ──
     { id:39, name:'Bergen, Norway',          type:'visited', lon:5.3221,    lat:60.3913,   note:'Travels' },
     { id:40, name:'Tromsø, Norway',          type:'visited', lon:18.9553,   lat:69.6496,   note:'Travels' },
     { id:41, name:'Kristiansand, Norway',    type:'visited', lon:7.9951,    lat:58.1467,   note:'Travels' },
     { id:42, name:'Copenhagen, Denmark',     type:'visited', lon:12.5683,   lat:55.6761,   note:'Travels' },
     { id:43, name:'Billund, Denmark',        type:'visited', lon:9.1182,    lat:55.7297,   note:'Travels' },
-
-    // ── VISITED: Germany / Netherlands ──
     { id:44, name:'Berlin, Germany',         type:'visited', lon:13.4050,   lat:52.5200,   note:'Travels' },
     { id:45, name:'Frankfurt, Germany',      type:'visited', lon:8.6821,    lat:50.1109,   note:'Travels' },
     { id:46, name:'Leipzig, Germany',        type:'visited', lon:12.3731,   lat:51.3397,   note:'Travels' },
     { id:47, name:'Munich, Germany',         type:'visited', lon:11.5820,   lat:48.1351,   note:'Travels' },
     { id:48, name:'Amsterdam, Netherlands',  type:'visited', lon:4.9041,    lat:52.3676,   note:'Travels' },
     { id:49, name:'Rotterdam, Netherlands',  type:'visited', lon:4.4777,    lat:51.9244,   note:'Travels' },
-
-    // ── VISITED: France / Iberia / Atlantic ──
     { id:50, name:'Paris, France',           type:'visited', lon:2.3522,    lat:48.8566,   note:'Travels' },
     { id:51, name:'Andorra',                 type:'visited', lon:1.5218,    lat:42.5063,   note:'Travels' },
     { id:52, name:'Barcelona, Spain',        type:'visited', lon:2.1734,    lat:41.3851,   note:'Travels' },
@@ -2114,13 +2600,9 @@ window.addEventListener('scroll', () => {
     { id:56, name:'Lagos, Portugal',         type:'visited', lon:-8.6730,   lat:37.1019,   note:'Travels' },
     { id:57, name:'Canary Islands',          type:'visited', lon:-15.4363,  lat:28.1235,   note:'Travels' },
     { id:58, name:'Funchal, Portugal',       type:'visited', lon:-16.9141,  lat:32.6669,   note:'Travels' },
-
-    // ── VISITED: North Africa ──
     { id:59, name:'Casablanca, Morocco',     type:'visited', lon:-7.5898,   lat:33.5731,   note:'Travels' },
     { id:60, name:'Agadir, Morocco',         type:'visited', lon:-9.5981,   lat:30.4278,   note:'Travels' },
     { id:61, name:'Algiers, Algeria',        type:'visited', lon:3.0588,    lat:36.7372,   note:'Travels' },
-
-    // ── VISITED: Southern Europe ──
     { id:62, name:'Rome, Italy',             type:'visited', lon:12.4964,   lat:41.9028,   note:'Travels' },
     { id:63, name:'Florence, Italy',         type:'visited', lon:11.2558,   lat:43.7696,   note:'Travels' },
     { id:64, name:'Venice, Italy',           type:'visited', lon:12.3155,   lat:45.4408,   note:'Travels' },
@@ -2132,8 +2614,6 @@ window.addEventListener('scroll', () => {
     { id:70, name:'Santorini, Greece',       type:'visited', lon:25.4615,   lat:36.3932,   note:'Travels' },
     { id:71, name:'Kalabaka, Greece',        type:'visited', lon:21.6269,   lat:39.7057,   note:'Travels' },
     { id:72, name:'Zürich, Switzerland',     type:'visited', lon:8.5417,    lat:47.3769,   note:'Travels' },
-
-    // ── VISITED: Middle East / Turkey ──
     { id:73, name:'Istanbul, Türkiye',       type:'visited', lon:28.9784,   lat:41.0082,   note:'Travels' },
     { id:74, name:'Cairo, Egypt',            type:'visited', lon:31.2357,   lat:30.0444,   note:'Travels' },
     { id:75, name:'Alexandria, Egypt',       type:'visited', lon:29.9187,   lat:31.2001,   note:'Travels' },
@@ -2148,8 +2628,6 @@ window.addEventListener('scroll', () => {
     { id:84, name:'Dubai, UAE',              type:'visited', lon:55.2708,   lat:25.2048,   note:'Travels' },
     { id:85, name:'Abu Dhabi, UAE',          type:'visited', lon:54.3773,   lat:24.4539,   note:'Travels' },
     { id:86, name:'Muscat, Oman',            type:'visited', lon:58.5922,   lat:23.5880,   note:'Travels' },
-
-    // ── VISITED: South / Southeast Asia ──
     { id:87, name:'Colombo, Sri Lanka',      type:'visited', lon:79.8612,   lat:6.9271,    note:'Travels' },
     { id:88, name:'Maldives',                type:'visited', lon:73.5093,   lat:4.1755,    note:'Travels' },
     { id:89, name:'Bangkok, Thailand',       type:'visited', lon:100.5018,  lat:13.7563,   note:'Travels' },
@@ -2163,8 +2641,6 @@ window.addEventListener('scroll', () => {
     { id:97, name:'Kuala Terengganu, Malaysia', type:'visited', lon:103.1408, lat:5.3296,  note:'Travels' },
     { id:98, name:'Perhentian Islands, Malaysia', type:'visited', lon:102.7731, lat:5.9085, note:'Travels' },
     { id:99, name:'Singapore',               type:'visited', lon:103.8198,  lat:1.3521,    note:'Travels' },
-
-    // ── VISITED: East Asia / Pacific ──
     { id:100, name:'Busan, South Korea',     type:'visited', lon:129.0756,  lat:35.1796,   note:'Travels' },
     { id:101, name:'Jeju, South Korea',      type:'visited', lon:126.5312,  lat:33.4996,   note:'Travels' },
     { id:102, name:'Taipei, Taiwan',         type:'visited', lon:121.5654,  lat:25.0330,   note:'Travels' },
@@ -2173,380 +2649,141 @@ window.addEventListener('scroll', () => {
     { id:105, name:'Sydney, Australia',      type:'visited', lon:151.2093,  lat:-33.8688,  note:'Travels' },
   ];
 
-  const LIVED_DOT_R   = 8;
-  const VISITED_DOT_R = 5.5;
-  const STEM_H_LIVED   = 22;
-  const STEM_H_VISITED = 16;
+  const LIVED_DOT_R=8, VISITED_DOT_R=5.5, STEM_H_LIVED=22, STEM_H_VISITED=16;
+  const TEAL='#2a8fa6', GOLD='#c48c2a', GOLD_LIGHT='#d4a043', WHITE='#eef0f4';
+  const BG='rgba(14,17,24,0.94)', BORDER='#243048', MUTED='#9aa3b8';
 
-  const TEAL = '#2a8fa6';
-  const GOLD = '#c48c2a';
-  const GOLD_LIGHT = '#d4a043';
-  const WHITE = '#eef0f4';
-  const BG    = 'rgba(14,17,24,0.94)';
-  const BORDER= '#243048';
-  const MUTED = '#9aa3b8';
+  const livedN=LOCATIONS.filter(l=>l.type==='lived').length;
+  const visitedN=LOCATIONS.filter(l=>l.type==='visited').length;
+  const countEl=document.getElementById('map-loc-count');
+  if(countEl) countEl.textContent=`${livedN} LIVED · ${visitedN} VISITED`;
 
-  /* ---- Update loc count badge ---- */
-  const livedN   = LOCATIONS.filter(l => l.type === 'lived').length;
-  const visitedN = LOCATIONS.filter(l => l.type === 'visited').length;
-  const countEl  = document.getElementById('map-loc-count');
-  if (countEl) countEl.textContent = `${livedN} LIVED · ${visitedN} VISITED`;
-
-  /* ---- Populate location ticker — two rows ---- */
-  function buildTickerItems(locations) {
-    return locations.map(loc => `
-      <div class="ticker-item">
-        <span class="ticker-dot ${loc.type}"></span>
-        <span class="ticker-name ${loc.type}">${loc.name}</span>
-      </div>
-    `).join('');
+  function buildTickerItems(locations){
+    return locations.map(loc=>`<div class="ticker-item"><span class="ticker-dot ${loc.type}"></span><span class="ticker-name ${loc.type}">${loc.name}</span></div>`).join('');
   }
+  const livedLocs=LOCATIONS.filter(l=>l.type==='lived');
+  const visitedLocs=LOCATIONS.filter(l=>l.type==='visited');
+  const livedTrack=document.getElementById('locTickerLived');
+  const visitedTrack=document.getElementById('locTickerVisited');
+  if(livedTrack){const r=[...livedLocs,...livedLocs,...livedLocs,...livedLocs];livedTrack.innerHTML=buildTickerItems(r);}
+  if(visitedTrack){const r=[...visitedLocs,...visitedLocs];visitedTrack.innerHTML=buildTickerItems(r);}
 
-  const livedLocs   = LOCATIONS.filter(l => l.type === 'lived');
-  const visitedLocs = LOCATIONS.filter(l => l.type === 'visited');
-
-  const livedTrack   = document.getElementById('locTickerLived');
-  const visitedTrack = document.getElementById('locTickerVisited');
-
-  if (livedTrack) {
-    /* Duplicate enough times to ensure seamless loop across all widths */
-    const repeated = [...livedLocs, ...livedLocs, ...livedLocs, ...livedLocs];
-    livedTrack.innerHTML = buildTickerItems(repeated);
-  }
-  if (visitedTrack) {
-    const repeated = [...visitedLocs, ...visitedLocs];
-    visitedTrack.innerHTML = buildTickerItems(repeated);
-  }
-
-  /* ---- SVG setup ---- */
-  const outer = document.getElementById('mapOuter');
-  const svgEl = document.getElementById('map-d3-svg');
-  const tooltip = document.getElementById('map-tooltip');
-
-  if (!outer || !svgEl || typeof d3 === 'undefined' || typeof topojson === 'undefined') return;
-
-  const W = outer.clientWidth  || 900;
-  const H = outer.clientHeight || 520;
-
-  const svg = d3.select(svgEl)
-    .attr('viewBox', `0 0 ${W} ${H}`)
-    .attr('width', W).attr('height', H);
-
-  /* Background */
-  svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#080d12');
-
-  /* Dot-grid pattern */
-  const defs = svg.append('defs');
-  const pat  = defs.append('pattern')
-    .attr('id','pg').attr('width',22).attr('height',22)
-    .attr('patternUnits','userSpaceOnUse');
-  pat.append('circle').attr('cx',1).attr('cy',1).attr('r',0.85)
-    .attr('fill','rgba(42,143,166,0.2)');
-  svg.append('rect').attr('width',W).attr('height',H)
-    .attr('fill','url(#pg)').attr('opacity',0.9);
-
-  /* Bottom fade overlay — rendered as SVG so it stays above map-g but below HTML overlays */
-  const grad = defs.append('linearGradient')
-    .attr('id','fade-up').attr('x1',0).attr('y1',1).attr('x2',0).attr('y2',0);
+  const outer=document.getElementById('mapOuter');
+  const svgEl=document.getElementById('map-d3-svg');
+  const tooltip=document.getElementById('map-tooltip');
+  if(!outer||!svgEl||typeof d3==='undefined'||typeof topojson==='undefined') return;
+  const W=outer.clientWidth||900, H=outer.clientHeight||520;
+  const svg=d3.select(svgEl).attr('viewBox',`0 0 ${W} ${H}`).attr('width',W).attr('height',H);
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','#080d12');
+  const defs=svg.append('defs');
+  const pat=defs.append('pattern').attr('id','pg').attr('width',22).attr('height',22).attr('patternUnits','userSpaceOnUse');
+  pat.append('circle').attr('cx',1).attr('cy',1).attr('r',0.85).attr('fill','rgba(42,143,166,0.2)');
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','url(#pg)').attr('opacity',0.9);
+  const grad=defs.append('linearGradient').attr('id','fade-up').attr('x1',0).attr('y1',1).attr('x2',0).attr('y2',0);
   grad.append('stop').attr('offset','0%').attr('stop-color','#080d12').attr('stop-opacity',0.96);
   grad.append('stop').attr('offset','55%').attr('stop-color','#080d12').attr('stop-opacity',0);
-  svg.append('rect').attr('width',W).attr('height',H * 0.45)
-    .attr('y', H * 0.55).attr('fill','url(#fade-up)').attr('pointer-events','none');
+  svg.append('rect').attr('width',W).attr('height',H*0.45).attr('y',H*0.55).attr('fill','url(#fade-up)').attr('pointer-events','none');
+  const mapG=svg.append('g').attr('class','map-g');
+  const projection=d3.geoMercator().scale(W/(2.18*Math.PI)).center([0,37.10]).translate([W/2,H/2]);
+  const pathGen=d3.geoPath().projection(projection);
 
-  /* Map group — zoom/pan applied here */
-  const mapG = svg.append('g').attr('class','map-g');
-
-  /* ---- Projection — centred vertically on Lagos, Portugal (37.10°N) ---- */
-  const projection = d3.geoMercator()
-    .scale(W / (2.18 * Math.PI))
-    .center([0, 37.10])           /* longitude 0 keeps map horizontally centred */
-    .translate([W / 2, H / 2]);   /* map centre maps to canvas centre */
-
-  const pathGen = d3.geoPath().projection(projection);
-
-  /* ---- Zoom behaviour ---- */
-  const zoomBehaviour = d3.zoom()
-    .scaleExtent([0.7, 14])
-    .on('zoom', (event) => {
-      const t = event.transform;
-      mapG.attr('transform', t);
-      /* Keep all pins at constant screen size by inverting the zoom scale */
-      mapG.selectAll('.pin-group').each(function() {
-        const px = +this.getAttribute('data-px');
-        const py = +this.getAttribute('data-py');
-        d3.select(this).attr('transform',
-          `translate(${px},${py}) scale(${1 / t.k})`);
-      });
-      const zl = document.getElementById('mapZoomLabel');
-      if (zl) zl.textContent = `ZOOM ${t.k.toFixed(1)}×`;
+  // 1. Calculate the shrink ratio whenever the window resizes
+  let windowScale = 1;
+  window.addEventListener('resize', () => {
+    const currentW = outer.clientWidth || 900;
+    windowScale = W / currentW; 
+    const currentTransform = d3.zoomTransform(svgEl);
+    
+    // Instantly resize the pins without waiting for a scroll/pan event
+    mapG.selectAll('.pin-group').each(function(){
+      const px=+this.getAttribute('data-px'), py=+this.getAttribute('data-py');
+      d3.select(this).attr('transform',`translate(${px},${py}) scale(${(1/currentTransform.k) * windowScale})`);
     });
-
-  d3.select(svgEl).call(zoomBehaviour).on('dblclick.zoom', null);
-  d3.select(outer)
-    .on('mousedown', () => outer.classList.add('grabbing'))
-    .on('mouseup',   () => outer.classList.remove('grabbing'));
-
-  /* ---- Scroll-hijack prevention ----
-     D3 zoom normally consumes ALL wheel events over the SVG, which
-     means scrolling the page while the cursor is over the map zooms
-     the map instead. Fix: gate wheel-zoom behind a "mouse is hovering
-     the map" flag — the user must intentionally hover the map before
-     the scroll wheel zooms it. Moving the cursor away instantly
-     restores normal page scroll.                                    */
-  let mapHovered = false;
-  outer.addEventListener('mouseenter', () => { mapHovered = true;  });
-  outer.addEventListener('mouseleave', () => { mapHovered = false; });
-
-  zoomBehaviour.filter(event => {
-    if (event.type === 'wheel') return mapHovered;
-    return !event.ctrlKey && !event.button;
   });
 
-  /* Button controls */
-  document.getElementById('mapZoomIn')?.addEventListener('click', () =>
-    d3.select(svgEl).transition().duration(300).call(zoomBehaviour.scaleBy, 1.6));
-  document.getElementById('mapZoomOut')?.addEventListener('click', () =>
-    d3.select(svgEl).transition().duration(300).call(zoomBehaviour.scaleBy, 0.625));
-  document.getElementById('mapReset')?.addEventListener('click', () =>
-    d3.select(svgEl).transition().duration(420).call(zoomBehaviour.transform, d3.zoomIdentity));
-
-  /* ---- Draw pins (dot + stem + label) ---- */
-  function drawPins() {
-    const LABEL_ZOOM_THRESHOLD = 6;
-
-    /* Two SVG groups: visited rendered first (bottom), lived on top */
-    const visitedG = mapG.append('g').attr('class','pins-layer-visited');
-    const livedG   = mapG.append('g').attr('class','pins-layer-lived');
-
-    function buildPin(loc, parentG) {
-      const [px, py] = projection([loc.lon, loc.lat]);
-      if (px == null || py == null) return;
-
-      const isLived  = loc.type === 'lived';
-      const dotR     = isLived ? LIVED_DOT_R   : VISITED_DOT_R;
-      const stemH    = isLived ? STEM_H_LIVED  : STEM_H_VISITED;
-      const dotCol   = isLived ? TEAL          : GOLD;
-      const labelCol = isLived ? TEAL          : GOLD_LIGHT;
-
-      const g = parentG.append('g')
-        .attr('class','pin-group')
-        .attr('data-px', px)
-        .attr('data-py', py)
-        .attr('transform', `translate(${px},${py})`)
-        .style('cursor','pointer');
-
-      /* Pulsing ring */
-      const ring = g.append('circle')
-        .attr('class','pulse-ring')
-        .attr('r', dotR * 1.8)
-        .attr('fill','none')
-        .attr('stroke', dotCol)
-        .attr('stroke-width', 1.4)
-        .attr('opacity', 0);
-
-      /* Stem */
-      g.append('line')
-        .attr('x1', 0).attr('y1', 0)
-        .attr('x2', 0).attr('y2', stemH)
-        .attr('stroke', dotCol)
-        .attr('stroke-width', isLived ? 1.5 : 1.2)
-        .attr('opacity', 0.65);
-
-      /* Dot */
-      g.append('circle')
-        .attr('class','pin-dot-circle')
-        .attr('r', dotR)
-        .attr('fill', dotCol)
-        .attr('stroke', WHITE)
-        .attr('stroke-width', isLived ? 2 : 1.5);
-
-      /* Label pill */
-      const labelText = loc.name;
-      const approxW   = labelText.length * 5.2 + 14;
-      const pillH     = 16;
-
-      const labelG = g.append('g')
-        .attr('class', isLived ? 'pin-label' : 'pin-label pin-label-visited')
-        .attr('transform', `translate(0,${stemH + 4})`)
-        .attr('opacity', isLived ? 1 : 0); /* visited labels hidden until zoom ≥ threshold */
-
-      labelG.append('rect')
-        .attr('x', -approxW / 2).attr('y', 0)
-        .attr('width', approxW).attr('height', pillH)
-        .attr('rx', 4)
-        .attr('fill', BG)
-        .attr('stroke', BORDER)
-        .attr('stroke-width', 0.8);
-
-      labelG.append('text')
-        .attr('x', 0).attr('y', pillH / 2 + 1)
-        .attr('text-anchor','middle')
-        .attr('dominant-baseline','middle')
-        .attr('fill', labelCol)
-        .attr('font-size', isLived ? '7.5px' : '6.5px')
-        .attr('font-family','Space Mono, monospace')
-        .attr('letter-spacing','0.06em')
-        .text(labelText.toUpperCase());
-
-      /* Hover / click interactions */
-      let rafId = null;
-
-      function startPulse() {
-        let t0 = null;
-        function frame(ts) {
-          if (!t0) t0 = ts;
-          const p = ((ts - t0) % 1100) / 1100;
-          ring.attr('r', dotR * 1.8 + p * dotR * 2.2)
-              .attr('opacity', (1 - p) * 0.75);
-          rafId = requestAnimationFrame(frame);
-        }
-        rafId = requestAnimationFrame(frame);
-      }
-
-      function stopPulse() {
-        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-        ring.attr('opacity', 0);
-      }
-
-      function showTooltip() {
-        const t       = d3.zoomTransform(svgEl);
-        const sx      = t.applyX(px);
-        const sy      = t.applyY(py);
-        const svgW    = svgEl.getBoundingClientRect().width;
-        const svgH    = svgEl.getBoundingClientRect().height;
-        const screenX = sx * (svgW / W);
-        const screenY = sy * (svgH / H) - (dotR + stemH) * (1 / t.k) * (svgH / H) - 12;
-        tooltip.innerHTML = `
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
-            <div style="width:8px;height:8px;border-radius:50%;background:${dotCol};flex-shrink:0;"></div>
-            <span style="font-size:0.82rem;font-weight:600;color:${WHITE};">${loc.name}</span>
-          </div>
-          <div style="font-size:0.62rem;color:${labelCol};font-family:var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px;">${loc.type}</div>
-          <div style="font-size:0.78rem;color:${MUTED};line-height:1.5;">${loc.note}</div>
-        `;
-        tooltip.style.left    = `${screenX}px`;
-        tooltip.style.top     = `${screenY}px`;
-        tooltip.style.opacity = '1';
-      }
-
-      g.on('mouseenter', () => {
-        startPulse();
-        showTooltip();
-        /* Always show this pin's label on hover */
-        if (!isLived) labelG.interrupt().attr('opacity', 1);
-        g.select('.pin-dot-circle').transition().duration(120).attr('r', dotR * 1.25);
-      });
-
-      g.on('mouseleave', () => {
-        stopPulse();
-        tooltip.style.opacity = '0';
-        /* Re-hide visited label if still below zoom threshold */
-        if (!isLived && d3.zoomTransform(svgEl).k < LABEL_ZOOM_THRESHOLD) {
-          labelG.transition().duration(200).attr('opacity', 0);
-        }
-        g.select('.pin-dot-circle').transition().duration(150).attr('r', dotR);
-      });
-
-      g.on('click', (e) => { e.stopPropagation(); startPulse(); showTooltip(); });
-    }
-
-    /* Render visited (bottom layer) then lived (top layer) */
-    LOCATIONS.filter(l => l.type === 'visited').forEach(l => buildPin(l, visitedG));
-    LOCATIONS.filter(l => l.type === 'lived').forEach(l => buildPin(l, livedG));
-
-    /* Show/hide visited labels based on zoom level */
-    zoomBehaviour.on('zoom.labels', event => {
-      const show = event.transform.k >= LABEL_ZOOM_THRESHOLD;
-      mapG.selectAll('.pin-label-visited')
-        .transition().duration(180)
-        .attr('opacity', show ? 1 : 0);
+  const zoomBehaviour=d3.zoom().scaleExtent([0.7,14]).on('zoom',(event)=>{
+    const t=event.transform;
+    mapG.attr('transform',t);
+    mapG.selectAll('.pin-group').each(function(){
+      const px=+this.getAttribute('data-px'), py=+this.getAttribute('data-py');
+      // 2. Factor the window scale into the zoom logic
+      d3.select(this).attr('transform',`translate(${px},${py}) scale(${(1/t.k) * windowScale})`);
     });
+    const zl=document.getElementById('mapZoomLabel');
+    if(zl) zl.textContent=`ZOOM ${t.k.toFixed(1)}×`;
+  });
+  d3.select(svgEl).call(zoomBehaviour).on('dblclick.zoom',null);
+  d3.select(outer).on('mousedown',()=>outer.classList.add('grabbing')).on('mouseup',()=>outer.classList.remove('grabbing'));
+  let mapHovered=false;
+  outer.addEventListener('mouseenter',()=>{mapHovered=true;});
+  outer.addEventListener('mouseleave',()=>{mapHovered=false;});
+  zoomBehaviour.filter(event=>{if(event.type==='wheel') return mapHovered; return !event.ctrlKey&&!event.button;});
+  document.getElementById('mapZoomIn')?.addEventListener('click',()=>d3.select(svgEl).transition().duration(300).call(zoomBehaviour.scaleBy,1.6));
+  document.getElementById('mapZoomOut')?.addEventListener('click',()=>d3.select(svgEl).transition().duration(300).call(zoomBehaviour.scaleBy,0.625));
+  document.getElementById('mapReset')?.addEventListener('click',()=>d3.select(svgEl).transition().duration(420).call(zoomBehaviour.transform,d3.zoomIdentity));
 
-    svg.on('click', () => { tooltip.style.opacity = '0'; });
+  function drawPins(){
+    const LABEL_ZOOM_THRESHOLD=6;
+    const visitedG=mapG.append('g').attr('class','pins-layer-visited');
+    const livedG=mapG.append('g').attr('class','pins-layer-lived');
+    function buildPin(loc,parentG){
+      const [px,py]=projection([loc.lon,loc.lat]);
+      if(px==null||py==null) return;
+      const isLived=loc.type==='lived';
+      const dotR=isLived?LIVED_DOT_R:VISITED_DOT_R;
+      const stemH=isLived?STEM_H_LIVED:STEM_H_VISITED;
+      const dotCol=isLived?TEAL:GOLD;
+      const labelCol=isLived?TEAL:GOLD_LIGHT;
+      const g=parentG.append('g').attr('class','pin-group').attr('data-px',px).attr('data-py',py).attr('transform',`translate(${px},${py})`).style('cursor','pointer');
+      const ring=g.append('circle').attr('class','pulse-ring').attr('r',dotR*1.8).attr('fill','none').attr('stroke',dotCol).attr('stroke-width',1.4).attr('opacity',0);
+      g.append('line').attr('x1',0).attr('y1',0).attr('x2',0).attr('y2',stemH).attr('stroke',dotCol).attr('stroke-width',isLived?1.5:1.2).attr('opacity',0.65);
+      g.append('circle').attr('class','pin-dot-circle').attr('r',dotR).attr('fill',dotCol).attr('stroke',WHITE).attr('stroke-width',isLived?2:1.5);
+      const labelText=loc.name;
+      const approxW=labelText.length*7.5+18;
+      const pillH=22;
+      const labelG=g.append('g').attr('class',isLived?'pin-label':'pin-label pin-label-visited').attr('transform',`translate(0,${stemH+4})`).attr('opacity',isLived?1:0);
+      labelG.append('rect').attr('x',-approxW/2).attr('y',0).attr('width',approxW).attr('height',pillH).attr('rx',4).attr('fill',BG).attr('stroke',BORDER).attr('stroke-width',0.8);
+      labelG.append('text').attr('x',0).attr('y',pillH/2+1.5).attr('text-anchor','middle').attr('dominant-baseline','middle').attr('fill',labelCol).attr('font-size',isLived?'11px':'9.5px').attr('font-family','Space Mono, monospace').attr('letter-spacing','0.06em').text(labelText.toUpperCase());
+      let rafId=null;
+      function startPulse(){let t0=null;function frame(ts){if(!t0)t0=ts;const p=((ts-t0)%1100)/1100;ring.attr('r',dotR*1.8+p*dotR*2.2).attr('opacity',(1-p)*0.75);rafId=requestAnimationFrame(frame);}rafId=requestAnimationFrame(frame);}
+      function stopPulse(){if(rafId){cancelAnimationFrame(rafId);rafId=null;}ring.attr('opacity',0);}
+      function showTooltip(){const t=d3.zoomTransform(svgEl);const sx=t.applyX(px);const sy=t.applyY(py);const svgW=svgEl.getBoundingClientRect().width;const svgH=svgEl.getBoundingClientRect().height;const screenX=sx*(svgW/W);const screenY=sy*(svgH/H)-(dotR+stemH)*(1/t.k)*(svgH/H)-12;tooltip.innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;"><div style="width:8px;height:8px;border-radius:50%;background:${dotCol};flex-shrink:0;"></div><span style="font-size:0.82rem;font-weight:600;color:${WHITE};">${loc.name}</span></div><div style="font-size:0.62rem;color:${labelCol};font-family:var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px;">${loc.type}</div><div style="font-size:0.78rem;color:${MUTED};line-height:1.5;">${loc.note}</div>`;tooltip.style.left=`${screenX}px`;tooltip.style.top=`${screenY}px`;tooltip.style.opacity='1';}
+      g.on('mouseenter',()=>{startPulse();showTooltip();if(!isLived)labelG.interrupt().attr('opacity',1);g.select('.pin-dot-circle').transition().duration(120).attr('r',dotR*1.25);});
+      g.on('mouseleave',()=>{stopPulse();tooltip.style.opacity='0';if(!isLived&&d3.zoomTransform(svgEl).k<LABEL_ZOOM_THRESHOLD){labelG.transition().duration(200).attr('opacity',0);}g.select('.pin-dot-circle').transition().duration(150).attr('r',dotR);});
+      g.on('click',(e)=>{e.stopPropagation();startPulse();showTooltip();});
+    }
+    LOCATIONS.filter(l=>l.type==='visited').forEach(l=>buildPin(l,visitedG));
+    LOCATIONS.filter(l=>l.type==='lived').forEach(l=>buildPin(l,livedG));
+    zoomBehaviour.on('zoom.labels',event=>{const show=event.transform.k>=LABEL_ZOOM_THRESHOLD;mapG.selectAll('.pin-label-visited').transition().duration(180).attr('opacity',show?1:0);});
+    svg.on('click',()=>{tooltip.style.opacity='0';});
   }
 
-  /* ---- Fetch TopoJSON and render ---- */
   fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
-    .then(r => r.json())
-    .then(world => {
-      const countries = topojson.feature(world, world.objects.countries);
-      const borders   = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
-
-      mapG.append('g').attr('class','countries')
-        .selectAll('path')
-        .data(countries.features)
-        .enter().append('path')
-        .attr('d', pathGen)
-        .attr('fill','#1b2133')
-        .attr('stroke','#243048')
-        .attr('stroke-width', 0.4)
-        .on('mouseenter', function() { d3.select(this).attr('fill','#1f2a42'); })
-        .on('mouseleave', function() { d3.select(this).attr('fill','#1b2133'); });
-
-      mapG.append('path')
-        .datum(borders)
-        .attr('d', pathGen)
-        .attr('fill','none')
-        .attr('stroke','#2a3858')
-        .attr('stroke-width', 0.25);
-
+    .then(r=>r.json())
+    .then(world=>{
+      const countries=topojson.feature(world,world.objects.countries);
+      const borders=topojson.mesh(world,world.objects.countries,(a,b)=>a!==b);
+      mapG.append('g').attr('class','countries').selectAll('path').data(countries.features).enter().append('path').attr('d',pathGen).attr('fill','#1b2133').attr('stroke','#243048').attr('stroke-width',0.4).on('mouseenter',function(){d3.select(this).attr('fill','#1f2a42');}).on('mouseleave',function(){d3.select(this).attr('fill','#1b2133');});
+      mapG.append('path').datum(borders).attr('d',pathGen).attr('fill','none').attr('stroke','#2a3858').attr('stroke-width',0.25);
       drawPins();
-    })
-    .catch(() => {
-      /* Fallback: still draw pins on blank grid */
-      drawPins();
-    });
-
+    }).catch(()=>drawPins());
 })();
 
 /* ── KEYBOARD SHORTCUTS ── */
-const shortcutMap = {
-  '1': '#about',
-  '2': '#map-section',
-  '3': '#projects',
-  '4': '#experience',
-  '5': '#resume-cta',
-  'r': '#resume-cta',
-  'R': '#resume-cta',
-};
-
-const toast    = document.getElementById('shortcut-toast');
-let toastTimer = null;
-
-function showToast() {
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
-}
-
-/* Show toast hint after 2s of inactivity on page load */
-setTimeout(showToast, 2000);
-
-document.addEventListener('keydown', (e) => {
-  // Don't trigger in inputs
-  if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
-
-  if (e.key === 'Escape') {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    return;
-  }
-  if (e.key === '?') { showToast(); return; }
-
-  const target = shortcutMap[e.key];
-  if (target) {
-    const el = document.querySelector(target);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+const shortcutMap={'1':'#about','2':'#map-section','3':'#projects','4':'#experience','5':'#resume-cta','r':'#resume-cta','R':'#resume-cta'};
+const toast=document.getElementById('shortcut-toast');
+let toastTimer=null;
+function showToast(){toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),3200);}
+setTimeout(showToast,2000);
+document.addEventListener('keydown',(e)=>{
+  if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+  if(e.key==='Escape'){window.scrollTo({top:0,behavior:'smooth'});return;}
+  if(e.key==='?'){showToast();return;}
+  const target=shortcutMap[e.key];
+  if(target){const el=document.querySelector(target);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 });
-
-/* Bento card keyboard activate */
-document.querySelectorAll('.project-card').forEach(card => {
-  card.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      card.click();
-    }
-  });
+document.querySelectorAll('.project-card').forEach(card=>{
+  card.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();card.click();}});
 });
 
 /* ── PROJECT MODAL ── */
@@ -2560,19 +2797,11 @@ const PROJECTS = [
     heroBg: 'linear-gradient(140deg, #0c2030 0%, #0e2a3a 60%, #0a1e2c 100%)',
     meta: { year: '2023', duration: 'Ongoing', role: 'Lead Engineer', team: 'Solo' },
     overview: 'A closed-loop thrust vectoring system designed for exo-atmospheric drone propulsion, operating with adaptive Kalman filtering at 400Hz. The node interfaces directly with a custom FPGA co-processor to achieve sub-millisecond actuation latency, enabling stable flight across rapid pressure transitions.',
-    motivation: 'Traditional drone autopilots struggle with the thin-atmosphere regime between 20–60km altitude. I wanted to build a system that could operate autonomously in this gap — a regime too high for conventional aircraft and too low for orbital vehicles — using only onboard sensing and control.',
-    images: [
-      { label: 'Thrust Vectoring Rig' },
-      { label: 'FPGA Co-processor PCB' },
-      { label: 'Pressure Chamber Test' },
-    ],
+    motivation: 'Traditional drone autopilots struggle with the thin-atmosphere regime between 20 and 60km altitude. I wanted to build a system that could operate autonomously in this gap, a regime too high for conventional aircraft and too low for orbital vehicles, using only onboard sensing and control.',
+    images: [{ label: 'Thrust Vectoring Rig' },{ label: 'FPGA Co-processor PCB' },{ label: 'Pressure Chamber Test' }],
     video: null,
     tags: ['Rust', 'ROS2', 'FPGA', 'C++', 'Kalman Filter', 'SITL'],
-    links: [
-      { label: 'GitHub Repo', href: '#', primary: true },
-      { label: 'Research Paper', href: '#' },
-      { label: 'Flight Data Logs', href: '#' },
-    ],
+    links: [{ label: 'GitHub Repo', href: '#', primary: true },{ label: 'Research Paper', href: '#' },{ label: 'Flight Data Logs', href: '#' }],
   },
   {
     id: 'quantum',
@@ -2583,17 +2812,11 @@ const PROJECTS = [
     heroBg: 'linear-gradient(140deg, #0d1228 0%, #121a38 60%, #0a1020 100%)',
     meta: { year: '2022', duration: '8 months', role: 'Research Engineer', team: 'Solo' },
     overview: 'Cryogenic logic gate arrays operating at 15mK for quantum computation research. The array uses superconducting Josephson junctions arranged in a planar grid topology, cooled by a dilution refrigerator to approach quantum coherence times exceeding 150µs.',
-    motivation: 'My interest in quantum error correction led me to ask whether classical logic-gate architectures could be adapted for cryogenic environments. This project bridged my embedded systems background with low-temperature physics — a genuinely new domain for me.',
-    images: [
-      { label: 'Dilution Fridge Setup' },
-      { label: 'Junction Array Micrograph' },
-    ],
-    video: { type: 'placeholder', label: 'Cryostat Boot Sequence — 3m 22s' },
+    motivation: 'My interest in quantum error correction led me to ask whether classical logic-gate architectures could be adapted for cryogenic environments. This project bridged my embedded systems background with low-temperature physics, a genuinely new domain for me.',
+    images: [{ label: 'Dilution Fridge Setup' },{ label: 'Junction Array Micrograph' }],
+    video: { type: 'placeholder', label: 'Cryostat Boot Sequence (3m 22s)' },
     tags: ['Python', 'Qiskit', 'VHDL', 'LabVIEW', 'Josephson Junctions'],
-    links: [
-      { label: 'Preprint (arXiv)', href: '#', primary: true },
-      { label: 'Dataset', href: '#' },
-    ],
+    links: [{ label: 'Preprint (arXiv)', href: '#', primary: true },{ label: 'Dataset', href: '#' }],
   },
   {
     id: 'exo',
@@ -2604,84 +2827,115 @@ const PROJECTS = [
     heroBg: 'linear-gradient(140deg, #1a1808 0%, #241e0a 60%, #16140a 100%)',
     meta: { year: '2021–2022', duration: '14 months', role: 'Robotics Research Eng.', team: 'ETH ASL (4 members)' },
     overview: 'Precision bio-mechanical force output system for rehabilitation exoskeletons. Implements variable-impedance control across 7 degrees of freedom, with real-time force sensing at 1kHz and voluntary patient intent detection via surface EMG.',
-    motivation: 'During my time at ETH Zürich I worked closely with physiotherapists who described the gap between what patients needed and what existing robotic assistants could provide. The actuator was my attempt to close that gap — specifically the problem of making robot compliance feel natural rather than mechanical.',
-    images: [
-      { label: 'Actuator Assembly' },
-      { label: 'EMG Signal Processing' },
-      { label: 'Clinical Trial Session' },
-    ],
-    video: { type: 'placeholder', label: 'Patient Gait Assist Demo — 1m 48s' },
+    motivation: 'During my time at ETH Zürich I worked closely with physiotherapists who described the gap between what patients needed and what existing robotic assistants could provide. The actuator was my attempt to close that gap, specifically tackling the problem of making robot compliance feel natural rather than mechanical.',
+    images: [{ label: 'Actuator Assembly' },{ label: 'EMG Signal Processing' },{ label: 'Clinical Trial Session' }],
+    video: { type: 'placeholder', label: 'Patient Gait Assist Demo (1m 48s)' },
     tags: ['C++', 'ROS2', 'Python', 'sEMG', 'Impedance Control', 'SolidWorks'],
-    links: [
-      { label: 'IEEE Publication', href: '#', primary: true },
-      { label: 'GitHub', href: '#' },
-      { label: 'Clinical Protocol', href: '#' },
-    ],
+    links: [{ label: 'IEEE Publication', href: '#', primary: true },{ label: 'GitHub', href: '#' },{ label: 'Clinical Protocol', href: '#' }],
   },
   {
-    id: 'plasma',
-    title: 'High-Density Plasma Initiator',
-    year: '2021',
-    tag: 'THERMAL PHYSICS',
-    heroEmoji: '⚡',
+    id: 'capstone',
+    title: 'Trash Retrieval Drone Capstone',
+    year: '2025 - 2026',
+    tag: 'ROBOTICS · INNOVATION',
     heroBg: 'linear-gradient(140deg, #150e28 0%, #1e1435 60%, #110c22 100%)',
-    meta: { year: '2021', duration: '6 months', role: 'Lead Engineer', team: 'Solo' },
-    overview: 'A toroidal magnetic containment grid sustaining 10keV plasma for fusion-adjacent research. The initiator achieves plasma densities of 10¹⁹ m⁻³ using a novel RF heating approach layered on top of a compact tokamak geometry, reducing ignition energy by 34% compared to baseline.',
-    motivation: 'My undergraduate thesis explored plasma instabilities in tokamak reactors. I became convinced that the bottleneck was initiator design, not confinement geometry. This project was a direct attack on that thesis — building something small enough to iterate quickly but physically meaningful enough to matter.',
+    heroImg: 'images/capstone-02.jpeg',
+    heroImgPosition: 'center 40%',
+    meta: { year: '2025 - 2026', duration: '10 months', role: 'Manufacturing Co-Lead & Team Member', team: 'Nicholas Yap, Dominic Nguyen, Sean Lee, Julianna Graham, Alex Elliott, Arman Mukhi' },
+    overview: 'The Trash Retrieval Drone is a MECH 45X capstone project focused on the development of a semi-autonomous, trash-collecting drone system. The final integrated prototype is a quadcopter powered by a 4S LiPo battery and controlled with a Pixhawk flight controller, utilizing a combination of custom 3D-printed components and Holybro kit parts to minimize weight. The payload consists of a custom 3D-printed 2-prong claw mounted to a fishing-line winch system. Both mechanisms are operated via the drone\'s radio controller, which features an attached screen displaying a live video feed from a base-mounted alignment camera. To inform our design decisions and handle aerodynamic challenges like rotor downdraft, we conducted extensive testing regarding propeller configurations, boom length, and motor cant angles. The project successfully establishes a baseline architecture and provides vital technical insights, offering future capstone teams a clear roadmap for implementing automated pickup and on-board litter detection.',
+    motivation: 'The project was inspired by the client, Dr. Van der Loos\’ experience hiking in Nepal, where litter was pervasively scattered along trails, and could be difficult or dangerous for a person to access. Rather than transporting landfills and piles of waste, the focus was on the smaller, lighter, and scattered waste that is usually thrown around and forgotten.',
     images: [
-      { label: 'Toroidal Chamber Assembly' },
-      { label: 'RF Antenna Array' },
+      { src: 'images/capstone-00.jpg', label: 'Prototyped Trash Retrieval Drone (Left) - Smaller Prototype Drone (Right)' },
+      { src: 'images/capstone-01.jpeg', label: 'Drone Perspective Shot' },
+      { src: 'images/capstone-03.jpg', label: 'Trash Retrieval Drone - Drone in Flight'},
+      { src: 'images/capstone-04.jpg', label: 'Closer Look at the Flight Controller'},
+      { src: 'images/capstone-05.jpg', label: 'Winch Mechanism'},
+      { src: 'images/capstone-08.jpg', label: '2-Prong Claw'},
+      { src: 'images/capstone-06.png', label: 'Custom Motor Mounting'},
+      { src: 'images/capstone-07.jpg', label: 'Canted Motor Mount - Close Up'},
     ],
-    video: null,
-    tags: ['Python', 'MATLAB', 'COMSOL', 'Langmuir Probes', 'RF Engineering'],
-    links: [
-      { label: 'Technical Report', href: '#', primary: true },
-      { label: 'Simulation Code', href: '#' },
+    video: { type: 'youtube', id: 'https://www.youtube.com/embed/VyWm-0429eQ ' },
+    tags: ['Onshape CAD', 'MATLAB', 'Pixhawk', 'Flight Controller', '3D Printing', 'Project Management', 'Dossiers'],
+    links: [{ label: 'Technical Report', href: '#', primary: true },],
+    sections: [
+      {
+        label: 'My Focus',
+        body: 'A large focus of my work centered around manufacturing and designing CAD components for mounting, litter retrieval, weight reduction, and downwash mitigation. The three major sub-projects I worked on was downwash mitigation, the smaller drone, and the octopus claw.',
+      },
+      {
+        label: 'Downwash Mitigation - Summary',
+        body: 'A large problem we faced during the project was downwash, which was essentially the effects from the propellors blowing away litter beneath the drone. It made the solution much harder than anticipated and required multiple methods for mitigation. Through research, simulation, and testing, we found that both reducing the propellor velocity and altering the direction of the downwash were effective. To do that, we maximized propellor size, and I worked to minimized weight with 3D printed components and designed the canted motors to redirect the downwash.',
+        img: 'images/capstone-07.jpg',
+        imgCaption: 'Canted Motor Mount - Close Up',
+        imgPosition: 'center 30%',
+      },
+      {
+        label: 'Downwash Mitigation - Redirection Test',
+        body: 'To first figure out whether the redirection of airflow was feasible, Alex and I worked on developing a test to alter the airflow beneath a working drone. Alex designed the DMT or Downwash Mitigation Technology which acted similar to an adjustable air vent to change angles beneath the propellor of a drone. Whereas, I worked on the manufacturing and assembly of the DMT for physical testing. In the end, we found that redirection is possible without losing too much thrust and that it creates an exclusion zone beneath the drone. So, we decided to cant the motors to save on weight and system complexity, which I took responsibility for.',
+        img: 'images/capstone-12.png',
+        imgCaption: 'DMT - Downwash Mitigation Technology',
+        imgPosition: 'center 30%',
+      },
+      {
+        label: 'Smaller Drone',
+        body: 'The smaller drone was an iteration of the trash retrieval drone to downsize and minimize weight for portability and downwash. I worked on design and manufacturing, successfully creating a full scale drone assembly and mounting points for the drone electronics. Although the drone successfully flew, the reduction in propellor size from 10" to 8" and smaller boom spacing between the propellors actually increased downwash effects. Canting/angling the motors could only provide so much, as the exclusion zone underneath the drone was much smaller than the original trash retrieval drone.',
+        img: 'images/capstone-11.png',
+        imgCaption: 'Smaller Drone - Full CAD',
+        imgPosition: 'center 30%',
+      },
+      {
+        label: 'Octopus Claw',
+        body: 'The octopus claw was part of the development for litter manipulators, previous to the 2-Prong claw. The idea comes from SpiRobs: a flexible, adaptable, logarithmic spiral inspired tentacle that was developed by a group at the University of Science and Technology of China. The design was not used as part of the final product due to the time constraints and complexity of the claw at the time, but it provided an opening for possible opportunities of improvement. To test and replicate the SpiRobs design for our use-case I created multiple iterations for different logarithmic equation coefficients, joint-types, and 3D printing material. To learn more, check out the <a href="#" class="modal-cross-link" data-target="octopus">Octopus Claw Project Page</a>.',
+        img: 'images/capstone-09.png',
+        imgCaption: 'Prototype Manipulator - Octopus Claw',
+        imgPosition: 'center 30%',
+      },
     ],
   },
   {
-    id: 'nav',
-    title: 'Stellar Navigation Core',
-    year: '2023',
-    tag: 'GNC · NAVIGATION',
+    id: 'smalldrone',
+    title: 'Smaller Litter Drone',
+    year: '2025 - 2026',
+    tag: 'ASSEMBLY DESIGN · WEIGHT SAVING',
     heroEmoji: '🛰️',
     heroBg: 'linear-gradient(140deg, #0a1e14 0%, #0e2a1c 60%, #081a10 100%)',
-    meta: { year: '2023', duration: '5 months', role: 'GNC Engineer', team: 'Solo' },
+    meta: { year: '2025 - 2026', duration: '5 months', role: 'Manufacturing Co-Lead & Team Member', team: 'Nicholas Yap, Dominic Nguyen, Sean Lee, Julianna Graham, Alex Elliott, Arman Mukhi' },
     overview: 'A star-tracker and IMU sensor-fusion system for attitude determination in low Earth orbit, achieving sub-0.01° pointing error. The system uses a custom Wahba solver running on a radiation-hardened ARM Cortex-M7 with deterministic 20ms latency.',
     motivation: 'Commercial star trackers are expensive and over-engineered for small satellite missions. I wanted to prove that a well-tuned open-source pipeline on commodity hardware could meet the pointing requirements of a science-grade imaging payload.',
-    images: [
-      { label: 'Star Tracker Optical Assembly' },
-      { label: 'Attitude Estimation Test Rig' },
-      { label: 'On-Orbit Simulation Run' },
-    ],
-    video: { type: 'placeholder', label: 'Hardware-in-the-Loop Demo — 2m 05s' },
+    images: [{ label: 'Star Tracker Optical Assembly' },{ label: 'Attitude Estimation Test Rig' },{ label: 'On-Orbit Simulation Run' }],
+    video: { type: 'placeholder', label: 'Hardware-in-the-Loop Demo (2m 05s)' },
     tags: ['C', 'Python', 'Wahba Solver', 'CUDA', 'Embedded Linux', 'Quaternion Math'],
-    links: [
-      { label: 'GitHub Repo', href: '#', primary: true },
-      { label: 'Conference Paper', href: '#' },
-    ],
+    links: [{ label: 'GitHub Repo', href: '#', primary: true },{ label: 'Conference Paper', href: '#' }],
   },
   {
-    id: 'soft',
-    title: 'Adaptive Soft Gripper',
-    year: '2022',
+    id: 'octopus',
+    title: 'Octopus Claw',
+    year: '2025 - 2026',
     tag: 'SOFT ROBOTICS',
-    heroEmoji: '🦾',
+    heroImg: 'images/octopus-08.png',
+    heroImgPosition: 'center 40%',
     heroBg: 'linear-gradient(140deg, #1e1208 0%, #2a1a0e 60%, #160e06 100%)',
-    meta: { year: '2022', duration: '4 months', role: 'Mechanical & Controls', team: 'Solo' },
+    meta: { year: '2025 - 2026', duration: '3 months', role: 'Manufacturing Co-Lead & Team Member', team: 'Nicholas Yap, Dominic Nguyen, Sean Lee, Julianna Graham, Alex Elliott, Arman Mukhi' },
     overview: 'A pneumatically-actuated soft robotic gripper capable of delicate manipulation using embedded tactile pressure sensing across 48 sensing nodes. The gripper adapts its grasping strategy in real-time based on object compliance feedback, achieving 94% grasp success on irregular biological specimens.',
     motivation: 'Rigid grippers fail catastrophically on fragile or irregularly-shaped objects. Soft robotics promised a solution, but most academic soft grippers lacked closed-loop sensing. This project explored what was possible when you combined pneumatic actuation with a dense tactile sensing array.',
     images: [
-      { label: 'Gripper Silicone Mould' },
-      { label: 'Tactile Sensor Array PCB' },
+      { src: 'images/octopus-00.png', label: 'Octopus Claw Trial - Mechanically Embedded Joint (PLA Claw)' },
+      { src: 'images/octopus-01.png', label: 'Octopus Claw Trial - First Flexible Tentacle Attempt (TPA Claw)' },
+      { src: 'images/octopus-03.png', label: 'Octopus Claw Trial - Second Flexible Tentacle Attempt (TPA Claw)'},
+      { src: 'images/octopus-04.png', label: 'Octopus Claw Trial - Improved Flexible Logarithmic Spiraling (TPA Claw)'},
+      { src: 'images/octopus-06.png', label: 'Octopus Claw Trial - 3D Claw Improvement for more range of motion'},
+      { src: 'images/octopus-07.png', label: 'Logarithmic Spiral Sketch in CAD'},
+      { src: 'images/octopus-05.png', label: 'Octopus Claw Base - Holds 3D SpiRobs Tentacles'},
+      { src: 'images/octopus-12.png', label: '2D SpiRobs Tentacle'},
+      { src: 'images/octopus-08.png', label: '3D SpiRobs Tentacle'},
+      { src: 'images/capstone-14.png', label: 'Embedded Mechanical Joint Tentacle (PLA)'},
+      { src: 'images/octopus-09.png', label: 'Flexible Tentacle Attempt (TPU)'},
+      { src: 'images/octopus-10.png', label: 'Flexible Tentacle Improvement (TPU)'},
+      { src: 'images/octopus-11.png', label: 'Starting Embedded Mechanical Joint Tentacle (PLA)'},
     ],
-    video: { type: 'placeholder', label: 'Egg Grasping Demo — 0m 45s' },
-    tags: ['Python', 'ROS2', 'Silicone Moulding', 'I2C Sensing', 'RL Control'],
-    links: [
-      { label: 'Research Paper', href: '#', primary: true },
-      { label: 'CAD Files', href: '#' },
-      { label: 'GitHub', href: '#' },
-    ],
+    video: { type: 'placeholder', label: 'Egg Grasping Demo (0m 45s)' },
+    tags: ['Onshape', 'CAD', '3D Printing (PLA/TPU)', 'Bio-mimicry', 'Research & Design'],
+    links: [{ label: 'Research Paper', href: '#', primary: true },{ label: 'CAD Files', href: '#' },{ label: 'GitHub', href: '#' }],
   },
   {
     id: 'fusion',
@@ -2692,42 +2946,45 @@ const PROJECTS = [
     heroBg: 'linear-gradient(140deg, #0e1a28 0%, #14243a 60%, #0a1620 100%)',
     meta: { year: '2020', duration: '3 months', role: 'Systems Engineer', team: 'Solo' },
     overview: 'A compact wave energy converter implementing real-time adaptive impedance matching to maximise power capture across a spectrum of ocean wave conditions. The system uses a model-predictive controller running at 50Hz to adjust the generator load in advance of incoming wave crests.',
-    motivation: 'Most wave energy research focuses on structural survivability, not power electronics. I wanted to attack the efficiency problem directly — specifically the mismatch between irregular ocean wave frequency and generator optimal operating points.',
-    images: [
-      { label: 'Wave Tank Physical Model' },
-      { label: 'Power Electronics Board' },
-    ],
+    motivation: 'Most wave energy research focuses on structural survivability, not power electronics. I wanted to attack the efficiency problem directly, targeting the mismatch between irregular ocean wave frequency and generator optimal operating points.',
+    images: [{ label: 'Wave Tank Physical Model' },{ label: 'Power Electronics Board' }],
     video: null,
+    /* ── STL fields: add stlPath when you have a model file ──
+       stlPath:  'models/wave-converter.stl',
+       stlColor: '#1a6fff',
+    */
     tags: ['Python', 'MATLAB', 'MPC', 'Power Electronics', 'Simulink', 'Arduino'],
-    links: [
-      { label: 'Technical Report', href: '#', primary: true },
-      { label: 'Dataset (Figshare)', href: '#' },
-    ],
+    links: [{ label: 'Technical Report', href: '#', primary: true },{ label: 'Dataset (Figshare)', href: '#' }],
   },
   {
     id: 'grass',
     title: 'Self-Balancing Wheeled Bipedal Robot',
     year: '2026',
     tag: 'ROBOTICS · CONTROL SYSTEMS',
-    heroEmoji: '🤖',
     heroBg: 'linear-gradient(140deg, #081a0e 0%, #0c2414 60%, #061208 100%)',
+    heroImg: 'images/grass-03.jpeg',
+    heroImgPosition: 'center 40%',
     meta: {
       year: '2025 – 2026',
-      duration: '4 months',
-      role: 'Mechanical, Firmware & Controls',
+      duration: '3 months',
+      role: 'Mechanical & Software Lead + Video Director',
       team: 'Nicholas Yap & Dominic Nguyen',
     },
-    overview: 'Grass is a bipedal two-wheeled self-balancing robot integrating mechanical, electrical, and software design into a single dynamic platform. Operating as an inverted pendulum on a cart, it maintains upright stability by actively driving two DC gearmotors mounted at the base of its 3D-printed legs. The system achieves autonomous balance, forward/backward motion, directional control, and wireless BLE communication with a custom C# desktop interface — all running on a dual-core ESP32 microcontroller.',
-    motivation: 'The project originated from a long-term vision: a compact companion robot capable of carrying loads across varied terrain while staying dynamically stable. Rather than a static rover, a self-balancing bipedal platform demands continuous feedback control and tests the full stack of mechatronics — mechanical design, embedded firmware, control theory, and wireless communication simultaneously. The immediate reward and consequence of balance (staying upright vs. falling) made tuning and iteration visceral and fast.',
+    overview: 'Grass is a bipedal two-wheeled self-balancing robot integrating mechanical, electrical, and software design into a single dynamic platform. Operating as an inverted pendulum on a cart, it maintains upright stability by actively driving two DC gearmotors mounted at the base of its 3D-printed legs. The system achieves autonomous balance, forward/backward motion, directional control, and wireless BLE communication that connects to a custom C# desktop interface, all run on a dual-core ESP32 microcontroller.',
+    motivation: 'The project originated from a long-term vision: a compact companion robot capable of carrying loads across varied terrain while staying dynamically stable. Rather than a static rover, a self-balancing bipedal platform demands continuous feedback control and tests the full stack of mechatronics simultaneously: mechanical design, embedded firmware, control theory, and wireless communication. The immediate reward and consequence of balance (staying upright vs. falling) made tuning and iteration visceral and fast.',
     images: [
-      { label: 'Grass Field Test — Prototype on Grass' },
-      { label: 'CAD Exploded View — Chassis Assembly' },
-      { label: 'CAD vs Physical — Side-by-Side Comparison' },
-      { label: 'Chassis Interior — High vs Low Voltage Wire Separation' },
-      { label: 'Wheel Iteration Set — Three Radius Sizes Tested' },
-      { label: 'Madgwick Filter Trace — Accelerometer vs Filtered Tilt Angle' },
+      { src:'images/grass-01.png', label: 'Grass Field Kick Test - Grass on Grass' },
+      { src:'images/grass-00.jpg', label: 'Grass Balance Test - Grass on Grass' },
+      { src: 'images/grass-03.png', label: 'CAD Exploded View - Chassis Assembly' },
+      { src: 'images/grass-05.png', label: 'CAD vs Physical - Side-by-Side Comparison' },
+      { src:'images/grass-03.jpeg', label: 'Grass Field Test - Grass on Gravel' },
+      { src: 'images/grass-12.png', label: 'Chassis Interior - High vs. Low Voltage Wire Separation' },
+      { src: 'images/grass-06.jpeg', label: 'Wheel Iteration Set - Three Radius Sizes Tested' },
+      { src: 'images/grass-07.png', label: 'Wheel CAD Design - Push Fit Tire Design' },
     ],
-    video: { type: 'placeholder', label: 'Grass Self-Balancing & BLE Control Demo — replace with video embed' },
+    video: { type: 'youtube', id: 'https://www.youtube.com/embed/MsJAQmkRbyM' },
+    stlPath: 'models/grass-assembly.stl',
+    stlColor: '#2a8fa6',
     tags: [
       'C++ (Arduino)', 'C# WinForms', 'ESP32 Dual-Core', 'FastPID',
       'Cascaded PID', 'Madgwick Filter', 'BLE (Bluetooth Low Energy)',
@@ -2735,45 +2992,58 @@ const PROJECTS = [
       'PLA + TPU 3D Printing', 'Simulink', 'DC Gearmotor',
     ],
     links: [
-      { label: 'Full Technical Report', href: '#', primary: true },
-      { label: 'GitHub — ESP32 Firmware', href: '#' },
-      { label: 'GitHub — C# UI', href: '#' },
-      { label: 'OnShape CAD', href: '#' },
+      { label: 'Full Project Report', href: 'files/Grass-FinalReport.pdf', primary: true },
+      { label: 'OnShape CAD', href: 'https://cad.onshape.com/documents/762b08bc605d9e9c7b749d49/w/7c29a662ffd687d790e58cf1/e/2f75bd6eea53f6d186f8e655?renderMode=0&uiState=6a2f249afc9f009e40d89cde'},
     ],
     sections: [
       {
         label: 'System Architecture',
         body: 'Grass runs a dual-core architecture on the ESP32: Core 1 handles the time-critical cascaded PID motor control loop at 500Hz, while Core 0 manages IMU tilt estimation at 1kHz and BLE communication. This separation eliminates CPU overload spikes that previously caused the control loop to lose balance. The inner "balancing PID" regulates tilt angle directly; the outer "velocity PID" generates a tilt setpoint from wheel encoder speed, allowing the robot to remain stationary or track a commanded velocity.',
+        img: 'images/grass-13.png',
+        imgCaption: 'System Overview - Prototype: Grass',
+        imgPosition: 'center 30%',
       },
       {
         label: 'Mechanical Design',
-        body: 'The chassis is a 9-component 3D-printed assembly in PLA, with TPU used for the front/back collision bumpers and internal battery retention tabs. The leg design routes motor power wires and encoder signal wires on opposite sides of the frame to reduce electromagnetic crosstalk — a key fix discovered after I2C noise corruption caused tilt estimation desyncs. Three wheel radii were prototyped and tested; a 10.5cm diameter wheel offered the best tradeoff between backlash, torque, and correction speed. Wheels use metal flange shaft collectors after the initial plastic set-screw design stripped under high-torque tuning.',
+        body: 'The chassis is a 9-component 3D-printed assembly in PLA, with TPU used for the front/back collision bumpers and internal battery retention tabs. The leg design routes motor power wires and encoder signal wires on opposite sides of the frame to reduce electromagnetic crosstalk, a key fix discovered after I2C noise corruption caused tilt estimation desyncs. Three wheel radii were prototyped and tested; a 10.5cm diameter wheel offered the best tradeoff between backlash, torque, and correction speed. Wheels use metal flange shaft collectors after the initial plastic set-screw design stripped under high-torque tuning.',
       },
       {
         label: 'Control System',
-        body: 'Balance is achieved through cascaded PID control. The inner loop takes the Madgwick-filtered IMU tilt angle and outputs a motor current command (converted to a PWM duty cycle via a simplified armature circuit model accounting for back-EMF). The outer velocity loop takes encoder RPM and outputs a tilt angle setpoint — set to zero for stationary balance, or a small forward/backward lean for motion. A manually-adjusted tilt bias compensates for gyroscope offset that varies with each reboot. Final tuned parameters: Kp=0.18, Ki=0.05, Kd=0.01 (inner); Kp=0.1, Ki=0.8, Kd=0.0003 (outer).',
+        body: 'Balance is achieved through cascaded PID control. The inner loop takes the Madgwick-filtered IMU tilt angle and outputs a motor current command (converted to a PWM duty cycle via a simplified armature circuit model accounting for back-EMF). The outer velocity loop takes encoder RPM and outputs a tilt angle setpoint: zero for stationary balance, or a small forward/backward lean for motion. A manually-adjusted tilt bias compensates for gyroscope offset that varies with each reboot. Final tuned parameters: Kp=0.18, Ki=0.05, Kd=0.01 (inner); Kp=0.1, Ki=0.8, Kd=0.0003 (outer).',
+        img: 'images/grass-11.png',
+        imgCaption: 'Block Diagram of the Control System in Simulink',
+        imgPosition: 'center 30%',
       },
       {
         label: 'Key Challenges & Lessons',
-        body: 'The most costly setback was motor failure: one motor overheated from rapid direction changes during tuning; another had its brushes burn out mid-session. The fix was clamping maximum duty cycle to 128/255 and switching to current control rather than voltage control, preventing current spikes. Switching IMU communication from I2C to SPI eliminated tilt desync issues caused by motor noise. Building a Simulink model of the inverted pendulum late in the project was the single most impactful decision — it allowed PID values to be derived analytically rather than guessed, cutting the tuning timeline dramatically.',
+        body: 'The most costly setback was motor failure: one motor overheated from rapid direction changes during tuning; another had its brushes burn out mid-session. The fix was clamping maximum duty cycle to 128/255 and switching to current control rather than voltage control, preventing current spikes. Switching IMU communication from I2C to SPI eliminated tilt desync issues caused by motor noise. Building a Simulink model of the inverted pendulum late in the project was the single most impactful decision, as it allowed PID values to be derived analytically rather than guessed, cutting the tuning timeline dramatically.',
       },
     ],
   },
 ];
 
-/* Map card index → project id — now handled via data-project attributes */
-
-const backdrop  = document.getElementById('project-modal-backdrop');
-const modal     = document.getElementById('project-modal');
-const closeBtn  = document.getElementById('modal-close-btn');
+const backdrop = document.getElementById('project-modal-backdrop');
+const modal    = document.getElementById('project-modal');
+const closeBtn = document.getElementById('modal-close-btn');
 
 function openModal(project) {
   /* Hero */
-  document.getElementById('modal-hero-bg').style.background = project.heroBg;
-  document.getElementById('modal-hero-bg').textContent = project.heroEmoji;
+  const heroBgEl = document.getElementById('modal-hero-bg');
+  const prevImg  = document.getElementById('modal-hero-img');
+  if (prevImg) prevImg.remove();
+  heroBgEl.style.background = project.heroBg || 'var(--bg3)';
+  heroBgEl.textContent = project.heroImg ? '' : (project.heroEmoji || '');
+  if (project.heroImg) {
+    const img = document.createElement('img');
+    img.id = 'modal-hero-img';
+    img.className = 'modal-hero-img';
+    img.src = project.heroImg;
+    img.alt = project.title;
+    img.style.objectPosition = project.heroImgPosition || 'center center';
+    const heroEl = document.getElementById('modal-hero');
+    heroEl.insertBefore(img, heroEl.querySelector('.modal-hero-gradient'));
+  }
   document.getElementById('modal-tag-text').textContent = project.tag;
-
-  /* Header */
   document.getElementById('modal-title-text').textContent = project.title;
   document.getElementById('modal-year').textContent = project.year;
 
@@ -2781,7 +3051,6 @@ function openModal(project) {
   const actionRow = document.getElementById('modal-action-row');
   actionRow.innerHTML = '';
   if (project.links && project.links.length) {
-    /* GitHub icon (first link) */
     const ghBtn = document.createElement('a');
     ghBtn.className = 'modal-action-btn';
     ghBtn.href = project.links[0].href;
@@ -2793,64 +3062,94 @@ function openModal(project) {
   shareBtn.className = 'modal-action-btn';
   shareBtn.title = 'Copy link';
   shareBtn.innerHTML = '⎘';
-  shareBtn.addEventListener('click', () => {
-    navigator.clipboard?.writeText(window.location.href).catch(() => {});
-  });
+  shareBtn.addEventListener('click', () => { navigator.clipboard?.writeText(window.location.href).catch(() => {}); });
   actionRow.appendChild(shareBtn);
 
-  /* Meta overview strip */
+  /* Meta strip */
   const metaEl = document.getElementById('modal-meta');
   if (project.meta) {
     const m = project.meta;
-    /* Team: split on ' & ' or ',' for multi-member display */
     const members = (m.team || '—').split(/\s*[,&]\s*/).map(s => s.trim()).filter(Boolean);
     const teamHtml = members.length > 1
       ? members.map(name => `<span class="modal-meta-team-member">${name}</span>`).join('')
       : `<span class="modal-meta-team-member">${members[0] || '—'}</span>`;
-
     metaEl.innerHTML = `
       <div class="modal-meta-row modal-meta-row-top">
-        <div class="modal-meta-cell">
-          <div class="modal-meta-label">Year</div>
-          <div class="modal-meta-value">${m.year || project.year || '—'}</div>
-        </div>
-        <div class="modal-meta-cell">
-          <div class="modal-meta-label">Duration</div>
-          <div class="modal-meta-value">${m.duration || '—'}</div>
-        </div>
-        <div class="modal-meta-cell">
-          <div class="modal-meta-label">My Role</div>
-          <div class="modal-meta-value accent">${m.role || '—'}</div>
-        </div>
+        <div class="modal-meta-cell"><div class="modal-meta-label">Year</div><div class="modal-meta-value">${m.year || project.year || '—'}</div></div>
+        <div class="modal-meta-cell"><div class="modal-meta-label">Duration</div><div class="modal-meta-value">${m.duration || '—'}</div></div>
+        <div class="modal-meta-cell"><div class="modal-meta-label">My Role</div><div class="modal-meta-value accent">${m.role || '—'}</div></div>
       </div>
       <div class="modal-meta-row modal-meta-row-bottom">
-        <div class="modal-meta-cell">
-          <div class="modal-meta-label">Team</div>
-          <div class="modal-meta-team">${teamHtml}</div>
-        </div>
-      </div>
-    `;
+        <div class="modal-meta-cell"><div class="modal-meta-label">Team</div><div class="modal-meta-team">${teamHtml}</div></div>
+      </div>`;
     metaEl.style.display = 'flex';
   } else {
     metaEl.style.display = 'none';
   }
 
-  /* Overview / Motivation */
+  /* Text */
   document.getElementById('modal-overview').textContent   = project.overview;
   document.getElementById('modal-motivation').textContent = project.motivation;
 
-  /* Images */
+  /* ── 3D STL VIEWER ── */
+  initSTLViewer(project);
+
+  /* Gallery */
   const imagesWrap = document.getElementById('modal-images-wrap');
   const imagesEl   = document.getElementById('modal-images');
   if (project.images && project.images.length) {
-    imagesEl.innerHTML = project.images.map(img =>
-      img.src
-        ? `<div class="modal-img-card"><img src="${img.src}" alt="${img.label}"/></div>`
-        : `<div class="modal-img-card">[ ${img.label.toUpperCase()} ]</div>`
-    ).join('');
+    _lbItems = project.images;
+    _lbIndex = 0;
+    imagesEl.innerHTML = project.images.map((img, i) => `
+      <div class="modal-bento-tile" id="bento-tile-${i}" data-index="${i}">
+        ${img.src
+          ? `<img src="${img.src}" alt="${img.label || ''}" loading="lazy" />`
+          : `<div class="modal-bento-placeholder"><div style="font-size:1.6rem;opacity:.45;">🖼</div><div class="modal-bento-placeholder-label">${(img.label || '').toUpperCase()}</div></div>`
+        }
+        <div class="modal-bento-zoom-badge">click to enlarge</div>
+      </div>`).join('');
+    project.images.forEach((imgData, i) => {
+      if (!imgData.src) return;
+      const tileEl = document.getElementById(`bento-tile-${i}`);
+      const imgEl  = tileEl?.querySelector('img');
+      if (!imgEl) return;
+      const applyRatio = () => {
+        const ratio = imgEl.naturalWidth / imgEl.naturalHeight;
+        if (ratio > 1.55)      tileEl.classList.add('wide');
+        else if (ratio < 0.72) tileEl.classList.add('tall');
+        else                    tileEl.classList.add('square');
+      };
+      if (imgEl.complete && imgEl.naturalWidth) applyRatio();
+      else imgEl.addEventListener('load', applyRatio);
+    });
+    imagesEl.querySelectorAll('.modal-bento-tile').forEach(tile => {
+      tile.addEventListener('click', () => lbOpen(parseInt(tile.dataset.index, 10), project.images));
+    });
     imagesWrap.style.display = 'block';
   } else {
     imagesWrap.style.display = 'none';
+  }
+
+  /* Extra sections */
+  let extraWrap = document.getElementById('modal-extra-sections');
+  if (!extraWrap) {
+    extraWrap = document.createElement('div');
+    extraWrap.id = 'modal-extra-sections';
+    document.getElementById('modal-links-wrap').after(extraWrap);
+  }
+  if (project.sections && project.sections.length) {
+    extraWrap.innerHTML = project.sections.map((s, si) => {
+      const imgBlock = s.img ? `<div class="modal-section-img-wrap" data-section-img="${si}"><img src="${s.img}" alt="${s.imgCaption || s.label}" style="object-position:${s.imgPosition || 'center center'};" />${s.imgCaption ? `<div class="modal-section-img-caption">${s.imgCaption}</div>` : ''}</div>` : '';
+      return `<div style="margin-top:28px;"><div class="modal-divider"></div><div class="modal-section-label">${s.label}</div>${imgBlock}<p class="modal-text">${s.body}</p></div>`;
+    }).join('');
+    extraWrap.querySelectorAll('.modal-section-img-wrap').forEach(wrap => {
+      const si = parseInt(wrap.dataset.sectionImg, 10);
+      const sec = project.sections[si];
+      if (!sec?.img) return;
+      wrap.addEventListener('click', () => lbOpen(0, [{ src: sec.img, label: sec.imgCaption || sec.label }]));
+    });
+  } else {
+    extraWrap.innerHTML = '';
   }
 
   /* Video */
@@ -2858,14 +3157,11 @@ function openModal(project) {
   const videoEl   = document.getElementById('modal-video');
   if (project.video) {
     if (project.video.type === 'youtube') {
-      videoEl.innerHTML = `<iframe src="https://www.youtube.com/embed/${project.video.id}" allowfullscreen></iframe>`;
+      videoEl.innerHTML = `<iframe src="${project.video.id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+    } else if (project.video.type === 'file') {
+      videoEl.innerHTML = `<video controls width="100%" height="auto"><source src="${project.video.label}" type="video/mp4">Your browser does not support the video tag.</video>`;
     } else {
-      videoEl.innerHTML = `
-        <div class="modal-video-placeholder">
-          <div class="modal-video-placeholder-icon">▶</div>
-          <div>${project.video.label}</div>
-          <div style="opacity:.5;font-size:.6rem;margin-top:4px;">VIDEO PLACEHOLDER — REPLACE WITH EMBED</div>
-        </div>`;
+      videoEl.innerHTML = `<div class="modal-video-placeholder"><div class="modal-video-placeholder-icon">▶</div><div>${project.video.label}</div><div style="opacity:.5;font-size:.6rem;margin-top:4px;">VIDEO PLACEHOLDER — REPLACE WITH EMBED</div></div>`;
     }
     videoWrap.style.display = 'block';
   } else {
@@ -2878,44 +3174,17 @@ function openModal(project) {
   if (project.tags && project.tags.length) {
     tagsEl.innerHTML = project.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
     tagsWrap.style.display = 'block';
-  } else {
-    tagsWrap.style.display = 'none';
-  }
+  } else { tagsWrap.style.display = 'none'; }
 
   /* Links */
   const linksWrap = document.getElementById('modal-links-wrap');
   const linksEl   = document.getElementById('modal-links');
   if (project.links && project.links.length) {
-    linksEl.innerHTML = project.links.map(l =>
-      `<a class="modal-link-btn${l.primary ? ' primary' : ''}" href="${l.href}">
-         ${l.label} ↗
-       </a>`
-    ).join('');
+    linksEl.innerHTML = project.links.map(l => `<a class="modal-link-btn${l.primary ? ' primary' : ''}" href="${l.href}">${l.label} ↗</a>`).join('');
     linksWrap.style.display = 'block';
-  } else {
-    linksWrap.style.display = 'none';
-  }
+  } else { linksWrap.style.display = 'none'; }
 
-  /* Extra named sections (e.g. Grass project deep-dives) */
-  let extraWrap = document.getElementById('modal-extra-sections');
-  if (!extraWrap) {
-    extraWrap = document.createElement('div');
-    extraWrap.id = 'modal-extra-sections';
-    document.getElementById('modal-links-wrap').after(extraWrap);
-  }
-  if (project.sections && project.sections.length) {
-    extraWrap.innerHTML = project.sections.map(s => `
-      <div style="margin-top:28px;">
-        <div class="modal-divider"></div>
-        <div class="modal-section-label">${s.label}</div>
-        <p class="modal-text">${s.body}</p>
-      </div>
-    `).join('');
-  } else {
-    extraWrap.innerHTML = '';
-  }
-
-  /* Animate in */
+  /* Open */
   modal.scrollTop = 0;
   backdrop.classList.add('open');
   modal.classList.add('open');
@@ -2927,21 +3196,66 @@ function closeModal() {
   backdrop.classList.remove('open');
   modal.classList.remove('open');
   document.body.style.overflow = '';
+  /* Destroy STL viewer to free GPU resources */
+  if (_stlViewerInstance) {
+    _stlViewerInstance.destroy();
+    _stlViewerInstance = null;
+  }
 }
 
-/* Wire up each project card via data-project attribute */
+/* ── LIGHTBOX ── */
+let _lbItems = [];
+let _lbIndex = 0;
+const lbEl      = document.getElementById('modal-lightbox');
+const lbImgEl   = document.getElementById('lb-img');
+const lbPhEl    = document.getElementById('lb-placeholder');
+const lbPhLabel = document.getElementById('lb-ph-label');
+const lbCapEl   = document.getElementById('lb-caption');
+const lbCounter = document.getElementById('lb-counter');
+const lbPrev    = document.getElementById('lb-prev');
+const lbNext    = document.getElementById('lb-next');
+const lbClose   = document.getElementById('lb-close');
+
+function lbRender() {
+  const item = _lbItems[_lbIndex];
+  lbCounter.textContent = `${_lbIndex + 1} / ${_lbItems.length}`;
+  lbPrev.disabled = _lbIndex === 0;
+  lbNext.disabled = _lbIndex === _lbItems.length - 1;
+  lbCapEl.textContent = item.label || '';
+  if (item.src) { lbImgEl.src=item.src; lbImgEl.alt=item.label||''; lbImgEl.style.display='block'; lbPhEl.style.display='none'; }
+  else { lbImgEl.style.display='none'; lbPhEl.style.display='flex'; lbPhLabel.textContent=(item.label||'').toUpperCase(); }
+}
+function lbOpen(index, items) { _lbItems=items; _lbIndex=index; lbRender(); lbEl.classList.add('open'); document.body.style.overflow='hidden'; }
+function lbNavigate(dir) { _lbIndex=Math.max(0,Math.min(_lbItems.length-1,_lbIndex+dir)); lbRender(); }
+lbPrev.addEventListener('click',  (e) => { e.stopPropagation(); lbNavigate(-1); });
+lbNext.addEventListener('click',  (e) => { e.stopPropagation(); lbNavigate(1); });
+lbClose.addEventListener('click', () => { lbEl.classList.remove('open'); document.body.style.overflow='hidden'; });
+lbEl.addEventListener('click',    (e) => { if(e.target===lbEl){lbEl.classList.remove('open');} });
+document.addEventListener('keydown', (e) => {
+  if (!lbEl.classList.contains('open')) return;
+  if (e.key==='ArrowRight') lbNavigate(1);
+  if (e.key==='ArrowLeft')  lbNavigate(-1);
+  if (e.key==='Escape')     lbEl.classList.remove('open');
+});
+
+/* Wire cards */
 document.querySelectorAll('.project-card').forEach((card) => {
-  const pid = card.dataset.project;
+  const pid     = card.dataset.project;
   const project = PROJECTS.find(p => p.id === pid);
   if (!project) return;
-  card.addEventListener('click', (e) => {
-    if (e.target.closest('a')) return;
-    openModal(project);
-  });
-  card.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(project); }
-  });
+  card.addEventListener('click', (e) => { if(e.target.closest('a')) return; openModal(project); });
+  card.addEventListener('keydown', (e) => { if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(project);} });
 });
+
+/* Close */
+closeBtn.addEventListener('click', closeModal);
+backdrop.addEventListener('click', closeModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key==='Escape'&&modal.classList.contains('open')) { e.stopPropagation(); closeModal(); }
+});
+let touchStartY=0;
+modal.addEventListener('touchstart',(e)=>{touchStartY=e.touches[0].clientY;},{passive:true});
+modal.addEventListener('touchend',(e)=>{const dy=e.changedTouches[0].clientY-touchStartY;if(dy>80&&modal.scrollTop===0)closeModal();},{passive:true});
 
 /* ── EXPERIENCE SLIDESHOWS ── */
 document.querySelectorAll('[data-slideshow]').forEach(slideshow => {
@@ -2953,58 +3267,45 @@ document.querySelectorAll('[data-slideshow]').forEach(slideshow => {
   const counter = slideshow.querySelector('.exp-slide-counter');
   const total   = slides.length;
   let current   = 0;
-
-  /* Build dots */
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'exp-slide-dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', `Slide ${i + 1}`);
-    dot.addEventListener('click', () => goTo(i));
+  slides.forEach((_,i)=>{
+    const dot=document.createElement('button');
+    dot.className='exp-slide-dot'+(i===0?' active':'');
+    dot.setAttribute('aria-label',`Slide ${i+1}`);
+    dot.addEventListener('click',()=>goTo(i));
     dotsEl.appendChild(dot);
   });
-
-  function goTo(idx) {
-    current = (idx + total) % total;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    dotsEl.querySelectorAll('.exp-slide-dot').forEach((d, i) =>
-      d.classList.toggle('active', i === current));
-    counter.textContent = `${current + 1} / ${total}`;
-    prevBtn.disabled = false;
-    nextBtn.disabled = false;
+  function goTo(idx){
+    current=(idx+total)%total;
+    track.style.transform=`translateX(-${current*100}%)`;
+    dotsEl.querySelectorAll('.exp-slide-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+    counter.textContent=`${current+1} / ${total}`;
   }
-
-  prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn.addEventListener('click', () => goTo(current + 1));
-
-  /* Swipe support */
-  let tx0 = 0;
-  const trackWrap = slideshow.querySelector('.exp-slides-track-wrap');
-  trackWrap.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, { passive: true });
-  trackWrap.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - tx0;
-    if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
-  }, { passive: true });
-
+  prevBtn.addEventListener('click',()=>goTo(current-1));
+  nextBtn.addEventListener('click',()=>goTo(current+1));
+  const trackWrap=slideshow.querySelector('.exp-slides-track-wrap');
+  let tx0=0;
+  trackWrap.addEventListener('touchstart',e=>{tx0=e.touches[0].clientX;},{passive:true});
+  trackWrap.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx0;if(Math.abs(dx)>40)goTo(dx<0?current+1:current-1);},{passive:true});
   goTo(0);
 });
 
-/* Close triggers */
-closeBtn.addEventListener('click', closeModal);
-backdrop.addEventListener('click', closeModal);
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modal.classList.contains('open')) {
-    e.stopPropagation();
-    closeModal();
+/* ── CROSS-LINK ROUTING ── */
+document.getElementById('project-modal').addEventListener('click', (e) => {
+  const crossLink = e.target.closest('.modal-cross-link');
+  
+  if (crossLink) {
+    e.preventDefault(); // Prevents the browser from jumping to the top of the page
+    
+    const targetId = crossLink.getAttribute('data-target');
+    const targetProject = PROJECTS.find(p => p.id === targetId);
+    
+    if (targetProject) {
+      // Re-trigger the modal function with the new project.
+      // This seamlessly overwrites the current modal without needing to close it!
+      openModal(targetProject);
+    }
   }
 });
-
-/* Swipe down to close */
-let touchStartY = 0;
-modal.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
-modal.addEventListener('touchend', (e) => {
-  const dy = e.changedTouches[0].clientY - touchStartY;
-  if (dy > 80 && modal.scrollTop === 0) closeModal();
-}, { passive: true });
 </script>
 </body>
 </html>
