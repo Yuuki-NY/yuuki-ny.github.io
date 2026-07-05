@@ -1911,6 +1911,29 @@ footer {
         </div>
       </div>
     </div>
+
+
+    <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="pms">
+      <div class="project-card-img card-8-bg" style="background-image:url('images/sensors-00.png');background-size:cover;background-position:center;">
+        <div class="card-tag"><span class="card-tag-dot"></span> HACKATHON · DESIGN · ROBOTICS</div>
+      </div>
+      <div class="hover-reveal">
+        <div class="hover-reveal-content">
+          <div class="hover-reveal-desc"></div>
+          <span class="hover-reveal-cta">View Full Blueprint →</span>
+        </div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-title">Weight Scale & NTC Temperature Sensor</div>
+        <div class="project-card-sub">Developing UI and Sensor Calibration | MECH 421 Sensor Lab</div>
+        <div class="project-card-footer">
+          <div class="spec-row"><span class="spec-pill">C#</span><span class="spec-pill">WinForms</span><span class="spec-pill">Circuits</span><span class="spec-pill">Instrumentation</span><span class="spec-pill">Firmware</span></div>
+          <span class="view-link">Blueprint →</span>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </section>
 
@@ -2805,31 +2828,51 @@ const PROJECTS = [
     title: 'Weight Scale & NTC Temperature Sensor',
     year: '2025',
     tag: 'SENSORS · CALIBRATION · FIRMWARE · SOFTWARE',
-    heroImg: 'images/sensors-00.png',
+    heroImg: 'images/sensors-10.png',
     heroImgPosition: 'center 40%',
     heroBg: 'linear-gradient(140deg, #0d1228 0%, #121a38 60%, #0a1020 100%)',
-    meta: { year: '2025', duration: '1 month', role: 'Lead', team: 'Solo' },
+    meta: { year: '2025', duration: '1 month', role: 'Solo', team: 'Solo' },
     overview: 'Given an MSP430FR5739 Microcontroller, wires, a breadboard, a strain gauge, and an NTC thermistor, I put together a functioning temperature sensor and weighing scale that operates with a C# WinForms UI. Calibration for the sensors was done by taking multiple data samples and either extrapolating an equation from the data or creating a lookup table. The temperature sensor could get between +/-3 degrees, while the weight scale was accurate for +/-10g.',
-    motivation: 'My interest in quantum error correction led me to ask whether classical logic-gate architectures could be adapted for cryogenic environments. This project bridged my embedded systems background with low-temperature physics, a genuinely new domain for me.',
-    images: [{ label: 'Dilution Fridge Setup' },{ label: 'Junction Array Micrograph' }],
-    video: { type: 'placeholder', label: 'Cryostat Boot Sequence (3m 22s)' },
-    tags: ['Sensors', 'Calibration', 'C#', 'WinForms', 'MATLAB', 'MSP430FR5739 Firmware'],
+    motivation: 'This lab project was created to make us more comfortable with interfacing sensors with their required circuits and firmware, then creating a visual representation of the data to record and collect information. It covers the basics of mechatronics and how important calibration and data are.',
+    images: [
+      { src: 'images/sensors-02.png', label: 'Thermistor Circuit Powered with 3.6V and Grounded by the MSP-Board and Reading Vout on the Discovery 2 Oscilloscope' },
+      { src: 'images/sensors-03.png', label: 'A Closer Look at the Thermistor Circuit with Labels' },
+      { src: 'images/sensors-04.png', label: 'Reading the Output Voltage when placing the NTC in the ~40°C Temperature Bath' },
+      { src: 'images/sensors-05.png', label: 'Verification of Temperature vs. Voltage Curve Fit' },
+      { src: 'images/sensors-06.png', label: 'Raw Data recorded by the C# UI and NTC Thermistor when dipping the sensor in different temperature baths' },
+      { src: 'images/sensors-07.png', label: 'Load Cell Apparatus Setup w/ Example Reference Weight' },
+      { src: 'images/sensors-08.png', label: 'Built Mock Strain Gauge Circuit on the Breadboard' },
+      { src: 'images/sensors-09.png', label: 'Built Instrumental Amplifier Circuit on the Breadboard' },
+      { src: 'images/sensors-00.png', label: 'Measuring the Load Cell using the Instrumental Amplifier Circuit' },
+      { src: 'images/sensors-11.png', label: 'Completed Built Circuit on the Breadboard' },
+    ],
+    tags: ['Sensors', 'Calibration', 'C#', 'WinForms', 'MATLAB', 'MSP430FR5739 Firmware', 'Oscilloscope'],
     links: [{ label: 'Lab Report', href: 'files/SensorsReport-NicholasYap.pdf', primary: true },],
+    sections: [
+      {
+        label: 'More Detail',
+        body: 'For more detail on this project, check out the lab report!',
+      },
+    ],
   },
   {
     id: 'bullet',
-    title: 'Exo-Skeletal Kinetic Actuator',
-    year: '2022',
-    tag: 'ROBOTICS · ACTUATION',
-    heroEmoji: '🤖',
+    title: 'Bullet Hell Game: The Game of Many Pews',
+    year: '2025',
+    tag: 'PROGRAMMING · GAME DEV',
+    heroImg: 'images/bullet-00.png',
+    heroImgPosition: 'bottom 30%',
     heroBg: 'linear-gradient(140deg, #1a1808 0%, #241e0a 60%, #16140a 100%)',
-    meta: { year: '2021–2022', duration: '14 months', role: 'Robotics Research Eng.', team: 'ETH ASL (4 members)' },
-    overview: 'Precision bio-mechanical force output system for rehabilitation exoskeletons. Implements variable-impedance control across 7 degrees of freedom, with real-time force sensing at 1kHz and voluntary patient intent detection via surface EMG.',
-    motivation: 'During my time at ETH Zürich I worked closely with physiotherapists who described the gap between what patients needed and what existing robotic assistants could provide. The actuator was my attempt to close that gap, specifically tackling the problem of making robot compliance feel natural rather than mechanical.',
-    images: [{ label: 'Actuator Assembly' },{ label: 'EMG Signal Processing' },{ label: 'Clinical Trial Session' }],
-    video: { type: 'placeholder', label: 'Patient Gait Assist Demo (1m 48s)' },
-    tags: ['C++', 'ROS2', 'Python', 'sEMG', 'Impedance Control', 'SolidWorks'],
-    links: [{ label: 'IEEE Publication', href: '#', primary: true },{ label: 'GitHub', href: '#' },{ label: 'Clinical Protocol', href: '#' }],
+    meta: { year: '2025', duration: '1 month', role: 'Solo', team: 'Solo' },
+    overview: 'The Game of Many Pews is a bullet hell game. You control a sprite character using the keyboard or an MSP430FR5739 like a joystick to dodge different kinds of bullets and collect points. There are power-ups to improve your chances of survival and provide more points. All of this was developed in a C# WinForms and utilizes an accelerometer on the MSP MCU that has coded firmware to communicate over UART, creating joystick controls.',
+    motivation: 'I always found bullet hell games to be cool. The goal is simple- dodge bullets and survive as long as possible. I wanted to create a fun game that can be played with simplistic controls and be able to create something similar to a Wii remote from my childhood by using a MSP MCU.',
+    images: [
+      { src: 'images/capstone-00.jpg', label: 'Prototyped Trash Retrieval Drone (Left) - Smaller Prototype Drone (Right)' },
+      { src: 'images/capstone-01.jpeg', label: 'Drone Perspective Shot' },
+    ],
+    video: { type: 'youtube', id: 'https://www.youtube.com/embed/XACHRlph4iE' },
+    tags: ['C#', 'WinForms', 'MSP430FR5739 Firmware', 'Code Composer Studio', 'Game Development',],
+    links: [{ label: 'Github Repository', href: 'https://github.com/Yuuki-NY/The-Game-Of-Many-Pews', primary: true },],
   },
   {
     id: 'capstone',
