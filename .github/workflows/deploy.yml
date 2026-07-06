@@ -29,7 +29,7 @@ jobs
       - name Upload artifact
         uses actionsupload-pages-artifact@v3
         with
-          path '.'   # change if index.html is in a subfolder, e.g. '.public'
+          path 'index.html'   # change if index.html is in a subfolder, e.g. '.public'
 
       - name Deploy to GitHub Pages
         id deployment
