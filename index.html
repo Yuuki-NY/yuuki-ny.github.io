@@ -1914,18 +1914,18 @@ footer {
 
 
     <div class="project-card reveal reveal-delay-1" tabindex="0" data-project="pms">
-      <div class="project-card-img card-8-bg" style="background-image:url('images/sensors-00.png');background-size:cover;background-position:center;">
+      <div class="project-card-img card-8-bg" style="background-image:url('images/pms-00.jpg');background-size:cover;background-position:bottom;">
         <div class="card-tag"><span class="card-tag-dot"></span> HACKATHON · DESIGN · ROBOTICS</div>
       </div>
       <div class="hover-reveal">
         <div class="hover-reveal-content">
-          <div class="hover-reveal-desc"></div>
+          <div class="hover-reveal-desc">HATCH 30-Hr Team Designathon to build a VEX Robot that can traverse a table gap while transporting an apple</div>
           <span class="hover-reveal-cta">View Full Blueprint →</span>
         </div>
       </div>
       <div class="project-card-body">
         <div class="project-card-title">HATCH Senior Design Competition: PMS</div>
-        <div class="project-card-sub">Team Woman in STEM | 24-Hr VEX Robotics Design Competition</div>
+        <div class="project-card-sub">Team Woman in STEM | 30-Hr VEX Robotics Design Competition</div>
         <div class="project-card-footer">
           <div class="spec-row"><span class="spec-pill">Hackathon</span><span class="spec-pill">Team Design</span><span class="spec-pill">Iteration</span></div>
           <span class="view-link">Blueprint →</span>
@@ -2809,19 +2809,32 @@ document.querySelectorAll('.project-card').forEach(card=>{
 /* ── PROJECT MODAL ── */
 const PROJECTS = [
   {
-    id: 'aero',
-    title: 'Autonomous Aerodynamics Node',
-    year: '2023',
-    tag: 'AERODYNAMICS · DYNAMICS',
-    heroEmoji: '🚀',
+    id: 'pms',
+    title: 'HATCH Senior Design Competition: Propulsive Mechanical Spanner (PMS)​',
+    year: '2026',
+    tag: 'HACKATHON · DESIGN · ROBOTICS',
+    heroImg: 'images/pms-03.jpg',
+    heroImgPosition: 'bottom 40%',
     heroBg: 'linear-gradient(140deg, #0c2030 0%, #0e2a3a 60%, #0a1e2c 100%)',
-    meta: { year: '2023', duration: 'Ongoing', role: 'Lead Engineer', team: 'Solo' },
-    overview: 'A closed-loop thrust vectoring system designed for exo-atmospheric drone propulsion, operating with adaptive Kalman filtering at 400Hz. The node interfaces directly with a custom FPGA co-processor to achieve sub-millisecond actuation latency, enabling stable flight across rapid pressure transitions.',
-    motivation: 'Traditional drone autopilots struggle with the thin-atmosphere regime between 20 and 60km altitude. I wanted to build a system that could operate autonomously in this gap, a regime too high for conventional aircraft and too low for orbital vehicles, using only onboard sensing and control.',
-    images: [{ label: 'Thrust Vectoring Rig' },{ label: 'FPGA Co-processor PCB' },{ label: 'Pressure Chamber Test' }],
-    video: null,
-    tags: ['Rust', 'ROS2', 'FPGA', 'C++', 'Kalman Filter', 'SITL'],
-    links: [{ label: 'GitHub Repo', href: '#', primary: true },{ label: 'Research Paper', href: '#' },{ label: 'Flight Data Logs', href: '#' }],
+    meta: { year: '2026', duration: '30-Hr', role: 'Mechanical / Documentation', team: 'Nicholas Yap, Dominic Nguyen, Michael Hui-Fumagalli, Arman Mukhi, Emma Greville' },
+    overview: 'The Senior Design competition was sponsored by HATCH with the sole task of transporting an apple across increasing table gaps using a VEX robotics kit. As the robot needed to start within a defined box, we developed a dual drawbridge mechanism that expands the vehicle to traverse across large gaps and managed to get 2nd place out of 5 total teams. The automation uses block coding with precise and tested timings to ensure completion of this task. Overall, it was long hours of fun, designing, iteration, assembling, and ideation!',
+    motivation: 'With our last year of undergrad coming to an end, we wanted to participate in something both fun and challenging. Doing a robotics competition was the perfect outlet to hang out with friends while utilizing design processes and collaborative tools in a short period of time. I had a lot of fun and enjoyed building something cool with my friends.',
+    images: [
+      { src: 'images/pms-00.jpg', label: 'Retracted PMS robot at rest' },
+      { src: 'images/pms-02.jpg', label: 'Full extended PMS robot' },
+      { src: 'images/pms-03.jpg', label: 'Ideation and Building with the team' },
+      { src: 'images/pms-04.jpg', label: 'Apple mount design' },
+      { src: 'images/pms-05.png', label: 'Testing torque and gap-crossing capabilities of the drawbridge mechanism' },
+    ],
+    video: { type: 'youtube', id: 'https://www.youtube.com/embed/zAxf289NNAM' },
+    tags: ['VEX Robotics', 'Parallel Development', 'Teamwork', 'Problem-solving'],
+    links: [{ label: 'Design Presentation', href: 'files/pms.pdf', primary: true },{ label: 'Linkedin Post', href: 'https://www.linkedin.com/feed/update/urn:li:activity:7441253825153511424/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD2ufIcBcXv48nXgAs4e7DsJFg7wNM4ANDQ' }],
+    sections: [
+      {
+        label: 'More Detail',
+        body: 'For more detail on this project, check out the design presentation!',
+      },
+    ],
   },
   {
     id: 'sensors',
