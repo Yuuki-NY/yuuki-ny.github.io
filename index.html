@@ -801,149 +801,442 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
-.exp-grid {
+/* ── EXPERIENCE TIMELINE (REACT) ── */
+#experience-timeline-root { margin-top: 44px; }
+
+.tl-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.tl-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.tl-legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.tl-legend-dot.career { background: var(--accent-light); box-shadow: 0 0 0 3px var(--accent-glow); }
+.tl-legend-dot.club   { background: var(--gold);         box-shadow: 0 0 0 3px var(--gold-glow); }
+
+.tl-grid {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: clamp(40px, 6vw, 80px);
+  grid-template-columns: 1fr 56px 1fr;
+  column-gap: 28px;
+  row-gap: clamp(18px, 2.6vw, 28px);
 }
-.exp-left { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
-.exp-count {
-  font-size: clamp(4rem, 7vw, 6rem);
-  font-weight: 700; letter-spacing: -0.04em;
-  color: var(--white); line-height: 1;
-}
-.exp-count span { color: var(--gold); }
-.exp-desc { font-size: 0.95rem; color: var(--text); line-height: 1.72; max-width: 220px; }
-.timeline { display: flex; flex-direction: column; }
-.timeline-item {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 32px;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-  transition: background var(--transition);
-}
-.timeline-item:last-child { border-bottom: none; }
-.timeline-item::before {
+
+.tl-axis-line { grid-column: 2; position: relative; z-index: 0; }
+.tl-axis-line::before {
   content: '';
   position: absolute;
-  left: -24px; top: 50%;
-  transform: translateY(-50%);
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: background var(--transition);
+  top: 0; bottom: 0; left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, var(--border) 3%, var(--border) 97%, transparent);
 }
-.timeline-item:hover::before { background: var(--gold); }
-.timeline-year {
-  font-family: var(--font-mono);
-  font-size: 0.76rem; color: var(--muted);
-  padding-top: 5px; letter-spacing: 0.06em;
-}
-.timeline-role { font-size: 1.02rem; font-weight: 600; color: var(--white); }
-.timeline-company {
-  font-size: 0.86rem; color: var(--accent-light);
-  font-weight: 500; margin: 4px 0 10px;
-}
-.timeline-desc { font-size: 0.86rem; color: var(--text); line-height: 1.65; }
 
-/* ── EXPERIENCE SLIDESHOW ── */
-.exp-slideshow {
-  margin-top: 16px;
+.tl-dot-cell {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  width: 100%;
+  z-index: 2;
 }
-.exp-slides-track-wrap {
+.tl-dot {
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  border: 3px solid var(--bg2);
+  background: var(--muted);
+  transition: background var(--transition), transform var(--transition);
+}
+.tl-dot.career { background: var(--accent-light); color: var(--accent-light); box-shadow: 0 0 0 3px var(--accent-glow); }
+.tl-dot.club   { background: var(--gold);         color: var(--gold);         box-shadow: 0 0 0 3px var(--gold-glow); }
+.tl-dot.ongoing { animation: tl-dot-pulse 2.4s ease-out infinite; }
+@keyframes tl-dot-pulse {
+  0%   { box-shadow: 0 0 0 0 currentColor; }
+  70%  { box-shadow: 0 0 0 9px rgba(0,0,0,0); }
+  100% { box-shadow: 0 0 0 9px rgba(0,0,0,0); }
+}
+
+.tl-card-cell.left  { grid-column: 1; }
+.tl-card-cell.right { grid-column: 3; }
+
+.tl-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.tl-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.32); }
+.tl-card.career:hover { border-color: var(--accent-light); }
+.tl-card.club:hover    { border-color: var(--gold-light); }
+
+.tl-card-header {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 22px 24px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: inherit;
+  color: inherit;
+}
+.tl-card-header:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+.tl-card-toprow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.tl-pill {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  line-height: 1.6;
+}
+.tl-pill.career { color: var(--accent-light); background: rgba(30,107,127,0.14); border: 1px solid rgba(42,143,166,0.35); }
+.tl-pill.club   { color: var(--gold-light);   background: rgba(196,140,42,0.14); border: 1px solid rgba(196,140,42,0.35); }
+
+.tl-dates {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.tl-ongoing-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  color: var(--gold-light);
+}
+
+.tl-role { font-size: 1.02rem; font-weight: 600; color: var(--white); line-height: 1.35; }
+
+.tl-metarow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 0.82rem;
+}
+.tl-company { color: var(--text); font-weight: 500; }
+.tl-location { color: var(--muted); }
+.tl-location::before { content: '·'; margin-right: 10px; color: var(--muted); }
+
+.tl-summary { font-size: 0.85rem; color: var(--text); line-height: 1.62; margin-top: 2px; }
+
+.tl-view-details {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+.tl-card.club .tl-view-details { color: var(--gold-light); }
+.tl-chevron { transition: transform var(--transition); }
+.tl-chevron.open { transform: rotate(180deg); }
+
+/* Accordion drawer — CSS-only smooth open/close via fr-unit animation */
+.tl-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.tl-drawer[data-state="open"] { grid-template-rows: 1fr; }
+.tl-drawer-inner { overflow: hidden; min-height: 0; padding: 0 24px; }
+.tl-drawer[data-state="open"] .tl-drawer-inner { padding: 2px 24px 24px; }
+
+.tl-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 6px;
+}
+.tl-highlights li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.84rem;
+  color: var(--text);
+  line-height: 1.62;
+}
+.tl-highlights li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.5em;
+  width: 6px; height: 6px;
+  background: var(--accent-light);
+  transform: rotate(45deg);
+}
+.tl-card.club .tl-highlights li::before { background: var(--gold); }
+
+.tl-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.tl-tag {
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--text);
+  background: var(--bg3);
+  letter-spacing: 0.03em;
+}
+
+.tl-overlap-note {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(196,140,42,0.07);
+  border: 1px dashed var(--border);
+  font-size: 0.76rem;
+  color: var(--muted);
+  line-height: 1.55;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.tl-overlap-icon { color: var(--gold-light); font-weight: 700; flex-shrink: 0; }
+
+/* ── Media gallery (21:9 widescreen slideshow) ── */
+.tl-gallery { margin-top: 20px; }
+.tl-gallery-viewport {
   overflow: hidden;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--bg3);
 }
-.exp-slides-track {
+.tl-gallery-track {
   display: flex;
-  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
-  will-change: transform;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
 }
-.exp-slide {
+.tl-gallery-slide {
   flex: 0 0 100%;
   min-width: 0;
   position: relative;
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  background: none;
+  cursor: zoom-in;
 }
-.exp-slide-img {
+.tl-gallery-slide img {
   width: 100%;
-  aspect-ratio: 16/7;
+  aspect-ratio: 21 / 9;
   object-fit: cover;
   display: block;
-  background: var(--surface);
 }
-.exp-slide-placeholder {
-  width: 100%;
-  aspect-ratio: 16/7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.tl-gallery-slide:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.tl-gallery-zoom-hint {
+  position: absolute;
+  bottom: 10px; right: 10px;
+  background: rgba(14,17,24,0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--white);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  background: var(--surface);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
 }
-.exp-slide-caption {
-  padding: 10px 14px 12px;
-  font-size: 0.75rem;
+.tl-gallery-slide:hover .tl-gallery-zoom-hint,
+.tl-gallery-slide:focus-visible .tl-gallery-zoom-hint { opacity: 1; }
+
+.tl-gallery-caption {
+  padding: 10px 2px 0;
+  font-size: 0.76rem;
   color: var(--muted);
   font-family: var(--font-mono);
-  letter-spacing: 0.06em;
-  line-height: 1.5;
-  border-top: 1px solid var(--border);
+  line-height: 1.55;
+  letter-spacing: 0.01em;
 }
-.exp-slide-caption strong {
-  color: var(--text);
-  font-weight: 500;
-}
-.exp-slide-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-.exp-slide-btn {
+.tl-gallery-caption strong { color: var(--text); font-weight: 600; }
+
+.tl-gallery-controls { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.tl-gallery-btn {
   width: 28px; height: 28px;
   border-radius: 8px;
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   transition: border-color var(--transition), color var(--transition);
   flex-shrink: 0;
   line-height: 1;
 }
-.exp-slide-btn:hover { border-color: var(--accent-light); color: var(--white); }
-.exp-slide-btn:disabled { opacity: 0.3; cursor: default; }
-.exp-slide-dots {
-  display: flex; gap: 5px; align-items: center;
-}
-.exp-slide-dot {
-  width: 5px; height: 5px;
+.tl-gallery-btn:hover { border-color: var(--accent-light); color: var(--white); }
+.tl-gallery-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.tl-gallery-dots { display: flex; gap: 6px; align-items: center; }
+.tl-gallery-dot {
+  width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--border);
-  transition: background var(--transition), transform var(--transition);
+  border: none; padding: 0;
   cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
 }
-.exp-slide-dot.active {
-  background: var(--gold);
-  transform: scale(1.35);
-}
-.exp-slide-counter {
+.tl-gallery-dot.active { background: var(--gold); transform: scale(1.35); }
+.tl-gallery-dot:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.tl-gallery-counter {
   margin-left: auto;
   font-family: var(--font-mono);
   font-size: 0.62rem;
   color: var(--muted);
   letter-spacing: 0.08em;
 }
+
+/* ── Lightbox (full-screen portal) ── */
+.tl-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(6,8,12,0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  animation: tl-fade-in 0.2s ease;
+}
+@keyframes tl-fade-in { from { opacity: 0; } to { opacity: 1; } }
+.tl-lightbox-figure {
+  max-width: min(1200px, 92vw);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+.tl-lightbox-figure img {
+  max-width: 100%;
+  max-height: 76vh;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.tl-lightbox-figure figcaption {
+  color: var(--text);
+  font-size: 0.82rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  line-height: 1.5;
+  max-width: 640px;
+}
+.tl-lightbox-figure figcaption strong { color: var(--white); }
+.tl-lightbox-close {
+  position: absolute;
+  top: 24px; right: 24px;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.tl-lightbox-close:hover { border-color: var(--gold); transform: rotate(90deg); }
+.tl-lightbox-close:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.tl-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-size: 1.6rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color var(--transition), background var(--transition);
+}
+.tl-lightbox-nav:hover { border-color: var(--accent-light); }
+.tl-lightbox-nav:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.tl-lightbox-nav.prev { left: 24px; }
+.tl-lightbox-nav.next { right: 24px; }
+.tl-lightbox-counter {
+  position: absolute;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  background: var(--surface);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+/* ── Responsive flattening: dual-channel → single track ── */
+@media (max-width: 900px) {
+  .tl-grid { grid-template-columns: 30px 1fr; column-gap: 16px; }
+  .tl-axis-line, .tl-dot-cell { grid-column: 1; }
+  .tl-card-cell.left, .tl-card-cell.right { grid-column: 2; }
+}
+
+@media (max-width: 600px) {
+  .tl-card-header { padding: 18px; }
+  .tl-drawer-inner { padding: 0 18px; }
+  .tl-drawer[data-state="open"] .tl-drawer-inner { padding: 2px 18px 18px; }
+  .tl-lightbox { padding: 16px; }
+  .tl-lightbox-nav { width: 42px; height: 42px; font-size: 1.3rem; }
+  .tl-lightbox-nav.prev { left: 8px; }
+  .tl-lightbox-nav.next { right: 8px; }
+  .tl-lightbox-close { top: 16px; right: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-drawer, .tl-gallery-track, .tl-chevron, .tl-card, .tl-lightbox { transition: none !important; animation: none !important; }
+  .tl-dot.ongoing { animation: none; }
+}
+
 
 /* ── EDUCATION ── */
 #education { 
@@ -1047,9 +1340,6 @@ footer {
   .hero-nameplate-text { font-size: clamp(3.5rem, 14vw, 7rem); }
   .about-grid { grid-template-columns: 1fr; }
   /* .about-images { height: 320px; } */
-  .exp-grid { grid-template-columns: 1fr; gap: 32px; }
-  .timeline-item { grid-template-columns: 1fr; gap: 8px; }
-  .timeline-item::before { display: none; }
   nav { gap: 16px; padding: 10px 18px; }
   .nav-links { gap: 14px; }
 }
@@ -1940,129 +2230,9 @@ footer {
 
 <!-- EXPERIENCE -->
 <section id="experience">
-  <div class="exp-grid">
-    <div class="exp-left">
-      <div class="section-eyebrow reveal">Career</div>
-      <!-- <div class="exp-count reveal reveal-delay-1">5<span>+</span></div>
-      <p class="exp-desc reveal reveal-delay-2">Years</p> -->
-    </div>
-    <div class="timeline">
-      <div class="timeline-item reveal">
-        <div class="timeline-year">May 2025 to</br>Aug 2025</div>
-        <div>
-          <div class="timeline-role">Summer Research Student - Cardiac Surgery Department</div>
-          <div class="timeline-company">Ted Rogers Centre for Heart Research + University Health Network</div>
-          <div class="timeline-desc">
-            <ul>
-              <li>Designed a framework for a secure data collection system for aortic biomechanics research using REDCap, ensuring patient confidentiality and anonymity.</li>
-              <li>Built custom MATLAB scripts to process and restructure existing research data for enhanced data security and streamlined management capabilities.</li>
-              <li>Customized web elements using HTML and CSS to improve visual consistency and mobile compatibility.</li>
-              <li>Participated in a company-sponsored animal dissection study for aortic heart research.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="timeline-item reveal reveal-delay-1">
-        <div class="timeline-year">Feb 2024 to</br>Aug 2024</div>
-        <div>
-          <div class="timeline-role">Maintenance/Reliability Engineering Co-op</div>
-          <div class="timeline-company">The Dow Chemical Company</div>
-          <div class="timeline-desc">
-            <ul>
-              <li>Reprogrammed an industrial oven PID controller and created safe operating procedures, shortening maintenance and improving operator safety.</li>
-              <li>Designed flange covers for shut-down pressure equipment in SolidWorks to improve the safety and repair efficiency for millwrights.</li>
-              <li>Redesigned equipment cleaning procedures, reducing corrosion and extending equipment service life.</li>
-              <li>Coordinated management of change (MOC) for facility renovations, equipment upgrades, and technical documentation to ensure compliant implementation and proper record keeping.</li>
-              <li>Communicated with vendors, work coordinators, and operators to streamline equipment bill of materials, stocking, and upgrades to ensure up-to date management and procurement of critical equipment.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="timeline-item reveal reveal-delay-2">
-        <div class="timeline-year">Sept 2023 to</br>Feb 2024</div>
-        <div>
-          <div class="timeline-role">Fixed Asset Integrity Engineering Co-op</div>
-          <div class="timeline-company">The Dow Chemical Company</div>
-          <div class="timeline-desc">
-            <ul>
-              <li>Collaborated with multiple plant operations teams to author and update Corrosion Control Documents and Integrity Operating Windows, improving reliability across all site operations.</li>
-              <li>Revised ABSA regulatory documentation to ensure regulatory compliance and maintain the site’s permission to operate.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-year">Sept 2022 to</br>Aug 2026</div>
-        <div>
-          <div class="timeline-role">Senior Aircraft and Administrative Member</div>
-          <div class="timeline-company">UBC Uncrewed Aircraft Systems (UAS)</div>
-          <div class="timeline-desc">
-            <ul>
-              <li>Designed airfoil frames, landing gear, and electrical equipment mounts for a VTOL reconnaissance aircraft.</li>
-              <li>Collaborated with an interdisciplinary team to develop comprehensive quadcopter and VTOL CAD assemblies in Onshape, creating functional autonomous drones for competition.</li>
-            </ul>
-          </div>
-          <div class="exp-slideshow" data-slideshow>
-            <div class="exp-slides-track-wrap">
-              <div class="exp-slides-track">
-                <div class="exp-slide"><img src="images/scout-00.png" class="exp-slide-img" alt="Scout VTOL Assembly" /><div class="exp-slide-caption"><strong>Scout VTOL Assembly:</strong>Assembly of the VTOL Aircraft named Scout. Developed for long distance scouting for the AEAC competition.</div></div>
-                <div class="exp-slide"><img src="images/scout-02.png" class="exp-slide-img" alt="Scout Servo Mount & Landing Gear" /><div class="exp-slide-caption"><strong>Scout Servo Mount & Landing Gear:</strong>Direct aileron servo control paired with lightweight landing gear.</div></div>
-                <div class="exp-slide"><img src="images/uas-00.png" class="exp-slide-img" alt="Hydrone Payload Mount" /><div class="exp-slide-caption"><strong>Hydrone Payload Mount:</strong>Utilizes Picatinny and M-Lok rails designs for quick access and swapping of payload on a quadcopter.</div></div>
-                <div class="exp-slide"><img src="images/scout-03.png" class="exp-slide-img" alt="Scout Servo Mount Detail" /><div class="exp-slide-caption"><strong>Scout Servo Mount Detail:</strong>Closer look at the servo embedded into the wing to directly drive the ailerons.</div></div>
-                <div class="exp-slide"><img src="images/dragonfly-03.png" class="exp-slide-img" alt="Dragonfly Airfoil Frame" /><div class="exp-slide-caption"><strong>Dragonfly Airfoil Frame:</strong>Full CAD of the VTOL tail frame for manufacturing and lasercutting balsa wood.</div></div>
-              </div>
-            </div>
-            <div class="exp-slide-controls">
-              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
-              <button class="exp-slide-btn next" aria-label="Next">›</button>
-              <div class="exp-slide-dots"></div>
-              <span class="exp-slide-counter">1 / 3</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="timeline-item reveal reveal-delay-1">
-        <div class="timeline-year">Oct 2021 to</br>Jul 2022</div>
-        <div>
-          <div class="timeline-role">Frame Subteam Member</div>
-          <div class="timeline-company">SUBC - UBC's Submarine Design Team</div>
-          <div class="timeline-desc">
-            <ul>
-              <li>Designed 3D models of aluminum extrusion attachments for the outer hull of a submarine.</li>
-              <li>Collaborated to manufacture an aluminum frame for a submarine consistenting of aluminum extrusions and water jet cut sheets.</li>
-            </ul>
-          </div>
-          <div class="exp-slideshow" data-slideshow>
-            <div class="exp-slides-track-wrap">
-              <div class="exp-slides-track">
-                <div class="exp-slide"><img src="images/subc-00.png" class="exp-slide-img" alt="SUBC Frame Assembly" /><div class="exp-slide-caption"><strong>SUBC Frame Assembly:</strong>Full aluminum frame for mechanically-powered submarine.</div></div>
-                <div class="exp-slide"><img src="images/subc-01.png" class="exp-slide-img" alt="Frame Mount Attachment" /><div class="exp-slide-caption"><strong>Frame Mount Attachment:</strong>Attachments for auxillery components to the aluminum extrusion frame.</div></div>
-              </div>
-            </div>
-            <div class="exp-slide-controls">
-              <button class="exp-slide-btn prev" aria-label="Previous">‹</button>
-              <button class="exp-slide-btn next" aria-label="Next">›</button>
-              <div class="exp-slide-dots"></div>
-              <span class="exp-slide-counter">1 / 3</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="timeline-item reveal reveal-delay-2">
-        <div class="timeline-year">Sept 2020 to</br>Jul 2021</div>
-        <div>
-          <div class="timeline-role">Mechanical Subsystem General Member</div>
-          <div class="timeline-company">University of Toronto Aerospace Team</div>
-          <div class="timeline-desc">
-            <ul>
-              <li>Modelled servo mounts, camera mounts, and alignment frames for an autonomous driving payload carried by an aircraft.</li>
-              <li>Designed a custom team-wide Google Slides presentation theme for competition.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="section-eyebrow reveal">Career</div>
+  <h2 class="section-title reveal reveal-delay-1">Experience</h2>
+  <div id="experience-timeline-root"></div>
 </section>
 
 <!-- EDUCATION -->
@@ -2212,6 +2382,8 @@ footer {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 
 <script>
 /* ════════════════════════════════════════════════════════
@@ -3355,38 +3527,6 @@ let touchStartY=0;
 modal.addEventListener('touchstart',(e)=>{touchStartY=e.touches[0].clientY;},{passive:true});
 modal.addEventListener('touchend',(e)=>{const dy=e.changedTouches[0].clientY-touchStartY;if(dy>80&&modal.scrollTop===0)closeModal();},{passive:true});
 
-/* ── EXPERIENCE SLIDESHOWS ── */
-document.querySelectorAll('[data-slideshow]').forEach(slideshow => {
-  const track   = slideshow.querySelector('.exp-slides-track');
-  const slides  = slideshow.querySelectorAll('.exp-slide');
-  const prevBtn = slideshow.querySelector('.exp-slide-btn.prev');
-  const nextBtn = slideshow.querySelector('.exp-slide-btn.next');
-  const dotsEl  = slideshow.querySelector('.exp-slide-dots');
-  const counter = slideshow.querySelector('.exp-slide-counter');
-  const total   = slides.length;
-  let current   = 0;
-  slides.forEach((_,i)=>{
-    const dot=document.createElement('button');
-    dot.className='exp-slide-dot'+(i===0?' active':'');
-    dot.setAttribute('aria-label',`Slide ${i+1}`);
-    dot.addEventListener('click',()=>goTo(i));
-    dotsEl.appendChild(dot);
-  });
-  function goTo(idx){
-    current=(idx+total)%total;
-    track.style.transform=`translateX(-${current*100}%)`;
-    dotsEl.querySelectorAll('.exp-slide-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
-    counter.textContent=`${current+1} / ${total}`;
-  }
-  prevBtn.addEventListener('click',()=>goTo(current-1));
-  nextBtn.addEventListener('click',()=>goTo(current+1));
-  const trackWrap=slideshow.querySelector('.exp-slides-track-wrap');
-  let tx0=0;
-  trackWrap.addEventListener('touchstart',e=>{tx0=e.touches[0].clientX;},{passive:true});
-  trackWrap.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx0;if(Math.abs(dx)>40)goTo(dx<0?current+1:current-1);},{passive:true});
-  goTo(0);
-});
-
 /* ── CROSS-LINK ROUTING ── */
 document.getElementById('project-modal').addEventListener('click', (e) => {
   const crossLink = e.target.closest('.modal-cross-link');
@@ -3404,6 +3544,16 @@ document.getElementById('project-modal').addEventListener('click', (e) => {
     }
   }
 });
+</script>
+
+<!-- ══════════════════════════════════════════
+     EXPERIENCE TIMELINE (REACT)
+     Dual-channel vertical timeline for #experience.
+     Compiled from ExperienceTimeline.jsx via Babel (JSX-only transform,
+     no runtime transpiler needed). See that file for editable source.
+     ══════════════════════════════════════════ -->
+<script>
+const{useState:useState,useEffect:useEffect,useRef:useRef,useMemo:useMemo,useCallback:useCallback}=React,EXPERIENCE_ITEMS=[{id:"trc-uhn",category:"career",role:"Summer Research Student - Cardiac Surgery Department",company:"Ted Rogers Centre for Heart Research + University Health Network",location:"Toronto, ON, Canada",start:"May 2025",end:"Aug 2025",summary:"Built a secure REDCap data pipeline and MATLAB tooling for aortic biomechanics research.",highlights:["Designed a framework for a secure data collection system for aortic biomechanics research using REDCap, ensuring patient confidentiality and anonymity.","Built custom MATLAB scripts to process and restructure existing research data for enhanced data security and streamlined management capabilities.","Customized web elements using HTML and CSS to improve visual consistency and mobile compatibility.","Participated in a company-sponsored animal dissection study for aortic heart research."],tags:["REDCap","MATLAB","HTML/CSS","Data Security"],images:[]},{id:"dow-maintenance",category:"career",role:"Maintenance/Reliability Engineering Co-op",company:"The Dow Chemical Company",location:"",start:"Feb 2024",end:"Aug 2024",summary:"Reprogrammed oven controls and redesigned safety equipment to cut maintenance time and improve operator safety.",highlights:["Reprogrammed an industrial oven PID controller and created safe operating procedures, shortening maintenance and improving operator safety.","Designed flange covers for shut-down pressure equipment in SolidWorks to improve the safety and repair efficiency for millwrights.","Redesigned equipment cleaning procedures, reducing corrosion and extending equipment service life.","Coordinated management of change (MOC) for facility renovations, equipment upgrades, and technical documentation to ensure compliant implementation and proper record keeping.","Communicated with vendors, work coordinators, and operators to streamline equipment bill of materials, stocking, and upgrades to ensure up-to date management and procurement of critical equipment."],tags:["PID Control","SolidWorks","MOC","Process Safety"],images:[]},{id:"dow-integrity",category:"career",role:"Fixed Asset Integrity Engineering Co-op",company:"The Dow Chemical Company",location:"",start:"Sept 2023",end:"Feb 2024",summary:"Authored corrosion-control documentation and regulatory filings across plant operations.",highlights:["Collaborated with multiple plant operations teams to author and update Corrosion Control Documents and Integrity Operating Windows, improving reliability across all site operations.","Revised ABSA regulatory documentation to ensure regulatory compliance and maintain the site’s permission to operate."],tags:["Corrosion Control","ABSA Compliance","Regulatory Docs"],images:[]},{id:"uas",category:"club",role:"Senior Aircraft and Administrative Member",company:"UBC Uncrewed Aircraft Systems (UAS)",location:"Vancouver, BC, Canada",start:"Sept 2022",end:"Aug 2026",summary:"Designed VTOL airframes and led interdisciplinary CAD assemblies for competition drones.",highlights:["Designed airfoil frames, landing gear, and electrical equipment mounts for a VTOL reconnaissance aircraft.","Collaborated with an interdisciplinary team to develop comprehensive quadcopter and VTOL CAD assemblies in Onshape, creating functional autonomous drones for competition."],tags:["Onshape","CAD","VTOL Design","Aerodynamics"],images:[{src:"images/scout-00.png",label:"Scout VTOL Assembly",caption:"Assembly of the VTOL Aircraft named Scout. Developed for long distance scouting for the AEAC competition."},{src:"images/scout-02.png",label:"Scout Servo Mount & Landing Gear",caption:"Direct aileron servo control paired with lightweight landing gear."},{src:"images/uas-00.png",label:"Hydrone Payload Mount",caption:"Utilizes Picatinny and M-Lok rails designs for quick access and swapping of payload on a quadcopter."},{src:"images/scout-03.png",label:"Scout Servo Mount Detail",caption:"Closer look at the servo embedded into the wing to directly drive the ailerons."},{src:"images/dragonfly-03.png",label:"Dragonfly Airfoil Frame",caption:"Full CAD of the VTOL tail frame for manufacturing and lasercutting balsa wood."}]},{id:"subc",category:"club",role:"Frame Subteam Member",company:"SUBC - UBC's Submarine Design Team",location:"Vancouver, BC, Canada",start:"Oct 2021",end:"Jul 2022",summary:"Modeled and helped manufacture the aluminum hull frame for a human-powered submarine.",highlights:["Designed 3D models of aluminum extrusion attachments for the outer hull of a submarine.","Collaborated to manufacture an aluminum frame for a submarine consistenting of aluminum extrusions and water jet cut sheets."],tags:["CAD","Aluminum Fabrication","Waterjet Cutting"],images:[{src:"images/subc-00.png",label:"SUBC Frame Assembly",caption:"Full aluminum frame for mechanically-powered submarine."},{src:"images/subc-01.png",label:"Frame Mount Attachment",caption:"Attachments for auxillery components to the aluminum extrusion frame."}]},{id:"utat",category:"club",role:"Mechanical Subsystem General Member",company:"University of Toronto Aerospace Team",location:"Toronto, ON, Canada",start:"Sept 2020",end:"Jul 2021",summary:"Modeled mounts and alignment frames for an autonomous aircraft payload.",highlights:["Modelled servo mounts, camera mounts, and alignment frames for an autonomous driving payload carried by an aircraft.","Designed a custom team-wide Google Slides presentation theme for competition."],tags:["CAD","Autonomous Systems","Team Branding"],images:[]}],MONTHS={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};function parseMonthYear(e){const t=e.trim().split(/\s+/),a=MONTHS[t[0].slice(0,3).toLowerCase()],n=parseInt(t[1],10);return new Date(n,null==a?0:a,1)}function isOngoing(e){const t=new Date,a=new Date(t.getFullYear(),t.getMonth(),1);return e.endDate.getTime()>=a.getTime()}function computeOverlaps(e){const t=new Map;return e.forEach(a=>{const n=[];e.forEach(e=>{if(a.id===e.id||a.category===e.category)return;a.startDate<=e.endDate&&e.startDate<=a.endDate&&n.push(e)}),t.set(a.id,n)}),t}function useRevealRef(){const e=useRef(null),[t,a]=useState(!1);return useEffect(()=>{const t=e.current;if(!t)return;if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return void a(!0);const n=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&(a(!0),n.unobserve(e.target))})},{threshold:.12});return n.observe(t),()=>n.disconnect()},[]),[e,t]}function Gallery({images:e,onOpenLightbox:t}){const[a,n]=useState(0),r=e.length,l=useRef(null),o=useCallback(e=>{n((e%r+r)%r)},[r]),i=e[a];return React.createElement("div",{className:"tl-gallery"},React.createElement("div",{className:"tl-gallery-viewport",onTouchStart:e=>{l.current=e.touches[0].clientX},onTouchEnd:e=>{if(null==l.current)return;const t=e.changedTouches[0].clientX-l.current;Math.abs(t)>40&&o(a+(t<0?1:-1)),l.current=null}},React.createElement("div",{className:"tl-gallery-track",style:{transform:`translateX(-${100*a}%)`}},e.map((e,a)=>React.createElement("button",{type:"button",key:e.src,className:"tl-gallery-slide",onClick:()=>t(a),"aria-label":`Enlarge image: ${e.label}`},React.createElement("img",{src:e.src,alt:e.label,loading:"lazy"}),React.createElement("span",{className:"tl-gallery-zoom-hint"},"⤢ Click to enlarge"))))),React.createElement("div",{className:"tl-gallery-caption"},React.createElement("strong",null,i.label),i.caption?React.createElement("span",null," — ",i.caption):null),React.createElement("div",{className:"tl-gallery-controls"},React.createElement("button",{type:"button",className:"tl-gallery-btn",onClick:()=>o(a-1),"aria-label":"Previous slide"},"‹"),React.createElement("div",{className:"tl-gallery-dots"},e.map((e,t)=>React.createElement("button",{type:"button",key:e.src,className:"tl-gallery-dot"+(t===a?" active":""),"aria-label":`Jump to slide ${t+1}: ${e.label}`,"aria-current":t===a,onClick:()=>o(t)}))),React.createElement("button",{type:"button",className:"tl-gallery-btn",onClick:()=>o(a+1),"aria-label":"Next slide"},"›"),React.createElement("span",{className:"tl-gallery-counter"},a+1," / ",r)))}function Lightbox({images:e,index:t,onClose:a,onNavigate:n}){useEffect(()=>{function e(e){"Escape"===e.key&&a(),"ArrowRight"===e.key&&n(1),"ArrowLeft"===e.key&&n(-1)}document.addEventListener("keydown",e);const t=document.body.style.overflow;return document.body.style.overflow="hidden",()=>{document.removeEventListener("keydown",e),document.body.style.overflow=t}},[a,n]);const r=e[t];return ReactDOM.createPortal(React.createElement("div",{className:"tl-lightbox",onClick:e=>{e.target===e.currentTarget&&a()}},React.createElement("button",{type:"button",className:"tl-lightbox-close",onClick:a,"aria-label":"Close image viewer"},"✕"),e.length>1&&React.createElement("button",{type:"button",className:"tl-lightbox-nav prev",onClick:()=>n(-1),"aria-label":"Previous image"},"‹"),React.createElement("figure",{className:"tl-lightbox-figure"},React.createElement("img",{src:r.src,alt:r.label}),React.createElement("figcaption",null,React.createElement("strong",null,r.label),r.caption?React.createElement("span",null," — ",r.caption):null)),e.length>1&&React.createElement("button",{type:"button",className:"tl-lightbox-nav next",onClick:()=>n(1),"aria-label":"Next image"},"›"),e.length>1&&React.createElement("div",{className:"tl-lightbox-counter"},t+1," / ",e.length)),document.body)}function TimelineCard({item:e,expanded:t,onToggle:a,overlaps:n,onOpenLightbox:r}){const[l,o]=useRevealRef(),i=`tl-drawer-${e.id}`,c=`${e.start} – ${e.end}`,s=isOngoing(e),m="career"===e.category?"Career":"Club";return React.createElement("article",{ref:l,className:`tl-card ${e.category} reveal${o?" visible":""}`},React.createElement("button",{type:"button",className:"tl-card-header",onClick:a,"aria-expanded":t,"aria-controls":i},React.createElement("div",{className:"tl-card-toprow"},React.createElement("span",{className:`tl-pill ${e.category}`},m),React.createElement("span",{className:"tl-dates"},c,s&&React.createElement("span",{className:"tl-ongoing-badge"},"Ongoing"))),React.createElement("h3",{className:"tl-role"},e.role),React.createElement("div",{className:"tl-metarow"},React.createElement("span",{className:"tl-company"},e.company),e.location&&React.createElement("span",{className:"tl-location"},e.location)),React.createElement("p",{className:"tl-summary"},e.summary),React.createElement("span",{className:"tl-view-details"},React.createElement("span",null,t?"Hide details":"View details"),React.createElement("svg",{className:"tl-chevron"+(t?" open":""),viewBox:"0 0 16 16",width:"11",height:"11","aria-hidden":"true"},React.createElement("path",{d:"M4 6l4 4 4-4",fill:"none",stroke:"currentColor",strokeWidth:"1.6",strokeLinecap:"round",strokeLinejoin:"round"})))),React.createElement("div",{className:"tl-drawer","data-state":t?"open":"closed"},React.createElement("div",{className:"tl-drawer-inner",id:i,role:"region","aria-hidden":!t},React.createElement("ul",{className:"tl-highlights"},e.highlights.map((e,t)=>React.createElement("li",{key:t},e))),e.tags.length>0&&React.createElement("div",{className:"tl-tags"},e.tags.map(e=>React.createElement("span",{className:"tl-tag",key:e},e))),n.length>0&&React.createElement("div",{className:"tl-overlap-note"},React.createElement("span",{className:"tl-overlap-icon","aria-hidden":"true"},"⇄"),"Running alongside ",n.map(e=>`${e.role} at ${e.company}`).join("; ")),e.images.length>0&&React.createElement(Gallery,{images:e.images,onOpenLightbox:t=>r(e.images,t)}))))}function ExperienceTimeline(){const[e,t]=useState(()=>new Set),[a,n]=useState(null),r=useMemo(()=>EXPERIENCE_ITEMS.map(e=>({...e,startDate:parseMonthYear(e.start),endDate:parseMonthYear(e.end)})).sort((e,t)=>t.startDate-e.startDate),[]),l=useMemo(()=>computeOverlaps(r),[r]),o=useCallback(e=>{t(t=>{const a=new Set(t);return a.has(e)?a.delete(e):a.add(e),a})},[]),i=useCallback((e,t)=>n({images:e,index:t}),[]),c=useCallback(()=>n(null),[]),s=useCallback(e=>{n(t=>{if(!t)return t;const a=t.images.length;return{...t,index:((t.index+e)%a+a)%a}})},[]);return React.createElement("div",{className:"tl-wrapper"},React.createElement("div",{className:"tl-legend"},React.createElement("span",{className:"tl-legend-item"},React.createElement("span",{className:"tl-legend-dot career"}),"Career"),React.createElement("span",{className:"tl-legend-item"},React.createElement("span",{className:"tl-legend-dot club"}),"Clubs & Volunteering")),React.createElement("div",{className:"tl-grid",style:{gridTemplateRows:`repeat(${r.length}, auto)`}},React.createElement("div",{className:"tl-axis-line",style:{gridRow:`1 / span ${r.length}`},"aria-hidden":"true"}),r.map((t,a)=>{const n=a+1,r=e.has(t.id),c=React.createElement(TimelineCard,{item:t,expanded:r,onToggle:()=>o(t.id),overlaps:l.get(t.id)||[],onOpenLightbox:i});return React.createElement(React.Fragment,{key:t.id},"club"===t.category&&React.createElement("div",{className:"tl-card-cell left",style:{gridRow:n}},c),React.createElement("div",{className:"tl-dot-cell",style:{gridRow:n}},React.createElement("span",{className:`tl-dot ${t.category}${isOngoing(t)?" ongoing":""}`})),"career"===t.category&&React.createElement("div",{className:"tl-card-cell right",style:{gridRow:n}},c))})),a&&React.createElement(Lightbox,{images:a.images,index:a.index,onClose:c,onNavigate:s}))}const experienceRootEl=document.getElementById("experience-timeline-root");experienceRootEl&&ReactDOM.createRoot(experienceRootEl).render(React.createElement(ExperienceTimeline,null));
 </script>
 </body>
 </html>
