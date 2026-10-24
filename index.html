@@ -2150,8 +2150,8 @@ footer {
     <h2 class="cta-heading reveal reveal-delay-1">Building<br />for <em>fun!</em></h2>
     <p class="cta-sub reveal reveal-delay-2">Whether you're hiring, collaborating, or just exploring cool engineering problems, feel free to reach out.</p>
     <div class="cta-row reveal reveal-delay-3">
-      <a class="btn-resume" id="resumeBtn" href="files/Nicholas-Yap-Resume-2026.pdf">↓ Download Resume</a>
-      <a class="btn-secondary" href="mailto:nicholas.yap28@gmail.com">Get in Touch →</a>
+      <a class="btn-resume" id="resumeBtn" href="files/Nicholas-Yap-Resume-2026.pdf" target="_blank">↓ Download Resume</a>
+      <a class="btn-secondary" href="mailto:nicholas.yap28@gmail.com" target="_blank">Get in Touch →</a>
     </div>
   </section>
 
@@ -2159,9 +2159,9 @@ footer {
   <footer>
     <div class="footer-copy">© 2026 Nicholas Yap</div>
     <div class="footer-links">
-      <a href="https://github.com/Yuuki-NY">GitHub</a>
-      <a href="https://www.linkedin.com/in/nicholas-yap28">LinkedIn</a>
-      <a href="mailto:nicholas.yap28@gmail.com">Email</a>
+      <a href="https://github.com/Yuuki-NY" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/nicholas-yap28" target="_blank">LinkedIn</a>
+      <a href="mailto:nicholas.yap28@gmail.com" target="_blank">Email</a>
     </div>
   </footer>
 
@@ -2879,7 +2879,7 @@ const PROJECTS = [
     ],
     video: { type: 'youtube', id: 'https://www.youtube.com/embed/zAxf289NNAM' },
     tags: ['VEX Robotics', 'Parallel Development', 'Teamwork', 'Problem-solving'],
-    links: [{ label: 'Design Presentation', href: 'files/pms.pdf', primary: true },{ label: 'Linkedin Post', href: 'https://www.linkedin.com/feed/update/urn:li:activity:7441253825153511424/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD2ufIcBcXv48nXgAs4e7DsJFg7wNM4ANDQ' }],
+    links: [{ label: 'Design Presentation', href: 'files/pms.pdf' , primary: true },{ label: 'Linkedin Post', href: 'https://www.linkedin.com/feed/update/urn:li:activity:7441253825153511424/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD2ufIcBcXv48nXgAs4e7DsJFg7wNM4ANDQ' }],
     sections: [
       {
         label: 'More Detail',
@@ -3326,7 +3326,13 @@ function openModal(project) {
   const linksWrap = document.getElementById('modal-links-wrap');
   const linksEl   = document.getElementById('modal-links');
   if (project.links && project.links.length) {
-    linksEl.innerHTML = project.links.map(l => `<a class="modal-link-btn${l.primary ? ' primary' : ''}" href="${l.href}">${l.label} ↗</a>`).join('');
+    linksEl.innerHTML = project.links.map(l => {
+      // Check if it's an external link or local file (e.g. starts with http or is a PDF/file)
+      const isExternal = l.href.startsWith('http') || l.href.startsWith('files/');
+      const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+      
+      return `<a class="modal-link-btn${l.primary ? ' primary' : ''}" href="${l.href}"${targetAttr}>${l.label} ↗</a>`;
+    }).join('');
     linksWrap.style.display = 'block';
   } else { linksWrap.style.display = 'none'; }
 
