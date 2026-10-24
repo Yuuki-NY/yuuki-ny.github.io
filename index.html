@@ -179,13 +179,12 @@ nav.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
 /* ── HERO ── */
 #hero {
   position: relative;
-  height: 100vh;
-  min-height: 560px;
-  max-height: 900px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  width: 100%;
 }
 .hero-bg {
   position: absolute;
@@ -202,14 +201,15 @@ nav.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .hero-content {
-  position: relative;
+position: relative;
   z-index: 2;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   flex: 1;
-  padding: clamp(72px, 10vw, 110px) clamp(28px, 6vw, 80px) 24px;
-  gap: 48px;
+  padding: clamp(80px, 10vw, 110px) clamp(20px, 5vw, 80px) 24px;
+  gap: 32px;
+  width: 100%;
 }
 .hero-left { display: flex; flex-direction: column; gap: 20px; }
 .hero-badge {
@@ -309,18 +309,23 @@ nav.scrolled { box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
 
 /* ── NAMEPLATE ── */
 .hero-nameplate {
-  position: relative; z-index: 2;
-  padding: 0 clamp(20px, 5vw, 60px);
+  position: relative; 
+  z-index: 2;
+  padding: 0 clamp(16px, 4vw, 60px);
   flex-shrink: 0;
+  width: 100%;
+  overflow: hidden;
 }
 .hero-nameplate-text {
-  font-size: clamp(4.5rem, 11vw, 9rem);
-  font-weight: 700;
+  font-size: clamp(2.8rem, 11vw, 9rem);
+  font-weight: 700 !important;
   letter-spacing: -0.04em;
-  line-height: 0.82;
+  line-height: 0.9;
   color: var(--white);
   white-space: nowrap;
-  margin-bottom: -0.08em;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background: linear-gradient(120deg, var(--white) 0%, #b0c8d4 40%, var(--white) 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -398,6 +403,8 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
     url('images/aboutme-02.jpeg') center / cover no-repeat;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+  width: 100%;
+  box-sizing: border-border-box;
 }
 .about-grid {
   display: grid;
@@ -839,9 +846,8 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
 }
 
 .exp-content-area {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  min-width: 0;
+  width: 100%;
 }
 .exp-panel {
   background: var(--surface);
@@ -850,6 +856,9 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
   padding: 32px;
   display: none;
   animation: fade-in-panel 0.35s cubic-bezier(0.4,0,0.2,1) forwards;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 .exp-panel.active {
   display: flex;
@@ -906,32 +915,41 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
 
 /* ── EXPERIENCE SLIDESHOW ── */
 .exp-slideshow {
-  margin-top: 10px;
+  margin-top: 16px;
   position: relative;
   width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 .exp-slides-track-wrap {
   overflow: hidden;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--bg3);
+  width: 100%;
+  max-width: 100%;
 }
 .exp-slides-track {
   display: flex;
-  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  width: 100%;
 }
 .exp-slide {
   flex: 0 0 100%;
+  width: 100%;
   min-width: 0;
-  position: relative;
+  box-sizing: border-box;
 }
 .exp-slide-img {
   width: 100%;
-  aspect-ratio: 16/7;
-  object-fit: cover;
-  display: block;
+  height: auto;
+  max-height: 380px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover; 
+  object-position: center center;
   background: var(--surface);
+  display: block;
 }
 .exp-slide-caption {
   padding: 10px 14px 12px;
@@ -941,6 +959,9 @@ section { padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px); }
   letter-spacing: 0.06em;
   line-height: 1.5;
   border-top: 1px solid var(--border);
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .exp-slide-caption strong {
   color: var(--text);
@@ -1086,6 +1107,10 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
+  #hero {
+    height: auto;
+    min-height: 100dvh;
+  }
   .hero-content { grid-template-columns: 1fr; gap: 28px; padding-bottom: 16px; }
   .hero-right { align-items: flex-start; }
   .hero-nameplate-text { font-size: clamp(3.5rem, 14vw, 7rem); }
@@ -1100,6 +1125,16 @@ footer {
   .projects-header { flex-direction: column; align-items: flex-start; }
   .projects-hint { text-align: left; }
   footer { flex-direction: column; align-items: flex-start; }
+
+  .exp-panel {
+    padding: 20px 16px;
+  }
+  .exp-slide-img {
+    max-height: 240px;
+  }
+  .hero-scroll-indicator {
+    display: none;
+  }
 }
 
 /* ── PROJECT MODAL ── */
